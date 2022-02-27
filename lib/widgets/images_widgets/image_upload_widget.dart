@@ -16,6 +16,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        
         Row(
           children: const [
             Text('Add Strategy Image ',
@@ -25,11 +26,14 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                     fontWeight: FontWeight.w300)),
           ],
         ),
+        
         const SizedBox(height: 10),
+
         _UploadImage(
             icon: Icons.add_a_photo,
             imagePath: Preferences.tempProfileImage,
             onClicked: () async {}),
+
         const SizedBox(height: 20),
       ],
     );
@@ -68,10 +72,14 @@ class _UploadImageState extends State<_UploadImage> {
                 print('TAP BOTTOM 2 Take Picture');
 
                 final picker = await ImagePicker();
+
                 final pickedFile =
                     await picker.pickImage(source: ImageSource.camera);
+
                 if (pickedFile == null) return;
+
                 Preferences.tempStrategyImage = pickedFile.path;
+
                 setState(() {});
               },
             ),
@@ -82,9 +90,14 @@ class _UploadImageState extends State<_UploadImage> {
             child: GestureDetector(
               onTap: () async {
                 final picker = await ImagePicker();
+
+
                 final pickedFile =
                     await picker.pickImage(source: ImageSource.gallery);
+
+
                 if (pickedFile == null) return;
+
                 Preferences.tempStrategyImage = pickedFile.path;
                 setState(() {});
               },

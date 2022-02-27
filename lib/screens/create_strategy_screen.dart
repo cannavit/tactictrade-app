@@ -241,7 +241,7 @@ class _FormState extends State<_Form> {
         Row(
           children: [
             Container(
-              width: MediaQuery.of(context).size.width * 0.5,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: GeneralInputField(
                   textController: strategyNameCtrl,
                   labelText: 'S.Name',
@@ -258,7 +258,7 @@ class _FormState extends State<_Form> {
             Expanded(child: Container()),
 
             Container(
-              width: MediaQuery.of(context).size.width * 0.3,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: GeneralInputField(
                   textController: symbolCtrl,
                   labelText: 'Symbol',
@@ -279,7 +279,7 @@ class _FormState extends State<_Form> {
             // DropDown(),
 
             Container(
-              width: MediaQuery.of(context).size.width * 0.4,
+              width: MediaQuery.of(context).size.width * 0.2,
               child: GeneralInputField(
                   textController: timeTradeCtrl,
                   labelText: 'Time Trade',
@@ -298,7 +298,7 @@ class _FormState extends State<_Form> {
           ],
         ),
 
-        const SizedBox(height: 20),
+        // const SizedBox(height: 20),
 
         Container(
           // width: MediaQuery.of(context).size.width * 0.4,
@@ -449,65 +449,68 @@ class _DropDownState extends State<DropDown> {
 
     return DropdownButtonHideUnderline(
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.4,
-        height: 47,
-        child: DropdownButton2(
-          hint: Row(
-            children: [
-              const SizedBox(width: 6),
-              Icon(
-                Icons.calendar_view_month_sharp,
-                color: Colors.white60,
-              ),
-              Text(
-                'Select Time',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Theme.of(context).hintColor,
-                ),
-              ),
-            ],
-          ),
-          items: widget.descriptionCtrl
-              .map((item) => DropdownMenuItem<String>(
-                    value: item,
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 6),
-                        // Icon(
-                        //   Icons.calendar_view_month_sharp,
-                        //   color: Colors.white60,
-                        // ),
-                        const SizedBox(width: 6),
-                        Text(
-                          item,
-                          style: const TextStyle(
-                            fontSize: 17,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ))
-              .toList(),
-          value: Preferences.selectedTimeNewStrategy,
-          onChanged: (value) {
-            if (value is String) {
-              Preferences.selectedTimeNewStrategy = value;
-            } else {
-              Preferences.selectedTimeNewStrategy = '';
-            }
-            setState(() {});
-          },
-          buttonHeight: 40,
-          buttonWidth: 140,
-          itemHeight: 40,
-          buttonDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-              color: Colors.white,
-            ),
-            color: Colors.transparent,
-          ),
+        // width: MediaQuery.of(context).size.width * 0.3,
+        // height: 47,
+        child: Container(
+          //TODO active this
+          // child: DropdownButton2(
+          //   hint: Row(
+          //     children: [
+          //       const SizedBox(width: 6),
+          //       Icon(
+          //         Icons.calendar_view_month_sharp,
+          //         color: Colors.white60,
+          //       ),
+          //       Text(
+          //         'Select Time',
+          //         style: TextStyle(
+          //           fontSize: 16,
+          //           color: Theme.of(context).hintColor,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          //   items: widget.descriptionCtrl
+          //       .map((item) => DropdownMenuItem<String>(
+          //             value: item,
+          //             child: Row(
+          //               children: [
+          //                 const SizedBox(width: 6),
+          //                 // Icon(
+          //                 //   Icons.calendar_view_month_sharp,
+          //                 //   color: Colors.white60,
+          //                 // ),
+          //                 const SizedBox(width: 6),
+          //                 Text(
+          //                   item,
+          //                   style: const TextStyle(
+          //                     fontSize: 17,
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ))
+          //       .toList(),
+          //   value: Preferences.selectedTimeNewStrategy,
+          //   onChanged: (value) {
+          //     if (value is String) {
+          //       Preferences.selectedTimeNewStrategy = value;
+          //     } else {
+          //       Preferences.selectedTimeNewStrategy = '';
+          //     }
+          //     setState(() {});
+          //   },
+          //   buttonHeight: 40,
+          //   buttonWidth: 140,
+          //   itemHeight: 40,
+          //   buttonDecoration: BoxDecoration(
+          //     borderRadius: BorderRadius.circular(5),
+          //     border: Border.all(
+          //       color: Colors.white,
+          //     ),
+          //     color: Colors.transparent,
+          //   ),
+          // ),
         ),
       ),
     );

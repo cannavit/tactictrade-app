@@ -1,15 +1,13 @@
 import 'dart:convert';
-
 import 'package:provider/provider.dart';
-
 import '../../../providers/new_strategy_provider.dart';
 import 'package:flutter/material.dart';
-
 import '../../../services/notifications_service.dart';
 import '../../../share_preferences/preferences.dart';
 import 'broker_service.dart';
 
 class ButtonCreateBroker extends StatelessWidget {
+  
   const ButtonCreateBroker({
     Key? key,
     required this.bodyRequest,
