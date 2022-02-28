@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:tactictrade/providers/theme_provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
+import '../services/auth_service.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
@@ -61,6 +63,8 @@ class _DarkModeSettingState extends State<_DarkModeSetting> {
   Widget build(BuildContext context) {
     final themeColors = Theme.of(context);
 
+    final authService = Provider.of<AuthService>(context, listen: false);
+
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
     return SingleChildScrollView(
@@ -82,7 +86,32 @@ class _DarkModeSettingState extends State<_DarkModeSetting> {
                     : themeProvider.setLightMode();
 
                 setState(() {});
-              })
+              }),
+
+          // height:,
+          SizedBox(height: MediaQuery.of(context).size.height * 0.7),
+
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16),
+            child: TextButton(
+                onPressed: () {
+                  authService.logout();
+                  Navigator.pushReplacementNamed(context, 'login');
+                },
+                child: Row(
+                  children: [
+                    Expanded(child: Container()),
+                    Text('Logout',
+                        style: TextStyle(
+                            // color: Colors.black54,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w300)),
+                    const SizedBox(width: 10),
+                    Icon(Icons.logout,
+                        size: 25, color: themeColors.primaryColor),
+                  ],
+                )),
+          )
         ],
       ),
     );
