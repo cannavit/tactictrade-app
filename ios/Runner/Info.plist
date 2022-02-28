@@ -44,6 +44,14 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To take user profile image</string>
+	<key>NSCameraUsageDescription</key>
+	<string>To choose user profile image</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used to capture audio for image picker plugin</string>
+
+
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -55,6 +63,8 @@
 			</array>
 		</dict>
 	</array>
+
+
 
 </dict>
 </plist>
