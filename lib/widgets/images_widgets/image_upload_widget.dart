@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
+
+import '../../services/strategies_services.dart';
 
 class ImageUploadWidget extends StatefulWidget {
   const ImageUploadWidget({
@@ -16,7 +21,6 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        
         Row(
           children: const [
             Text('Add Strategy Image ',
@@ -26,14 +30,11 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                     fontWeight: FontWeight.w300)),
           ],
         ),
-        
         const SizedBox(height: 10),
-
         _UploadImage(
             icon: Icons.add_a_photo,
             imagePath: Preferences.tempProfileImage,
             onClicked: () async {}),
-
         const SizedBox(height: 20),
       ],
     );
@@ -60,7 +61,7 @@ class _UploadImageState extends State<_UploadImage> {
   @override
   Widget build(BuildContext context) {
     final themeColors = Theme.of(context);
-
+    final strategyLoadServices = Provider.of<StrategyLoadServices>(context);
     return Center(
       child: Stack(
         children: [
@@ -73,11 +74,12 @@ class _UploadImageState extends State<_UploadImage> {
 
                 final picker = await ImagePicker();
 
-                final pickedFile =
-                    await picker.pickImage(source: ImageSource.camera);
+                final pickedFile = await picker.pickImage(
+                    source: ImageSource.camera, imageQuality: 100);
 
                 if (pickedFile == null) return;
 
+                print('The user selected one image: ${pickedFile.path}');
                 Preferences.tempStrategyImage = pickedFile.path;
 
                 setState(() {});
@@ -91,10 +93,8 @@ class _UploadImageState extends State<_UploadImage> {
               onTap: () async {
                 final picker = await ImagePicker();
 
-
                 final pickedFile =
                     await picker.pickImage(source: ImageSource.gallery);
-
 
                 if (pickedFile == null) return;
 
@@ -113,20 +113,18 @@ class _UploadImageState extends State<_UploadImage> {
   }
 
   Widget buildImage() {
-    final image = Preferences.tempStrategyImage == ''
-        ? AssetImage('assets/no-image.png')
-        : AssetImage(Preferences.tempStrategyImage);
+    var imageStrategyPicture;
 
-    return Material(
-      color: Colors.transparent,
-      child: Ink.image(
-        image: image as ImageProvider,
-        fit: BoxFit.cover,
-        // width: 148,
-        height: 148,
-        child: InkWell(onTap: widget.onClicked),
-      ),
-    );
+    if (Preferences.tempStrategyImage == '' ||
+        Preferences.tempStrategyImage == null) {
+      return Image(image: AssetImage('assets/no-image.png'), fit: BoxFit.cover);
+    } else if (Preferences.tempStrategyImage.startsWith('http')) {
+      return Image(
+          image: NetworkImage(Preferences.tempStrategyImage),
+          fit: BoxFit.cover);
+    } else {
+      return Image.file(File(Preferences.tempStrategyImage), fit: BoxFit.cover);
+    }
   }
 
   Widget buildEditImageIcon(Color color, IconData icon) => ClipOval(

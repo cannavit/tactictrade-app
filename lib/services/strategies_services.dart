@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -94,6 +95,7 @@ class StrategyServices extends ChangeNotifier {
 class StrategyLoadServices extends ChangeNotifier {
   bool isLoading = true;
   List strategyList = [];
+  File? newPictureFile;
 
   StrategyLoadServices() {
     this.loadStrategy();
@@ -126,6 +128,18 @@ class StrategyLoadServices extends ChangeNotifier {
 
     return this.strategyList;
   }
+
+  void updateSelectedProductImage( String path ) {
+
+    Preferences.tempStrategyImage = path;
+    this.newPictureFile = File.fromUri( Uri(path: path) );
+
+    notifyListeners();
+
+  }
+
+
+
 }
 
 class StrategySocial extends ChangeNotifier {
@@ -156,4 +170,11 @@ class StrategySocial extends ChangeNotifier {
 
     return data;
   }
+
+
+
 }
+
+
+
+
