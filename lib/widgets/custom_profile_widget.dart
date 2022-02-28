@@ -36,8 +36,7 @@ class CustomProfilImage extends StatelessWidget {
   }
 
   Widget buildImage() {
-
-
+    print(Preferences.profileImage);
     final imageUrl = Preferences.tempProfileImage;
 
     final image = imagePath.startsWith('http')

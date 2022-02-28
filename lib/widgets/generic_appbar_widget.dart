@@ -62,6 +62,7 @@ AppBar GenericAppBar(
 
                       child: GestureDetector(
                         onTap: () {
+                          Preferences.tempProfileImage = Preferences.profileImage;
                           Navigator.pushReplacementNamed(context, 'profile');
                         },
                         child: CircleAvatar(

@@ -34,6 +34,7 @@ class SettingsScreen extends StatelessWidget {
           leading: BackButton(
             color: themeColors.primaryColor,
             onPressed: () {
+              Preferences.tempProfileImage = Preferences.profileImage;
               Navigator.pushReplacementNamed(context, 'profile');
             },
           ),
