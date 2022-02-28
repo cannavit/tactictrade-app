@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
+import '../models/environments_models.dart';
+
 class CustomProfilImage extends StatelessWidget {
   final String imagePath;
   final VoidCallback onClicked;
@@ -34,9 +36,13 @@ class CustomProfilImage extends StatelessWidget {
   }
 
   Widget buildImage() {
-    final image = imagePath.contains('http')
-        ? NetworkImage(imagePath)
-        : FileImage(File(imagePath));
+
+
+    final imageUrl = Preferences.tempProfileImage;
+
+    final image = imagePath.startsWith('http')
+        ? NetworkImage(imageUrl)
+        : FileImage(File(imageUrl));
 
     return ClipOval(
       child: Material(

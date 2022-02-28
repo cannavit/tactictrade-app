@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:tactictrade/models/environments_models.dart';
 import 'package:tactictrade/screens/login_screens.dart';
 import 'package:tactictrade/services/auth_service.dart';
 import 'package:tactictrade/services/profile_service.dart';
@@ -81,19 +82,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 icon: Icons.add_a_photo,
                 imagePath: Preferences.tempProfileImage,
                 onClicked: () async {
+
                   final ImagePicker _picker = ImagePicker();
 
-                  var pickedFile;
-                  try {
-                    pickedFile =
+                  final pickedFile =
                         await _picker.pickImage(source: ImageSource.gallery);
-                  } catch (e) {
-                    print(e);
-                  }
-                  ;
-
-                  print(pickedFile);
-
+             
                   if (pickedFile == null) return;
 
                   Preferences.tempProfileImage = pickedFile.path;
@@ -143,7 +137,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     if (!Preferences.pathGalleryImage.contains('http')) {
                       Preferences.profileImage = Preferences.tempProfileImage;
                     }
-                    ;
+                    
 
                     final token =
                         await FlutterSecureStorage().read(key: 'token_access');

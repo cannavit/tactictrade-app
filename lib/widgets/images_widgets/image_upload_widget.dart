@@ -125,6 +125,8 @@ class _UploadImageState extends State<_UploadImage> {
     } else {
       return Image.file(File(Preferences.tempStrategyImage), fit: BoxFit.cover);
     }
+
+    
   }
 
   Widget buildEditImageIcon(Color color, IconData icon) => ClipOval(

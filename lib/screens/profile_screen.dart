@@ -43,6 +43,7 @@ class ProfileScreen extends StatelessWidget {
             CustomProfilImage(
                 imagePath: Preferences.profileImage,
                 onClicked: () {
+                  Preferences.tempProfileImage = Preferences.profileImage;
                   Navigator.pushReplacementNamed(context, 'edit_profile');
                 }),
             const SizedBox(height: 24),
