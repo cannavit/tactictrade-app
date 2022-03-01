@@ -28,7 +28,7 @@ class Preferences {
   static String _tempStrategyImage = '';
   static bool _isPublicNewStrategy = true;
   static bool _isActiveNewStrategy = true;
-  static String _selectedTimeNewStrategy = 'minute';
+  static String _selectedTimeNewStrategy = 'minutes';
   static bool _createNewStrategy = false;
   static int _formValidatorCounter = 0;
 

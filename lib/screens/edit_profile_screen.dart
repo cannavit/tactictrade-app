@@ -82,7 +82,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 icon: Icons.add_a_photo,
                 imagePath: Preferences.tempProfileImage,
                 onClicked: () async {
-
+                  
                   final ImagePicker _picker = ImagePicker();
 
                   final pickedFile =

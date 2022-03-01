@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scaffoldMessengerKey: NotificationsService.messagerKey,
       title: 'Material App',
-      initialRoute: 'loading',
+      initialRoute: 'login',
       routes: {
         'home': (_) => HomeScreen(),
         'login': (_) => const LoginScreen(),

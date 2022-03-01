@@ -47,6 +47,7 @@ class StrategyServices extends ChangeNotifier {
 
     final String strategyImage = Preferences.tempStrategyImage;
     if (strategyImage != '') {
+      
       print(strategyImage);
 
       final profile_image =
