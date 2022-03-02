@@ -21,8 +21,8 @@ jobs:
   Build-Image:
     runs-on: ubuntu-latest
     steps:
-    - uses: Create upload-keystore.jks
-    - name: Install Dependencies
+    - name: Build file upload-keystore.jks
+    - uses: actions/checkout@v2
       run: |
           echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
           ls 
