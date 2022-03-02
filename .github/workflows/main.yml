@@ -6,12 +6,23 @@ on:
   pull_request:
     branches: [ test ]
 
+# jobs:
+#   Build-Image:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Create upload-keystore.jks
+#     - uses: actions/checkout@v2    
+#       run: |
+#           echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
+#           ls 
+
+
 jobs:
   Build-Image:
     runs-on: ubuntu-latest
     steps:
-    - name: Create upload-keystore.jks
-    - uses: actions/checkout@v2    
+    - uses: Create upload-keystore.jks
+    - name: Install Dependencies
       run: |
           echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
           ls 
@@ -42,7 +53,7 @@ jobs:
       #   uses: ncipollo/release-action@v1
       #   with:
       #     # artifacts: "build/app/outputs/apk/release/*,build/app/outputs/bundle/release/*"
-      #     artifacts: "build/app/outputs/bundle/release/*"
+      #     artifacts: "build/app/outputs/bjundle/release/*"
       #     tag: v1.0.${{ github.run_number }}
       #     token: ${{ secrets.GITHUB_TOKEN }}
       
@@ -52,7 +63,7 @@ jobs:
   #   runs-on: ubuntu-latest
   #   steps:
   #   - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
-  #     with:
+  #     with:j
   #       php-version: '8.1'
   #   - uses: actions/checkout@v2
 
