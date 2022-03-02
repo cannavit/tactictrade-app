@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build & Release
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Create upload-keystore.jks
       - uses: actions/checkout@v2
