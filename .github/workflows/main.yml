@@ -21,10 +21,9 @@ jobs:
     - name: Install Dependencies
       run:  | 
         echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
-        ls     
-        ls .
-        cat upload-keystore.jks
-        
+        mv upload-keystore.jks ./android
+        ls ./android
+
     # - run: flutter build apk --release
     # - run: flutter build appbundle  
     # - name: Push to Releases
