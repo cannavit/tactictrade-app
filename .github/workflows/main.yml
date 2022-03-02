@@ -22,8 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Install Dependencies
-      run: echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
-      
+      run:  | 
+        echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
+        ls
+
 # jobs:
 #   build:
 #     name: Build & Release
