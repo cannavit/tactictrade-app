@@ -18,6 +18,10 @@ samples, guidance on mobile development, and a full API reference.
 
 flutter clean
 flutter build apk --release
-flutter build apk --split-per-abi
+c
 
 flutter build appbundle
+
+
+base64 --input [Archivo] --output [Archivo].b64 
+
