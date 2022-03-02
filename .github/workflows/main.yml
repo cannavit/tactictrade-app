@@ -23,16 +23,15 @@ jobs:
         echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
         mv upload-keystore.jks ./android
         ls ./android
-
-    # - run: flutter build apk --release
-    # - run: flutter build appbundle  
-    # - name: Push to Releases
-    #   uses: ncipollo/release-action@v1
-    #   with:
-    #     # artifacts: "build/app/outputs/apk/release/*,build/app/outputs/bundle/release/*"
-    #     artifacts: "build/app/outputs/bjundle/release/*"
-    #     tag: v1.0.${{ github.run_number }}
-    #     token: ${{ secrets.GITHUB_TOKEN }}
+    - run: flutter build apk --release
+    - run: flutter build appbundle  
+    - name: Push to Releases
+      uses: ncipollo/release-action@v1
+      with:
+        # artifacts: "build/app/outputs/apk/release/*,build/app/outputs/bundle/release/*"
+        artifacts: "build/app/outputs/bjundle/release/*"
+        tag: v1.0.${{ github.run_number }}
+        token: ${{ secrets.GITHUB_TOKEN }}
       
       
 
