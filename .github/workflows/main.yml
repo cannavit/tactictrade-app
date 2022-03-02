@@ -19,9 +19,9 @@ jobs:
       with:
         flutter-version: '1.7.8+hotfix.4'
     - run: flutter build apk --split-per-abi
-    - run: flutter build appbundle
+    # - run: flutter build appbundle
     - name: Create a Release APK
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "build/app/outputs/apk/debug/*.apk"
+        artifacts: "build/app/outputs/apk/*.apk"
         token: ${{ secrets.GITHUB_TOKEN }}
