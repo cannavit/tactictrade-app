@@ -6,17 +6,6 @@ on:
   pull_request:
     branches: [ test ]
 
-# jobs:
-#   Build-Image:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Create upload-keystore.jks
-#     - uses: actions/checkout@v2    
-#       run: |
-#           echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
-#           ls 
-
-
 jobs:
   Build-Image:
     runs-on: ubuntu-latest
@@ -24,38 +13,25 @@ jobs:
     - name: Install Dependencies
       run:  | 
         echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
-        ls
-
-# jobs:
-#   build:
-#     name: Build & Release
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Create upload-keystore.jks
-#       - uses: actions/checkout@v2
-#       - run: |
-#           echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
-#           ls 
-    # name: Build & Release
-    # runs-on: macos-latest
-    # steps:          
-      # - uses: actions/checkout@v1
-      # - uses: actions/setup-java@v1
-      #   with:
-      #     java-version: '12.x'
-      # - uses: subosito/flutter-action@v1
-      #   with:
-      #     flutter-version: '2.10.2'
-      # - run: flutter clean
-      # # - run: flutter build apk --release
-      # - run: flutter build appbundle  
-      # - name: Push to Releases
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     # artifacts: "build/app/outputs/apk/release/*,build/app/outputs/bundle/release/*"
-      #     artifacts: "build/app/outputs/bjundle/release/*"
-      #     tag: v1.0.${{ github.run_number }}
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+        ls     
+        ls .
+    - uses: actions/checkout@v1
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    - uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '2.10.2'
+    - run: flutter clean
+    # - run: flutter build apk --release
+    - run: flutter build appbundle  
+    - name: Push to Releases
+      uses: ncipollo/release-action@v1
+      with:
+        # artifacts: "build/app/outputs/apk/release/*,build/app/outputs/bundle/release/*"
+        artifacts: "build/app/outputs/bjundle/release/*"
+        tag: v1.0.${{ github.run_number }}
+        token: ${{ secrets.GITHUB_TOKEN }}
       
       
 
