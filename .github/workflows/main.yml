@@ -7,15 +7,24 @@ on:
     branches: [ test ]
 
 jobs:
-  build:
-    name: Build & Release
+  Build-Image:
     runs-on: ubuntu-latest
     steps:
-      - name: Create upload-keystore.jks
-      - uses: actions/checkout@v2
-      - run: |
+    - name: Create upload-keystore.jks
+    - uses: actions/checkout@v2    
+      run: |
           echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
           ls 
+# jobs:
+#   build:
+#     name: Build & Release
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Create upload-keystore.jks
+#       - uses: actions/checkout@v2
+#       - run: |
+#           echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
+#           ls 
     # name: Build & Release
     # runs-on: macos-latest
     # steps:          
