@@ -25,8 +25,8 @@ samples, guidance on mobile development, and a full API reference.
 
     echo "android/*.jks" >> .gitignore
 
-    export KEY_PASSWORD=
-    export KEY_PASSWORD=
+    export KEY_PASSWORD=Milan.2020
+    export KEY_PASSWORD=Milan.2020
 
     flutter clean
     flutter build appbundle
@@ -35,4 +35,4 @@ samples, guidance on mobile development, and a full API reference.
     
 
 
-
+## Encode file upload-keystore.jks

@@ -61,7 +61,7 @@ android {
 
     // export STORE_PASSWORD=Milan.2020
     // export KEY_PASSWORD=Milan.2020
-
+    // UPLOAD_KEYSTORE=
 
     buildTypes {
         release {
