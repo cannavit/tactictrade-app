@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ deploy-ci ]
 
+env:
+  KEY_JKS: ${{ secrets.UPLOAD_KEYSTORE }}
+  KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+  ALIAS_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+
 jobs:
   build-apk:
     runs-on: ubuntu-latest
@@ -20,11 +25,7 @@ jobs:
         java-version: '12.x'
     - name: Upload Secrets
       uses: subosito/flutter-action@v1.1.1
-      env:
-        KEY_JKS: ${{ secrets.UPLOAD_KEYSTORE }}
-        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        ALIAS_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
+      run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
         
     # - name: Check if exist file .jks
     #   run: ls android/
