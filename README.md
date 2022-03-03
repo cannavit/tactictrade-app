@@ -14,3 +14,25 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+
+## Deploy in Play Store using GitHub
+
+    https://danielllewellyn.medium.com/flutter-github-actions-for-a-signed-apk-fcdf9878f660
+
+    cp  ~/upload-keystore.jks ./android/
+
+    echo "android/*.jks" >> .gitignore
+
+    export KEY_PASSWORD=
+    export KEY_PASSWORD=
+
+    flutter clean
+    flutter build appbundle
+
+
+    
+
+
+

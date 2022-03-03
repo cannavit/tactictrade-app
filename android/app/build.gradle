@@ -50,11 +50,25 @@ android {
         multiDexEnabled true
     }
 
+    signingConfigs {
+        release {
+            storeFile file('../upload-keystore.jks')
+            keyAlias = 'upload'
+            storePassword = "$System.env.STORE_PASSWORD"
+            keyPassword = "$System.env.KEY_PASSWORD"
+        }
+    }
+
+    // export STORE_PASSWORD=Milan.2020
+    // export KEY_PASSWORD=Milan.2020
+
+
     buildTypes {
         release {
             signingConfig signingConfigs.debug
         }
     }
+
 }
 
 flutter {
@@ -64,6 +78,5 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-
 
 apply plugin: 'com.google.gms.google-services'
