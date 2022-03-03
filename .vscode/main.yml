@@ -18,8 +18,6 @@ jobs:
       with:
         java-version: '12.x'
     - uses: subosito/flutter-action@v1.1.1
-      with:
-        channel: 'dev'
       env:
         KEY_JKS: ${{ secrets.UPLOAD_KEYSTORE }}
         KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
