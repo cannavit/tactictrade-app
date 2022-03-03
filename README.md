@@ -23,5 +23,9 @@ c
 flutter build appbundle
 
 
-base64 --input [Archivo] --output [Archivo].b64 
+base64 --input [Archivo] --output [Archivo].b64
+
+base64 --input /Users/ceciliocannavaciuolo/upload-keystore.jks --output /Users/ceciliocannavaciuolo/upload-keystore.b64
+
+echo "${{UPLOAD_KEYSTORE}}" > upload-keystore.jks
 
