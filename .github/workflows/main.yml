@@ -7,31 +7,29 @@ on:
     branches: [ deploy-ci ]
 
 jobs:
-  build:
+  build-apk:
     runs-on: ubuntu-latest
     steps:
     - name: Define environment variables
       uses: actions/checkout@v1
-      run: docker push ghcr.io/fantaking/backend:"${{ github.ref_name }}"
-
     - name: Define actions
       uses: actions/checkout@v1
 
-    - name: setup-jav
-      uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
+    # - name: setup-jav
+    #   uses: actions/setup-java@v1
+    #   with:
+    #     java-version: '12.x'
 
-    - name: Upload Secrets
-      uses: subosito/flutter-action@v1.1.1
-      env:
-        KEY_JKS: ${{ secrets.UPLOAD_KEYSTORE }}
-        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        ALIAS_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
+    # - name: Upload Secrets
+    #   uses: subosito/flutter-action@v1.1.1
+    #   env:
+    #     KEY_JKS: ${{ secrets.UPLOAD_KEYSTORE }}
+    #     KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+    #     ALIAS_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+    #     run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
         
-    - name: Check if exist file .jks
-      run: ls android/
+    # - name: Check if exist file .jks
+    #   run: ls android/
 
 
 
