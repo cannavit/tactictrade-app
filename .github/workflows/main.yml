@@ -10,6 +10,10 @@ env:
   KEY_JKS: ${{ secrets.UPLOAD_KEYSTORE }}
   KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
   ALIAS_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+  VERSION_NAME: '1.0.$GITHUB_RUN_ID'
+  VERSION_CODE: '$GITHUB_RUN_ID'
+
+
 
 jobs:
   build-apk:
@@ -26,9 +30,6 @@ jobs:
 
     - name: Create Version Number
       run: echo "VERSION '1.0.$GITHUB_RUN_ID'"
-      env:
-        VERSION_NAME: '1.0.$GITHUB_RUN_ID'
-        VERSION_CODE: '$GITHUB_RUN_ID'
 
     - name: Directory Content
       run: ls android/
