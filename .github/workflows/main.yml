@@ -33,11 +33,14 @@ jobs:
       run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
     - name: Directory Content 2
       run: ls android/ 
-    - name: Create APK package
-      run: flutter build apk --release
-
-
-
+      
+    # - name: Create APK package
+      # run: flutter build apk --release
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '2.10.2'
+        channel: 'stable'
+    - run: flutter --version
 
 
 #       - name: Install Dependencies
