@@ -27,9 +27,12 @@ jobs:
     #   uses: subosito/flutter-action@v1.1.1
     #   # run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
     #   run: ls
-    - name: Install Dependencies
+    - name: Directory Content
       run: ls
-        
+    - name: Upload Secret Key
+      run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
+    - name: Directory Content 2
+      run: ls      
         
     # - name: Check if exist file .jks
     #   run: ls android/
