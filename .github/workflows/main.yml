@@ -44,13 +44,18 @@ jobs:
 
     - name: Build  APK
       run: flutter build apk
+
     - name: Save APK File
       uses: actions/upload-artifact@v3
       with:
         name: tactictrade-apk
         path: "build/app/outputs/apk/release/*"
-    - name: Build  appbundle
+
+    - name: Build appbundle
       run: flutter build appbundle
+
+    - name: Save Bundle File
+      uses: actions/upload-artifact@v3      
       with:
         name: tactictrade-appbundle
         path: "build/app/outputs/bundle/release/*"
