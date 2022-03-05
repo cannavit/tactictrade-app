@@ -42,7 +42,13 @@ jobs:
         channel: 'stable'
     - run: flutter --version
 
+    - name: Build  APK
+      run: flutter build apk
+    - name: Build  appbundle
+      run: flutter build appbundle
 
+
+      
 #       - name: Install Dependencies
 #         run:  | 
 #           echo "${{secrets.UPLOAD_KEYSTORE}}" > upload-keystore.jks
