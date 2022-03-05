@@ -25,7 +25,7 @@ jobs:
         java-version: '12.x'
 
     - name: Create Version Number
-      run: "$GITHUB_RUN_ID"
+      run: echo "$GITHUB_RUN_ID"
 
     - name: Directory Content
       run: ls android/
