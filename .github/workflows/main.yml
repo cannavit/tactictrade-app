@@ -44,16 +44,15 @@ jobs:
 
     - name: Build  APK
       run: flutter build apk
+    - name: Save APK File
+      uses: actions/upload-artifact@v3
       with:
-        artifacts: "build/app/outputs/apk/release/*"
-        tag: v1.0.${{ github.run_number }}
-        token: ${{ secrets.GITHUB_TOKEN }}      
+        name: code-coverage-report
+        path: "build/app/outputs/apk/release/*"
     - name: Build  appbundle
       run: flutter build appbundle
-      with:
-        artifacts: "build/app/outputs/bundle/release/*"
-        tag: v1.0.${{ github.run_number }}
-        token: ${{ secrets.GITHUB_TOKEN }}
+
+
 
 
 #       - name: Install Dependencies
