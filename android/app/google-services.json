@@ -1,54 +1,54 @@
 {
-    "project_info": {
-      "project_number": "224135933441",
-      "project_id": "tactictrade",
-      "storage_bucket": "tactictrade.appspot.com"
-    },
-    "client": [
-      {
-        "client_info": {
-          "mobilesdk_app_id": "1:224135933441:android:d36a0a5a4805fb5c691a00",
-          "android_client_info": {
-            "package_name": "com.cannavit.tactictrade"
+  "project_info": {
+    "project_number": "224135933441",
+    "project_id": "tactictrade",
+    "storage_bucket": "tactictrade.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224135933441:android:d36a0a5a4805fb5c691a00",
+        "android_client_info": {
+          "package_name": "com.cannavit.tactictrade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224135933441-fealqcuqqvghdockj60odicgfhqcn9m0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cannavit.tactictrade",
+            "certificate_hash": "c63981e2afaff28b85a5ae715acb77af4e0ae73e"
           }
         },
-        "oauth_client": [
-          {
-            "client_id": "224135933441-fealqcuqqvghdockj60odicgfhqcn9m0.apps.googleusercontent.com",
-            "client_type": 1,
-            "android_info": {
-              "package_name": "com.cannavit.tactictrade",
-              "certificate_hash": "c63981e2afaff28b85a5ae715acb77af4e0ae73e"
-            }
-          },
-          {
-            "client_id": "224135933441-4tro3i2as3figk7m04b57tha10u71rdl.apps.googleusercontent.com",
-            "client_type": 3
-          }
-        ],
-        "api_key": [
-          {
-            "current_key": "AIzaSyCONAlbIrxkdqWrRShuI46ozneZ4566Qos"
-          }
-        ],
-        "services": {
-          "appinvite_service": {
-            "other_platform_oauth_client": [
-              {
-                "client_id": "224135933441-4tro3i2as3figk7m04b57tha10u71rdl.apps.googleusercontent.com",
-                "client_type": 3
-              },
-              {
-                "client_id": "224135933441-q6hp13a975s4j6tlg46859tihealdffh.apps.googleusercontent.com",
-                "client_type": 2,
-                "ios_info": {
-                  "bundle_id": "com.cannavit.tactictrade"
-                }
+        {
+          "client_id": "224135933441-4tro3i2as3figk7m04b57tha10u71rdl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCONAlbIrxkdqWrRShuI46ozneZ4566Qos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224135933441-4tro3i2as3figk7m04b57tha10u71rdl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "224135933441-q6hp13a975s4j6tlg46859tihealdffh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cannavit.tactictrade"
               }
-            ]
-          }
+            }
+          ]
         }
       }
-    ],
-    "configuration_version": "1"
-  }
+    }
+  ],
+  "configuration_version": "1"
+}
