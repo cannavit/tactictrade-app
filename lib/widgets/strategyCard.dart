@@ -333,6 +333,8 @@ class _statisticsValues extends StatelessWidget {
                   variable: 'Net Profit: ',
                   value: netProfit,
                 ),
+
+                // const SizedBox(width: 0 ),
               ],
             )
           ],
@@ -529,7 +531,7 @@ class _cardTextPorcentaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
         Text(
           variable,
