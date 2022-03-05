@@ -47,11 +47,13 @@ jobs:
     - name: Save APK File
       uses: actions/upload-artifact@v3
       with:
-        name: code-coverage-report
+        name: tactictrade-apk
         path: "build/app/outputs/apk/release/*"
     - name: Build  appbundle
       run: flutter build appbundle
-
+      with:
+        name: tactictrade-appbundle
+        path: "build/app/outputs/bundle/release/*"
 
 
 
