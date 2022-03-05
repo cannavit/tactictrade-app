@@ -28,11 +28,11 @@ jobs:
     #   # run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
     #   run: ls
     - name: Directory Content
-      run: ls
+      run: ls android/
     - name: Upload Secret Key
       run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
     - name: Directory Content 2
-      run: ls      
+      run: ls android/ 
         
     # - name: Check if exist file .jks
     #   run: ls android/
