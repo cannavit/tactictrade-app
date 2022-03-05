@@ -17,8 +17,8 @@ jobs:
     steps:
     - name: Define environment variables
       uses: actions/checkout@v1
-    # - name: Define actions
-    #   uses: actions/checkout@v1
+    - name: Define actions
+      uses: actions/checkout@v1
     # - name: setup-jav
     #   uses: actions/setup-java@v1
     #   with:
