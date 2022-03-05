@@ -33,9 +33,8 @@ jobs:
       run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
     - name: Directory Content 2
       run: ls android/ 
-        
-    # - name: Check if exist file .jks
-    #   run: ls android/
+    - name: Create APK package
+      run: flutter build apk --release
 
 
 
