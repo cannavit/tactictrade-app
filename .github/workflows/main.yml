@@ -23,9 +23,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: '12.x'
-    # - name: Upload Secrets
-    #   uses: subosito/flutter-action@v1.1.1
-    #   run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
+    - name: Upload Secrets
+      uses: subosito/flutter-action@v1.1.1
+      # run: echo $UPLOAD_KEYSTORE > android/upload-keystore.jks 
+      run: ls
+
         
         
     # - name: Check if exist file .jks
