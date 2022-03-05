@@ -184,6 +184,8 @@ class _FormState extends State<_Form> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
+        
         Row(
           children: [
             Container(
@@ -201,9 +203,6 @@ class _FormState extends State<_Form> {
           ],
         ),
 
-        const Divider(
-          color: Colors.white30,
-        ),
 
         const Divider(
           color: Colors.white30,
@@ -275,12 +274,12 @@ class _FormState extends State<_Form> {
 
         const SizedBox(height: 20),
 
-        Column(
+        Row(
           children: [
             // DropDown(),
 
             Container(
-              width: MediaQuery.of(context).size.width * 0.2,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: GeneralInputField(
                   textController: timeTradeCtrl,
                   labelText: 'Time Trade',
@@ -293,13 +292,13 @@ class _FormState extends State<_Form> {
                   )),
             ),
 
-            // Expanded(child: Container()),
+            Expanded(child: Container()),
 
             DropDown(descriptionCtrl: itemsData),
           ],
         ),
 
-        // const SizedBox(height: 20),
+        const SizedBox(height: 20),
 
         Container(
           // width: MediaQuery.of(context).size.width * 0.4,
@@ -451,7 +450,7 @@ class _DropDownState extends State<DropDown> {
     return DropdownButtonHideUnderline(
       child: Container(
         // width: MediaQuery.of(context).size.width * 0.3,
-        // height: 47,
+        height: 47,
         child: Container(
             //TODO active this
             child: DropdownButton2(

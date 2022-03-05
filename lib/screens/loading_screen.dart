@@ -70,7 +70,7 @@ class LoadingScreen extends StatelessWidget {
           context,
           PageRouteBuilder(
               pageBuilder: (_, __, ___) => const NavigationScreen(),
-              transitionDuration: const Duration(seconds: 2)));
+              transitionDuration: const Duration(seconds: 1)));
     } else {
       // Navigator.pushReplacementNamed(context, 'login');
       Navigator.pushReplacement(

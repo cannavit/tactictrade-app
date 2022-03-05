@@ -49,7 +49,7 @@ packages:
       name: chart_sparkline
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.9"
+    version: "1.0.10"
   clock:
     dependency: transitive
     description:
@@ -91,7 +91,7 @@ packages:
       name: dropdown_button2
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.2.0"
   expandable_text:
     dependency: "direct main"
     description:
