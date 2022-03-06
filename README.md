@@ -38,7 +38,7 @@ samples, guidance on mobile development, and a full API reference.
 ## Encode file upload-keystore.jks
 
 base64 -i ~/.android/debug.keystore -o <outfile>
-  # flutter build appbundle --build-name=1.0.3 --build-number=3
+  # flutter build appbundle --build-name=1.0.4 --build-number=4
 
 # keytool -list -v \ -alias androiddebugkey -keystore ~/.android/debug.keystore
 

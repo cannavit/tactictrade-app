@@ -44,15 +44,6 @@ jobs:
         channel: 'stable'
     - run: flutter --version
 
-    - name: Build  APK
-      run: flutter build apk --build-name='1.0.$GITHUB_RUN_ID' --build-number=$GITHUB_RUN_ID
-
-    - name: Save APK File
-      uses: actions/upload-artifact@v3
-      with:
-        name: tactictrade-apk
-        path: "build/app/outputs/apk/release/*"
-
     - name: Build appbundle
       run: flutter build appbundle --build-name='1.0.$GITHUB_RUN_ID' --build-number=$GITHUB_RUN_ID
 

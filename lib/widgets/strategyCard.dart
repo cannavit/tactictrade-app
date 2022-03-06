@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
+import 'package:tactictrade/widgets/popUpTradeDataStrategy.dart';
 
 import '../services/strategies_services.dart';
 
@@ -241,6 +242,7 @@ class _likeIcons extends StatelessWidget {
           Column(
             children: const [
               Icon(Icons.share),
+              
               Text('Share',
                   style: TextStyle(
                       color: Colors.white,
@@ -250,8 +252,19 @@ class _likeIcons extends StatelessWidget {
           ),
           Column(
             children: [
-              Icon(Icons.play_arrow_rounded),
-              Text('Copy Bot',
+              IconButton(
+        icon: const Icon(Icons.play_arrow_rounded),
+        onPressed: () {
+          // Navigator.pushReplacementNamed(context, 'login');
+           showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        PopUpTradeDataStrategy(context),
+                  );
+        },
+      ),
+              // Icon(Icons.play_arrow_rounded),
+              Text('Follow',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
