@@ -64,14 +64,17 @@ class cardBrokerWidget extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: IntrinsicHeight(
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             BrokerInfo(tagBroker: tagBroker, broker: broker),
-            BrokerCapitalWidget(
-                brokerName: brokerName,
-                capital: capital,
-                tagBroker: tagBroker,
-                tagPrice: tagPrice),
+            Container(
+              child: BrokerCapitalWidget(
+                  brokerName: brokerName,
+                  capital: capital,
+                  tagBroker: tagBroker,
+                  tagPrice: tagPrice),
+            ),
           ],
         ),
       ),

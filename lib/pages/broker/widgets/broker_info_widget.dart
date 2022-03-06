@@ -42,7 +42,7 @@ class BrokerInfo extends StatelessWidget {
               child: Image(
                   image: AssetImage(broker == 'alpaca'
                       ? 'lib/pages/broker/assets/BrokerAlpacaDark.png'
-                      : 'lib/pages/broker/assets/BrokertactictradeDark.png')),
+                      : 'lib/pages/broker/assets/TacticTradeBroker.png')),
             )
           ],
         ));

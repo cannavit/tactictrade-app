@@ -19,9 +19,11 @@ class BrokerCapitalWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 10),
       color: Preferences.isDarkmode ? Color(0xffE7EDEF) : Color(0xff151C1F),
-      width: MediaQuery.of(context).size.width * 0.645,
+      width: MediaQuery.of(context).size.width * 0.545,
+      // width: double.infinity,
       // height: MediaQuery.of(context).size.width * 0.4,
       child: Column(children: [
         Row(
