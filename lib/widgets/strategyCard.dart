@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/popUpTradeDataStrategy.dart';
 
+import '../pages/broker/service/broker_service.dart';
 import '../services/strategies_services.dart';
 
 class ProductCard extends StatelessWidget {
@@ -188,6 +189,7 @@ class _likeIcons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strategySocial = Provider.of<StrategySocial>(context);
+    final brokerServices = Provider.of<BrokerServices>(context);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -242,7 +244,6 @@ class _likeIcons extends StatelessWidget {
           Column(
             children: const [
               Icon(Icons.share),
-              
               Text('Share',
                   style: TextStyle(
                       color: Colors.white,
@@ -253,16 +254,22 @@ class _likeIcons extends StatelessWidget {
           Column(
             children: [
               IconButton(
-        icon: const Icon(Icons.play_arrow_rounded),
-        onPressed: () {
-          // Navigator.pushReplacementNamed(context, 'login');
-           showDialog(
+                icon: const Icon(Icons.play_arrow_rounded),
+                onPressed: () async {
+                  final dataBroker = await brokerServices.loadBroker();
+
+                  print(">>>>>578475837>>>>>");
+                  print(dataBroker);
+                  print("<<<<<<<<<<<<<<<<<<<");
+                  // Navigator.pushReplacementNamed(context, 'login');
+
+                  showDialog(
                     context: context,
                     builder: (BuildContext context) =>
-                        PopUpTradeDataStrategy(context),
+                        PopUpTradeDataStrategy(dataBroker: dataBroker),
                   );
-        },
-      ),
+                },
+              ),
               // Icon(Icons.play_arrow_rounded),
               Text('Follow',
                   style: TextStyle(

@@ -76,7 +76,7 @@ class PopUpCreateStrategy extends StatelessWidget {
                             decoration: const BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
-                                        "/Users/ceciliocannavaciuolo/Documents/workspace/codeSchool/flutterCourse_01_helloWorld/newsapp/tactictrade/assets/TutorialLoadStrategy1.png"),
+                                        "assets/TutorialLoadStrategy1.png"),
                                     fit: BoxFit.cover)),
                           ),
                           EditTextField(

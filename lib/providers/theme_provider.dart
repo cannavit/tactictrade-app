@@ -34,7 +34,9 @@ class MyThemes {
   );
 
   static final lightTheme = new ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: const Color(0xff142A32),
+    // scaffoldBackgroundColor: const Color(0xff142A32),
+    scaffoldBackgroundColor: const Color(0xff181B25),
+
     textSelectionColor: Colors.white,
     secondaryHeaderColor: Colors.white,
     primaryColor: const Color(0xff08BEFB),
@@ -48,31 +50,3 @@ class AppColors {
   const AppColors();
 }
 
-// primaryColor: Colors.red,
-// primaryColorBrightness: Colors.red,
-// primaryColorLight: Colors.red,
-// primaryColorDark: Colors.red,
-// accentColor: Colors.red,
-// accentColorBrightness: Colors.red,
-// canvasColor: Colors.red,
-// shadowColor: Colors.red,
-// bottomAppBarColor: Colors.red,
-// cardColor: Colors.red,
-// dividerColor: Colors.red,
-// focusColor: Colors.red,
-// hoverColor: Colors.red,
-// highlightColor: Colors.red,
-// splashColor: Colors.red,
-// selectedRowColor: Colors.red,
-// unselectedWidgetColor: Colors.red,
-// disabledColor: Colors.red,
-// buttonColor: Colors.red,
-// secondaryHeaderColor: Colors.red,
-// cursorColor: Colors.red,
-// textSelectionHandleColor: Colors.red,
-// backgroundColor: Colors.red,
-// dialogBackgroundColor: Colors.red,
-// indicatorColor: Colors.red,
-// hintColor: Colors.red,
-// errorColor: Colors.red,
-// toggleableActiveColor: Colors.red,

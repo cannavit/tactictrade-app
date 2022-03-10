@@ -18,6 +18,7 @@ class GeneralInputField extends StatelessWidget {
   final int maxLine;
   final TextInputType textInputType;
   final bool btnEnabled;
+  final bool enabled;
 
   const GeneralInputField({
     Key? key,
@@ -32,13 +33,14 @@ class GeneralInputField extends StatelessWidget {
     required this.textController,
     this.maxLine = 1,
     this.textInputType = TextInputType.text,
-    this.btnEnabled = false,
+    this.btnEnabled = false, this.enabled = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextFormField(
+          enabled: enabled,
           maxLines: maxLine,
           controller: textController,
           autovalidateMode: AutovalidateMode.onUserInteraction,

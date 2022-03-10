@@ -34,6 +34,10 @@ class Preferences {
 
   static int _navigationCurrentPage = 0;
 
+  static bool _brokerNewUseTradingLong = false;
+  static bool _brokerNewUseTradingShort = false;
+
+
   // Init Preferences
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -123,6 +127,15 @@ class Preferences {
     return _prefs.getInt('navigationCurrentPage') ?? _navigationCurrentPage;
   }
 
+  static bool get brokerNewUseTradingLong {
+    return _prefs.getBool('brokerNewUseTradingLong') ?? _brokerNewUseTradingLong;
+  }
+
+  static bool get brokerNewUseTradingShort {
+    return _prefs.getBool('brokerNewUseTradingShort') ?? _brokerNewUseTradingShort;
+  }
+
+  
   // Define seters -------------------------------------------------------
 
   static set name(String name) {
@@ -209,4 +222,15 @@ class Preferences {
     _navigationCurrentPage = value;
     _prefs.setInt('navigationCurrentPage', value);
   }
+
+  static set brokerNewUseTradingLong(bool value) {
+    _brokerNewUseTradingLong = value;
+    _prefs.setBool('brokerNewUseTradingLong', value);
+  }
+
+  static set brokerNewUseTradingShort(bool value) {
+    _brokerNewUseTradingShort = value;
+    _prefs.setBool('brokerNewUseTradingShort', value);
+  }
+
 }
