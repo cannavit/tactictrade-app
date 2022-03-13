@@ -1,7 +1,6 @@
 import 'dart:math';
 
-// import 'package:animated_icon/animate_icon.dart'; #TODO uninstall
-import 'package:animated_icon/animate_icons.dart';
+
 import 'package:expandable_text/expandable_text.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
