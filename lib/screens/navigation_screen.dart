@@ -53,7 +53,9 @@ class _Pages extends StatelessWidget {
 }
 
 class NavigationModel with ChangeNotifier {
-  int _currentPage = Preferences.navigationCurrentPage;
+  // int _currentPage = Preferences.navigationCurrentPage
+  int _currentPage = 0;
+  
 
   final PageController _pageController = PageController();
 

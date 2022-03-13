@@ -9,15 +9,19 @@ import '../pages/broker/service/broker_service.dart';
 import '../providers/theme_provider.dart';
 import '../screens/create_strategy_screen.dart';
 import '../screens/loading_strategy.dart';
+import '../services/strategies_services.dart';
+import '../services/trading_config.dart';
 import 'editfield_custom.dart';
 import 'forms_components/general_input_field.dart';
 
 class PopUpTradeDataStrategy extends StatelessWidget {
   // PopUpTradeDataStrategy(BuildContext context, dynamic dataBroker);
 
-  PopUpTradeDataStrategy({Key? key, this.dataBroker}) : super(key: key);
+  PopUpTradeDataStrategy({Key? key, this.dataBroker, required this.strategyId})
+      : super(key: key);
 
   final dataBroker;
+  final int strategyId;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +33,13 @@ class PopUpTradeDataStrategy extends StatelessWidget {
     ];
 
     // final dynamic dataBroker;
+    Preferences.brokerNewUseTradingShort =
+        true; //TODO delete this only use for test
 
     final strategyPreferences =
         Provider.of<NewStrategyProvider>(context, listen: false);
+
+    final tradingConfig = Provider.of<TradingConfig>(context);
 
     final themeColors = Theme.of(context);
     final aboutCtrl = TextEditingController(text: Preferences.about);
@@ -43,10 +51,12 @@ class PopUpTradeDataStrategy extends StatelessWidget {
     final longQtyCtrl = TextEditingController();
     final longStopLossCtrl = TextEditingController();
     final longTakeProfitCtrl = TextEditingController();
+    final consecutiveLossessAllowedLong = TextEditingController();
 
     final shortQtyCtrl = TextEditingController();
     final shortStopLossCtrl = TextEditingController();
     final shortTakeProfitCtrl = TextEditingController();
+    final consecutiveLossessAllowedShort = TextEditingController();
 
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
@@ -64,6 +74,7 @@ class PopUpTradeDataStrategy extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   _FormCard(
+                      strategyId: strategyId,
                       themeColors: themeColors,
                       themeProvider: themeProvider,
                       longQtyCtrl: longQtyCtrl,
@@ -71,7 +82,11 @@ class PopUpTradeDataStrategy extends StatelessWidget {
                       longTakeProfitCtrl: longTakeProfitCtrl,
                       shortQtyCtrl: shortQtyCtrl,
                       shortStopLossCtrl: shortStopLossCtrl,
-                      shortTakeProfitCtrl: shortTakeProfitCtrl),
+                      shortTakeProfitCtrl: shortTakeProfitCtrl,
+                      consecutiveLossessAllowedLong:
+                          consecutiveLossessAllowedLong,
+                      consecutiveLossessAllowedShort:
+                          consecutiveLossessAllowedShort),
                   Positioned(
                       top: -40,
                       child: CircleAvatar(
@@ -91,17 +106,20 @@ class PopUpTradeDataStrategy extends StatelessWidget {
 }
 
 class _FormCard extends StatefulWidget {
-  const _FormCard({
-    Key? key,
-    required this.themeColors,
-    required this.themeProvider,
-    required this.longQtyCtrl,
-    required this.longStopLossCtrl,
-    required this.longTakeProfitCtrl,
-    required this.shortQtyCtrl,
-    required this.shortStopLossCtrl,
-    required this.shortTakeProfitCtrl,
-  }) : super(key: key);
+  const _FormCard(
+      {Key? key,
+      required this.themeColors,
+      required this.themeProvider,
+      required this.longQtyCtrl,
+      required this.longStopLossCtrl,
+      required this.longTakeProfitCtrl,
+      required this.shortQtyCtrl,
+      required this.shortStopLossCtrl,
+      required this.shortTakeProfitCtrl,
+      required this.consecutiveLossessAllowedShort,
+      required this.consecutiveLossessAllowedLong,
+      required this.strategyId})
+      : super(key: key);
 
   final ThemeData themeColors;
   final ThemeProvider themeProvider;
@@ -111,6 +129,9 @@ class _FormCard extends StatefulWidget {
   final TextEditingController shortQtyCtrl;
   final TextEditingController shortStopLossCtrl;
   final TextEditingController shortTakeProfitCtrl;
+  final TextEditingController consecutiveLossessAllowedShort;
+  final TextEditingController consecutiveLossessAllowedLong;
+  final int strategyId;
 
   @override
   State<_FormCard> createState() => _FormCardState();
@@ -119,6 +140,8 @@ class _FormCard extends StatefulWidget {
 class _FormCardState extends State<_FormCard> {
   @override
   Widget build(BuildContext context) {
+    final tradingConfig = Provider.of<TradingConfig>(context);
+
     return Container(
       // height: 400,
       width: MediaQuery.of(context).size.width * 0.8,
@@ -142,6 +165,9 @@ class _FormCardState extends State<_FormCard> {
               style: TextStyle(fontSize: 15),
             ),
 
+            // DropDownSelectBroker(),
+            // TODO add list here
+
             const Divider(
               color: Colors.white30,
             ),
@@ -157,6 +183,7 @@ class _FormCardState extends State<_FormCard> {
             //TODO
 
             _SwiftList(
+              isTradingLong: true,
               themeColors: widget.themeColors,
               themeProvider: widget.themeProvider,
               iconColor: Colors.green,
@@ -216,7 +243,7 @@ class _FormCardState extends State<_FormCard> {
             GeneralInputField(
                 enabled: Preferences.brokerNewUseTradingLong,
                 textInputType: TextInputType.number,
-                textController: widget.longTakeProfitCtrl,
+                textController: widget.consecutiveLossessAllowedLong,
                 labelText: 'Consecutive Losses Allowed',
                 hintText: 'example: 3',
                 validatorType: 'porcentaje',
@@ -248,6 +275,7 @@ class _FormCardState extends State<_FormCard> {
             //TODO
 
             _SwiftList(
+              isTradingLong: false,
               themeColors: widget.themeColors,
               themeProvider: widget.themeProvider,
               iconColor: Colors.red,
@@ -307,7 +335,7 @@ class _FormCardState extends State<_FormCard> {
             GeneralInputField(
                 enabled: Preferences.brokerNewUseTradingShort,
                 textInputType: TextInputType.number,
-                textController: widget.shortTakeProfitCtrl,
+                textController: widget.consecutiveLossessAllowedShort,
                 labelText: 'Consecutive Losses Allowed',
                 hintText: 'example: 3',
                 validatorType: 'porcentaje',
@@ -323,12 +351,31 @@ class _FormCardState extends State<_FormCard> {
 
             RaisedButton(
               onPressed: () {
+                final data = {
+                  'strategyNews': widget.strategyId,
+                  'quantityUSDLong': int.parse(widget.longQtyCtrl.text),
+                  'stopLossLong': int.parse(widget.longStopLossCtrl.text),
+                  'takeProfitLong': int.parse(widget.longTakeProfitCtrl.text),
+                  'quantityUSDShort': int.parse(widget.shortQtyCtrl.text),
+                  'stopLossShort': int.parse(widget.shortStopLossCtrl.text),
+                  'takeProfitShort': int.parse(widget.shortTakeProfitCtrl.text),
+                  'consecutiveLossesShort':
+                      int.parse(widget.consecutiveLossessAllowedShort.text),
+                  'consecutiveLossesLong':
+                      int.parse(widget.consecutiveLossessAllowedLong.text),
+                  'useLong': Preferences.brokerNewUseTradingLong,
+                  'useShort': Preferences.brokerNewUseTradingShort,
+                };
+
+                tradingConfig.create(data);
+
+                Navigator.pop(context, true);
                 // Navigator.of(context).pop();
-                Navigator.pushReplacementNamed(context, 'navigation');
+                // Navigator.pushReplacementNamed(context, 'navigation');
               },
               color: Colors.blue,
               child: const Text(
-                'Done',
+                'Use This Strategy Trade',
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -347,6 +394,7 @@ class _SwiftList extends StatefulWidget {
     required this.iconSwift,
     required this.iconColor,
     required this.textSwift,
+    required this.isTradingLong,
   }) : super(key: key);
 
   final ThemeData themeColors;
@@ -354,6 +402,7 @@ class _SwiftList extends StatefulWidget {
   final IconData iconSwift;
   final Color iconColor;
   final String textSwift;
+  final bool isTradingLong;
 
   @override
   State<_SwiftList> createState() => _SwiftListState();
@@ -369,92 +418,15 @@ class _SwiftListState extends State<_SwiftList> {
           title: Text(widget.textSwift,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
           onChanged: (value) {
-            Preferences.brokerNewUseTradingLong = value;
             // setState(() {});
 
-            setState(() {
+            if (widget.isTradingLong) {
               Preferences.brokerNewUseTradingLong = value;
-            });
+            } else {
+              Preferences.brokerNewUseTradingLong = value;
+            }
+            setState(() {});
           }),
-    );
-  }
-}
-
-class DropDownBrokers extends StatefulWidget {
-  const DropDownBrokers({
-    Key? key,
-    required this.descriptionCtrl,
-  }) : super(key: key);
-
-  final List<dynamic> descriptionCtrl;
-
-  @override
-  State<DropDownBrokers> createState() => _DropDownState();
-}
-
-class _DropDownState extends State<DropDownBrokers> {
-  @override
-  Widget build(BuildContext context) {
-    var selectedValue;
-
-    return DropdownButtonHideUnderline(
-      child: Container(
-        // width: MediaQuery.of(context).size.width * 0.3,
-        height: 47,
-        child: Container(
-          //TODO active this
-          child: DropdownButton2(
-            hint: Row(
-              children: [
-                const SizedBox(width: 6),
-                const Icon(
-                  Icons.calendar_view_month_sharp,
-                  color: Colors.white60,
-                ),
-                Text(
-                  'Select Time',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).hintColor,
-                  ),
-                ),
-              ],
-            ),
-            items: widget.descriptionCtrl
-                .map((item) => DropdownMenuItem(
-                      value: item['id'],
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 6),
-
-                          // Text(
-                          //   item['brokerName'] == null ? "" : item['brokerName'],
-                          //   style: const TextStyle(
-                          //     fontSize: 17,
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ))
-                .toList(),
-            value: "",
-            onChanged: (value) {
-              // if (value is String) {
-              //   Preferences.selectedTimeNewStrategy = value;
-              // } else {
-              //   Preferences.selectedTimeNewStrategy = '';
-              // }
-              // setState(() {});
-            },
-            buttonHeight: 40,
-            buttonWidth: double.infinity,
-            itemHeight: 40,
-            buttonDecoration: BoxDecoration(
-                // color: Colors.transparent,
-                ),
-          ),
-        ),
-      ),
     );
   }
 }

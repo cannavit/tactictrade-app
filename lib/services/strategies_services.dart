@@ -82,7 +82,6 @@ class StrategyServices extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     });
 
-    print(response.body);
     final data = json.decode(response.body)['results'];
 
     Preferences.selectedTimeNewStrategy = '';
@@ -129,17 +128,12 @@ class StrategyLoadServices extends ChangeNotifier {
     return this.strategyList;
   }
 
-  void updateSelectedProductImage( String path ) {
-
+  void updateSelectedProductImage(String path) {
     Preferences.tempStrategyImage = path;
-    this.newPictureFile = File.fromUri( Uri(path: path) );
+    this.newPictureFile = File.fromUri(Uri(path: path));
 
     notifyListeners();
-
   }
-
-
-
 }
 
 class StrategySocial extends ChangeNotifier {
@@ -170,11 +164,5 @@ class StrategySocial extends ChangeNotifier {
 
     return data;
   }
-
-
-
 }
-
-
-
 

@@ -7,9 +7,9 @@ class BrokersCard extends StatelessWidget {
 
   BrokersCard({
     Key? key,
-    required this.initialCapitalLogn,
+    required this.initialCapitalLong,
     required this.initialCapitalShort,
-    required this.currentCapitalLogn,
+    required this.currentCapitalLong,
     required this.currentCapitalShort,
     required this.percentageProfitLong,
     required this.percentageProfitShort,
@@ -22,11 +22,12 @@ class BrokersCard extends StatelessWidget {
     required this.timeTrade,
     required this.symbol,
     required this.symbolUrl,
+    required this.totalNumberOfWinTrades,
   }) : super(key: key);
 
-  final double initialCapitalLogn;
+  final double initialCapitalLong;
   final double initialCapitalShort;
-  final double currentCapitalLogn;
+  final double currentCapitalLong;
   final double currentCapitalShort;
   final double percentageProfitLong;
   final double percentageProfitShort;
@@ -41,15 +42,15 @@ class BrokersCard extends StatelessWidget {
   final String timeTrade;
   final String symbol;
   final String symbolUrl;
+  final int totalNumberOfWinTrades;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 300),
-      width: double.infinity,
-      alignment: Alignment.topCenter,
-      child: _buildFrontWidget()
-    );
+        margin: EdgeInsets.symmetric(vertical: 300),
+        width: double.infinity,
+        alignment: Alignment.topCenter,
+        child: _buildFrontWidget());
   }
 
   Widget _buildFrontWidget() {
@@ -67,7 +68,6 @@ class BrokersCard extends StatelessWidget {
                 pusherName: pusherName,
               ),
               Expanded(child: Container()),
-           
             ],
           ),
           Divider(
@@ -78,6 +78,7 @@ class BrokersCard extends StatelessWidget {
             symbolUrl: symbolUrl,
             symbol: symbol,
             timeTrade: timeTrade,
+            totalNumberOfWinTrades: totalNumberOfWinTrades,
           ),
           // Expanded(child: Container()),
           Container(
@@ -115,7 +116,6 @@ class BrokersCard extends StatelessWidget {
                   brokerName: brokerName,
                   pusherName: pusherName),
               Expanded(child: Container()),
-              
               BrokerImageText(brokerName: brokerName, brokerUrl: brokerUrl),
             ],
           ),
@@ -124,13 +124,16 @@ class BrokersCard extends StatelessWidget {
             color: Colors.white,
           ),
           BrokersCardSimple(
-              symbolUrl: symbolUrl, symbol: symbol, timeTrade: timeTrade),
+              symbolUrl: symbolUrl,
+              symbol: symbol,
+              timeTrade: timeTrade,
+              totalNumberOfWinTrades: totalNumberOfWinTrades),
 
           // ADD TEXT -------------------------------------------------------->>
           _tableProfit(
-            initialCapitalLogn: initialCapitalLogn,
+            initialCapitalLong: initialCapitalLong,
             initialCapitalShort: initialCapitalShort,
-            currentCapitalLogn: currentCapitalLogn,
+            currentCapitalLong: currentCapitalLong,
             currentCapitalShort: currentCapitalShort,
             percentageProfitLong: percentageProfitLong,
             percentageProfitShort: percentageProfitShort,
@@ -242,9 +245,9 @@ class _ControlButtoms extends StatelessWidget {
 class _tableProfit extends StatelessWidget {
   const _tableProfit({
     Key? key,
-    required this.initialCapitalLogn,
+    required this.initialCapitalLong,
     required this.initialCapitalShort,
-    required this.currentCapitalLogn,
+    required this.currentCapitalLong,
     required this.currentCapitalShort,
     required this.percentageProfitLong,
     required this.percentageProfitShort,
@@ -252,9 +255,9 @@ class _tableProfit extends StatelessWidget {
     required this.closedTradeLong,
   }) : super(key: key);
 
-  final double initialCapitalLogn;
+  final double initialCapitalLong;
   final double initialCapitalShort;
-  final double currentCapitalLogn;
+  final double currentCapitalLong;
   final double currentCapitalShort;
   final double percentageProfitLong;
   final double percentageProfitShort;
@@ -281,14 +284,14 @@ class _tableProfit extends StatelessWidget {
           _ColumnTableUSD(
               titleOne: 'INITIAL',
               titleTwo: 'CAPITAL',
-              valueOne: initialCapitalLogn,
+              valueOne: initialCapitalLong,
               valueTwo: initialCapitalShort),
           _ColumnTableUSDCurrent(
             titleOne: 'CURRENT',
             titleTwo: 'CAPITAL',
-            currentCapitalLogn: currentCapitalLogn,
+            currentCapitalLong: currentCapitalLong,
             currentCapitalShort: currentCapitalShort,
-            initialCapitalLogn: initialCapitalLogn,
+            initialCapitalLong: initialCapitalLong,
             initialCapitalShort: initialCapitalShort,
           ),
           _ColumnTablePercentage(
@@ -584,17 +587,17 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
     Key? key,
     required this.titleOne,
     required this.titleTwo,
-    required this.currentCapitalLogn,
+    required this.currentCapitalLong,
     required this.currentCapitalShort,
-    required this.initialCapitalLogn,
+    required this.initialCapitalLong,
     required this.initialCapitalShort,
   }) : super(key: key);
 
   final String titleOne;
   final String titleTwo;
-  final double currentCapitalLogn;
+  final double currentCapitalLong;
   final double currentCapitalShort;
-  final double initialCapitalLogn;
+  final double initialCapitalLong;
   final double initialCapitalShort;
 
   @override
@@ -631,10 +634,10 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('${currentCapitalLogn}',
+                Text('${currentCapitalLong}',
                     style: GoogleFonts.oswald(
                       textStyle: TextStyle(
-                        color: initialCapitalLogn < currentCapitalLogn
+                        color: initialCapitalLong < currentCapitalLong
                             ? Colors.green
                             : Colors.red,
                         letterSpacing: .5,
@@ -646,7 +649,7 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
                 Text('USD',
                     style: GoogleFonts.oswald(
                       textStyle: TextStyle(
-                        color: initialCapitalLogn < currentCapitalLogn
+                        color: initialCapitalLong < currentCapitalLong
                             ? Colors.green
                             : Colors.red,
                         letterSpacing: .5,
@@ -698,11 +701,13 @@ class BrokersCardSimple extends StatelessWidget {
     required this.symbolUrl,
     required this.symbol,
     required this.timeTrade,
+    required this.totalNumberOfWinTrades,
   }) : super(key: key);
 
   final String symbolUrl;
   final String symbol;
   final String timeTrade;
+  final int totalNumberOfWinTrades;
 
   @override
   Widget build(BuildContext context) {
@@ -766,8 +771,8 @@ class BrokersCardSimple extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w300)),
                 Row(
-                  children: const [
-                    Text('6',
+                  children: [
+                    Text('$totalNumberOfWinTrades',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,
@@ -795,8 +800,10 @@ class BrokersCardSimple extends StatelessWidget {
 
 class _CapitalAvailableWidget extends StatelessWidget {
   const _CapitalAvailableWidget({
-    Key? key,
+    Key? key, required this.totalProfitUSD,
   }) : super(key: key);
+
+  final double totalProfitUSD;
 
   @override
   Widget build(BuildContext context) {
@@ -818,7 +825,7 @@ class _CapitalAvailableWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('130',
+                    Text('$totalProfitUSD',
                         style: TextStyle(
                             color: Color(0xff1BC232),
                             fontSize: 25,
@@ -945,7 +952,8 @@ class BrokerImageText extends StatelessWidget {
     Key? key,
     this.mainTextColor = Colors.white54,
     required this.brokerName,
-    required this.brokerUrl, this.radioImage = 40,
+    required this.brokerUrl,
+    this.radioImage = 40,
   }) : super(key: key);
 
   final Color mainTextColor;

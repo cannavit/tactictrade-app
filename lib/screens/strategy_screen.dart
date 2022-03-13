@@ -25,6 +25,8 @@ class StrategyScreen extends StatelessWidget {
           body: ListView.builder(
               itemCount: strategies.strategyList.length,
               itemBuilder: (BuildContext context, int index) => ProductCard(
+                  isOwner: strategies.strategyList[index]['is_owner'],
+                  isFollower: strategies.strategyList[index]['is_follower'],
                   isFavorite: strategies.strategyList[index]['is_liked'],
                   isStarred: strategies.strategyList[index]['is_favorite'],
                   urlUser: strategies.strategyList[index]['owner']

@@ -37,6 +37,9 @@ class Preferences {
   static bool _brokerNewUseTradingLong = false;
   static bool _brokerNewUseTradingShort = false;
 
+  static int _newFollowStrategyId = -1;
+
+  static String _selectedBrokerInFollowStrategy = 'Select your Broker';
 
   // Init Preferences
   static Future init() async {
@@ -128,14 +131,25 @@ class Preferences {
   }
 
   static bool get brokerNewUseTradingLong {
-    return _prefs.getBool('brokerNewUseTradingLong') ?? _brokerNewUseTradingLong;
+    return _prefs.getBool('brokerNewUseTradingLong') ??
+        _brokerNewUseTradingLong;
   }
 
   static bool get brokerNewUseTradingShort {
-    return _prefs.getBool('brokerNewUseTradingShort') ?? _brokerNewUseTradingShort;
+    return _prefs.getBool('brokerNewUseTradingShort') ??
+        _brokerNewUseTradingShort;
   }
 
-  
+  static int get newFollowStrategyId {
+    return _prefs.getInt('newFollowStrategyId') ?? _newFollowStrategyId;
+  }
+
+
+  static String get selectedBrokerInFollowStrategy {
+    return _prefs.getString('selectedBrokerInFollowStrategy') ??
+        _selectedBrokerInFollowStrategy;
+  }
+
   // Define seters -------------------------------------------------------
 
   static set name(String name) {
@@ -231,6 +245,16 @@ class Preferences {
   static set brokerNewUseTradingShort(bool value) {
     _brokerNewUseTradingShort = value;
     _prefs.setBool('brokerNewUseTradingShort', value);
+  }
+
+  static set newFollowStrategyId(int value) {
+    _newFollowStrategyId = value;
+    _prefs.setInt('newFollowStrategyId', value);
+  }
+
+  static set selectedBrokerInFollowStrategy(String value) {
+    _selectedBrokerInFollowStrategy = value;
+    _prefs.setString('selectedBrokerInFollowStrategy', value);
   }
 
 }

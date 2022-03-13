@@ -1,4 +1,7 @@
-import 'package:chart_sparkline/chart_sparkline.dart';
+import 'dart:math';
+
+// import 'package:animated_icon/animate_icon.dart'; #TODO uninstall
+import 'package:animated_icon/animate_icons.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,7 @@ import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/popUpTradeDataStrategy.dart';
 
 import '../pages/broker/service/broker_service.dart';
+import '../screens/createFollowerTrade.dart';
 import '../services/strategies_services.dart';
 
 class ProductCard extends StatelessWidget {
@@ -30,7 +34,9 @@ class ProductCard extends StatelessWidget {
       required this.isStarred,
       required this.isFavorite,
       required this.likesNumber,
-      required this.idStrategy})
+      required this.idStrategy,
+      required this.isOwner,
+      required this.isFollower})
       : super(key: key);
 
   final String urlUser;
@@ -52,6 +58,8 @@ class ProductCard extends StatelessWidget {
   final bool isFavorite;
   final int likesNumber;
   final int idStrategy;
+  final bool isOwner;
+  final bool isFollower;
 
   @override
   Widget build(BuildContext context) {
@@ -103,11 +111,12 @@ class ProductCard extends StatelessWidget {
             Container(
               child: imageNetwork == null
                   ? null
-                  : Image(
-                      image: NetworkImage(imageNetwork!),
-                    ),
+                  : FadeInImage(
+                      placeholder: Preferences.isDarkmode
+                          ? AssetImage('assets/giphy.gif')
+                          : AssetImage('assets/giphyDarkLoading.gif'),
+                      image: NetworkImage(imageNetwork!)),
             ),
-
             const Divider(height: 10, color: Color(0xff797979)),
 
             _statisticsValues(
@@ -120,11 +129,13 @@ class ProductCard extends StatelessWidget {
 
             const SizedBox(width: 10),
 
-            _graph2d(data: historicalData),
+            // _graph2d(data: historicalData),
 
             // ,
 
             _likeIcons(
+                isOwner: isOwner,
+                isFollower: isFollower,
                 isFavorite: isFavorite,
                 isStarred: isStarred,
                 likesNumber: likesNumber,
@@ -179,12 +190,16 @@ class _likeIcons extends StatelessWidget {
     required this.isFavorite,
     required this.likesNumber,
     required this.strategyId,
+    required this.isOwner,
+    required this.isFollower,
   }) : super(key: key);
 
   final bool isStarred;
   final bool isFavorite;
   final int likesNumber;
   final int strategyId;
+  final bool isOwner;
+  final bool isFollower;
 
   @override
   Widget build(BuildContext context) {
@@ -251,62 +266,57 @@ class _likeIcons extends StatelessWidget {
                       fontWeight: FontWeight.w300)),
             ],
           ),
-          Column(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.play_arrow_rounded),
-                onPressed: () async {
-                  final dataBroker = await brokerServices.loadBroker();
-
-                  print(">>>>>578475837>>>>>");
-                  print(dataBroker);
-                  print("<<<<<<<<<<<<<<<<<<<");
-                  // Navigator.pushReplacementNamed(context, 'login');
-
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        PopUpTradeDataStrategy(dataBroker: dataBroker),
-                  );
-                },
-              ),
-              // Icon(Icons.play_arrow_rounded),
-              Text('Follow',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300)),
-            ],
-          ),
+          _FollowButton(
+              isFollower: isFollower,
+              brokerServices: brokerServices,
+              strategyId: strategyId),
         ],
       ),
     );
   }
 }
 
-class _graph2d extends StatelessWidget {
-  const _graph2d({
+class _FollowButton extends StatelessWidget {
+  const _FollowButton({
     Key? key,
-    required this.data,
+    required this.isFollower,
+    required this.brokerServices,
+    required this.strategyId,
   }) : super(key: key);
 
-  final data;
+  final bool isFollower;
+  final BrokerServices brokerServices;
+  final int strategyId;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: data.length == 0 ? 0 : 80.0,
-      child: data.length == 0
-          ? null
-          : Sparkline(
-              data: data,
-              lineWidth: 2.0,
-              useCubicSmoothing: true,
-              cubicSmoothingFactor: 0.1,
-              averageLine: true,
-              averageLabel: true,
-              kLine: const ['max', 'min', 'first', 'last'],
-            ),
+    return Column(
+      children: [
+        IconButton(
+          splashColor: Colors.amber,
+          icon: Icon(
+            isFollower ? Icons.play_arrow_rounded : Icons.stop_outlined,
+            color: isFollower ? Colors.blue : Colors.white,
+          ),
+          onPressed: () async {
+            final dataBroker = await brokerServices.loadBroker();
+
+            Preferences.newFollowStrategyId = strategyId;
+            Preferences.brokerNewUseTradingLong = false;
+            Preferences.brokerNewUseTradingShort = false;
+            Preferences.selectedBrokerInFollowStrategy = "{}";
+
+            Navigator.pushReplacementNamed(context, 'create_follow_trade');
+          },
+        ),
+        // Icon(Icons.play_arrow_rounded),
+
+        Text(isFollower ? 'Followed' : 'Follow',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.w300)),
+      ],
     );
   }
 }

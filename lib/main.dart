@@ -8,11 +8,16 @@ import 'package:tactictrade/pages/broker/service/broker_service.dart';
 import 'package:tactictrade/pages/broker/create_broker_screen.dart';
 import 'package:tactictrade/providers/home_categories_provider.dart';
 import 'package:tactictrade/providers/providers.dart';
+import 'package:tactictrade/screens/createFollowerTrade.dart';
 import 'package:tactictrade/screens/screens.dart';
+import 'package:tactictrade/services/broker_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
+import 'package:tactictrade/widgets/forms_components/dropdown_custom.dart';
 import 'package:tactictrade/widgets/social_login/google_login_widget.dart';
 import 'services/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'services/trading_config.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +45,9 @@ void main() async {
       ChangeNotifierProvider(create: (_) => StrategySocial()),
       ChangeNotifierProvider(create: (_) => BrokerServices()),
       ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
+      ChangeNotifierProvider(create: (_) => TradingConfig()),
+      ChangeNotifierProvider(create: (_) => BrokerConfig()),
+
 
       // ChangeNotifierProvider(create: (_) => )
     ],
@@ -58,6 +66,7 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       initialRoute: 'loading',
       routes: {
+        // 'test': (_) => DropDownSelectBroker(),
         'home': (_) => HomeScreen(),
         'login': (_) => const LoginScreen(),
         'positions': (_) => const PositionScreen(),
@@ -71,6 +80,7 @@ class MyApp extends StatelessWidget {
         'list_strategies': (_) => ListStrategyScreen(),
         'brokers': (_) => BrokersPages(),
         'create_broker': (_) => const NewBrokerScreen(),
+        'create_follow_trade': (_) => CreateFollowTrade(),
       },
       theme: Provider.of<ThemeProvider>(context).currentTheme,
     );

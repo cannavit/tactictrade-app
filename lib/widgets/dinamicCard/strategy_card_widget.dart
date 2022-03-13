@@ -1,15 +1,21 @@
 import 'package:folding_cell/folding_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/theme_provider.dart';
+import '../../screens/createFollowerTrade.dart';
+import '../../services/trading_config.dart';
+import '../popup_delete_trading_config.dart';
 
 class StrategyCard extends StatelessWidget {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
 
   StrategyCard({
     Key? key,
-    required this.initialCapitalLogn,
+    required this.initialCapitalLong,
     required this.initialCapitalShort,
-    required this.currentCapitalLogn,
+    required this.currentCapitalLong,
     required this.currentCapitalShort,
     required this.percentageProfitLong,
     required this.percentageProfitShort,
@@ -23,11 +29,16 @@ class StrategyCard extends StatelessWidget {
     required this.timeTrade,
     required this.symbol,
     required this.symbolUrl,
+    required this.brokerType,
+    required this.tradingConfigId,
+    required this.totalNumberOfWinTrades,
+    required this.totalTradingProfit,
+    required this.totalProfitUSD
   }) : super(key: key);
 
-  final double initialCapitalLogn;
+  final double initialCapitalLong;
   final double initialCapitalShort;
-  final double currentCapitalLogn;
+  final double currentCapitalLong;
   final double currentCapitalShort;
   final double percentageProfitLong;
   final double percentageProfitShort;
@@ -43,9 +54,17 @@ class StrategyCard extends StatelessWidget {
   final String timeTrade;
   final String symbol;
   final String symbolUrl;
+  final String brokerType;
+  final int tradingConfigId;
+  final int totalNumberOfWinTrades;
+  final double totalTradingProfit;
+  final double totalProfitUSD;
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    final themeColors = Theme.of(context);
+
     return Container(
       width: double.infinity,
       alignment: Alignment.topCenter,
@@ -53,8 +72,8 @@ class StrategyCard extends StatelessWidget {
         // padding: EdgeInsets.all(1),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
         key: _foldingCellKey,
-        frontWidget: _buildFrontWidget(),
-        innerWidget: _buildInnerWidget(),
+        frontWidget: _buildFrontWidget(context),
+        innerWidget: _buildInnerWidget(context),
         cellSize: Size(MediaQuery.of(context).size.width, 195),
         animationDuration: Duration(milliseconds: 400),
         borderRadius: 10,
@@ -64,10 +83,10 @@ class StrategyCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFrontWidget() {
+  Widget _buildFrontWidget(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
-      decoration: _BackgroundCardColor(),
+      decoration: _BackgroundCardColor(context),
       alignment: Alignment.center,
       child: Column(
         children: [
@@ -80,9 +99,9 @@ class StrategyCard extends StatelessWidget {
               ),
               Expanded(child: Container()),
               BrokerImageText(
-                brokerName: brokerName,
-                brokerUrl: brokerUrl,
-              ),
+                  brokerName: brokerName,
+                  brokerUrl: brokerUrl,
+                  brokerType: brokerType),
             ],
           ),
           Divider(
@@ -90,6 +109,9 @@ class StrategyCard extends StatelessWidget {
             color: Colors.white,
           ),
           StrategyCardSimple(
+            totalProfitUSD: totalProfitUSD,
+            totalTradingProfit: totalTradingProfit,
+            totalNumberOfWinTrades: totalNumberOfWinTrades,
             symbolUrl: symbolUrl,
             symbol: symbol,
             timeTrade: timeTrade,
@@ -108,19 +130,25 @@ class StrategyCard extends StatelessWidget {
     );
   }
 
-  BoxDecoration _BackgroundCardColor() {
+  BoxDecoration _BackgroundCardColor(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+
     return BoxDecoration(
       borderRadius: BorderRadius.circular(4.0),
-      gradient: const LinearGradient(
-          colors: [Color.fromRGBO(23, 25, 26, 1), Color.fromRGBO(0, 0, 0, 1)]),
+      gradient: LinearGradient(colors: [
+        themeProvider.currentTheme.scaffoldBackgroundColor,
+        themeProvider.currentTheme.scaffoldBackgroundColor
+      ]),
     );
   }
 
-  Widget _buildInnerWidget() {
+  Widget _buildInnerWidget(BuildContext context) {
+    final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
+
     return Container(
       // color: Color(0xFFecf2f9),
       // padding: EdgeInsets.only(top: 10),
-      decoration: _BackgroundCardColor(),
+      decoration: _BackgroundCardColor(context),
       child: Column(
         children: [
           Row(
@@ -130,7 +158,11 @@ class StrategyCard extends StatelessWidget {
                   strategyName: strategyName,
                   pusherName: pusherName),
               Expanded(child: Container()),
-              BrokerImageText(brokerName: brokerName, brokerUrl: brokerUrl),
+              BrokerImageText(
+                brokerName: brokerName,
+                brokerUrl: brokerUrl,
+                brokerType: brokerType,
+              ),
             ],
           ),
           Divider(
@@ -138,13 +170,18 @@ class StrategyCard extends StatelessWidget {
             color: Colors.white,
           ),
           StrategyCardSimple(
-              symbolUrl: symbolUrl, symbol: symbol, timeTrade: timeTrade),
+              totalProfitUSD: totalProfitUSD,
+              totalTradingProfit: totalTradingProfit,
+              symbolUrl: symbolUrl,
+              symbol: symbol,
+              timeTrade: timeTrade,
+              totalNumberOfWinTrades: totalNumberOfWinTrades),
 
           // ADD TEXT -------------------------------------------------------->>
           _tableProfit(
-            initialCapitalLogn: initialCapitalLogn,
+            initialCapitalLong: initialCapitalLong,
             initialCapitalShort: initialCapitalShort,
-            currentCapitalLogn: currentCapitalLogn,
+            currentCapitalLong: currentCapitalLong,
             currentCapitalShort: currentCapitalShort,
             percentageProfitLong: percentageProfitLong,
             percentageProfitShort: percentageProfitShort,
@@ -152,21 +189,29 @@ class StrategyCard extends StatelessWidget {
             closedTradeLong: closedTradeLong,
           ),
 
-          // ADD TEXT --------------------------------------------------------<<
-
-          // ADD Switch -----------------------------------------------
           _ControlButtoms(),
-          // ----------------------------------------------------------
-          // Control Icons ----
           Row(
             children: [
               Expanded(child: Container()),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    //TODO check how work this part.
+
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          PopUpDeleteTradingConfigSecure(
+                        tradingConfigId: tradingConfigId,
+                        titleHeader: 'Are you sure to delete this strategy?',
+                        message:
+                            ' ⛔️ We will not be able to close trades opened by you. In case of continuing make sure to close your position manually.',
+                      ),
+                    );
+                  },
                   icon: Icon(Icons.delete_outline, color: Colors.red)),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.settings, color: Colors.grey.shade600))
+              // IconButton(
+              //     onPressed: () {},
+              //     icon: Icon(Icons.settings, color: Colors.grey.shade600))
             ],
           ),
 
@@ -256,9 +301,9 @@ class _ControlButtoms extends StatelessWidget {
 class _tableProfit extends StatelessWidget {
   const _tableProfit({
     Key? key,
-    required this.initialCapitalLogn,
+    required this.initialCapitalLong,
     required this.initialCapitalShort,
-    required this.currentCapitalLogn,
+    required this.currentCapitalLong,
     required this.currentCapitalShort,
     required this.percentageProfitLong,
     required this.percentageProfitShort,
@@ -266,9 +311,9 @@ class _tableProfit extends StatelessWidget {
     required this.closedTradeLong,
   }) : super(key: key);
 
-  final double initialCapitalLogn;
+  final double initialCapitalLong;
   final double initialCapitalShort;
-  final double currentCapitalLogn;
+  final double currentCapitalLong;
   final double currentCapitalShort;
   final double percentageProfitLong;
   final double percentageProfitShort;
@@ -295,14 +340,14 @@ class _tableProfit extends StatelessWidget {
           _ColumnTableUSD(
               titleOne: 'INITIAL',
               titleTwo: 'CAPITAL',
-              valueOne: initialCapitalLogn,
+              valueOne: initialCapitalLong,
               valueTwo: initialCapitalShort),
           _ColumnTableUSDCurrent(
             titleOne: 'CURRENT',
             titleTwo: 'CAPITAL',
-            currentCapitalLogn: currentCapitalLogn,
+            currentCapitalLong: currentCapitalLong,
             currentCapitalShort: currentCapitalShort,
-            initialCapitalLogn: initialCapitalLogn,
+            initialCapitalLong: initialCapitalLong,
             initialCapitalShort: initialCapitalShort,
           ),
           _ColumnTablePercentage(
@@ -598,17 +643,17 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
     Key? key,
     required this.titleOne,
     required this.titleTwo,
-    required this.currentCapitalLogn,
+    required this.currentCapitalLong,
     required this.currentCapitalShort,
-    required this.initialCapitalLogn,
+    required this.initialCapitalLong,
     required this.initialCapitalShort,
   }) : super(key: key);
 
   final String titleOne;
   final String titleTwo;
-  final double currentCapitalLogn;
+  final double currentCapitalLong;
   final double currentCapitalShort;
-  final double initialCapitalLogn;
+  final double initialCapitalLong;
   final double initialCapitalShort;
 
   @override
@@ -645,10 +690,10 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('${currentCapitalLogn}',
+                Text('${currentCapitalLong}',
                     style: GoogleFonts.oswald(
                       textStyle: TextStyle(
-                        color: initialCapitalLogn < currentCapitalLogn
+                        color: initialCapitalLong < currentCapitalLong
                             ? Colors.green
                             : Colors.red,
                         letterSpacing: .5,
@@ -660,7 +705,7 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
                 Text('USD',
                     style: GoogleFonts.oswald(
                       textStyle: TextStyle(
-                        color: initialCapitalLogn < currentCapitalLogn
+                        color: initialCapitalLong < currentCapitalLong
                             ? Colors.green
                             : Colors.red,
                         letterSpacing: .5,
@@ -712,11 +757,17 @@ class StrategyCardSimple extends StatelessWidget {
     required this.symbolUrl,
     required this.symbol,
     required this.timeTrade,
+    required this.totalNumberOfWinTrades,
+    required this.totalTradingProfit,
+    required this.totalProfitUSD,
   }) : super(key: key);
 
   final String symbolUrl;
   final String symbol;
   final String timeTrade;
+  final int totalNumberOfWinTrades;
+  final double totalTradingProfit;
+  final double totalProfitUSD;
 
   @override
   Widget build(BuildContext context) {
@@ -780,8 +831,8 @@ class StrategyCardSimple extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w300)),
                 Row(
-                  children: const [
-                    Text('6',
+                  children: [
+                    Text('$totalNumberOfWinTrades',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,
@@ -816,7 +867,7 @@ class StrategyCardSimple extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text('3',
+                        Text('$totalTradingProfit',
                             style: TextStyle(
                                 color: Color(0xff1BC232),
                                 fontSize: 35,
@@ -834,7 +885,7 @@ class StrategyCardSimple extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('130',
+                          Text('$totalProfitUSD',
                               style: TextStyle(
                                   color: Color(0xff1BC232),
                                   fontSize: 25,
@@ -940,22 +991,17 @@ class ImageCircleBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10),
-      padding: EdgeInsets.all(1),
-
-      width: radioImage,
-      height: radioImage,
-
-      decoration: BoxDecoration(
-          color: colorBorder,
-          borderRadius: BorderRadius.circular(radioImage / 2)),
-
-      child: CircleAvatar(
-        backgroundImage: NetworkImage(urlPrusher),
-      ),
-
-      // decoration:
-    );
+        margin: EdgeInsets.only(left: 10),
+        padding: EdgeInsets.all(1),
+        width: radioImage,
+        height: radioImage,
+        decoration: BoxDecoration(
+            color: colorBorder,
+            borderRadius: BorderRadius.circular(radioImage / 2)),
+        child: urlPrusher.startsWith('http')
+            ? CircleAvatar(
+                radius: radioImage, backgroundImage: NetworkImage(urlPrusher))
+            : Image(image: AssetImage(urlPrusher)));
   }
 }
 
@@ -964,34 +1010,45 @@ class BrokerImageText extends StatelessWidget {
     Key? key,
     this.mainTextColor = Colors.white54,
     required this.brokerName,
-    required this.brokerUrl, this.radioImage = 40,
+    required this.brokerUrl,
+    this.radioImage = 40,
+    required this.brokerType,
   }) : super(key: key);
 
   final Color mainTextColor;
   final String brokerName;
   final String brokerUrl;
   final double radioImage;
+  final String brokerType;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      // crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Align(
-          alignment: Alignment.topLeft,
-          child: Column(
-            children: [
-              Text('Broker',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w300)),
-              Text(brokerName,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400)),
-            ],
+          child: Container(
+            margin: EdgeInsets.only(left: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text('Broker',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400)),
+                Text(brokerName,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400)),
+                Text(brokerType,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w300)),
+              ],
+            ),
           ),
         ),
         ImageCircleBorder(
@@ -1044,6 +1101,62 @@ class _SimpleSwitchTradeState extends State<_SimpleSwitchTrade> {
                 status = value;
               });
             },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PopUpDelete extends StatelessWidget {
+  const _PopUpDelete({
+    Key? key,
+    required this.titleHeader,
+    required this.message,
+  }) : super(key: key);
+
+  final String titleHeader;
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return new AlertDialog(
+      title: Text(titleHeader),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(message),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          textColor: Theme.of(context).primaryColor,
+          child: Row(
+            children: [
+              TextButton(
+                child: Text('Continue',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700)),
+                onPressed: () {},
+              ),
+              Expanded(child: Container()),
+              TextButton(
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           ),
         ),
       ],
