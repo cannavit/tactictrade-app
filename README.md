@@ -32,13 +32,16 @@ samples, guidance on mobile development, and a full API reference.
     flutter build appbundle
 
 
+    heroku config -s -a django-backend-steging > .env.staging
+
+
     
 
 
 ## Encode file upload-keystore.jks
 
 base64 -i ~/.android/debug.keystore -o <outfile>
-  # flutter build appbundle --build-name=1.0.10 --build-number=10
+  # flutter build appbundle --build-name=1.0.11 --build-number=11
 
 # keytool -list -v \ -alias androiddebugkey -keystore ~/.android/debug.keystore
 

@@ -53,6 +53,8 @@ class LoadingScreen extends StatelessWidget {
     final bool logged = loggedResult['isLogged'];
     final String token = loggedResult['token'];
 
+    Preferences.selectedTimeNewStrategy = 'minutes';
+
     if (logged) {
       final profileData = await authService.readProfileData(token);
 

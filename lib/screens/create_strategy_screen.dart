@@ -405,7 +405,7 @@ class _FormState extends State<_Form> {
           ],
         ),
 
-        const SizedBox(height: 30),
+        const SizedBox(height: 40),
 
         Container(
             height: 50,
@@ -661,6 +661,9 @@ class ButtonNext extends StatelessWidget {
 
                 if (response['statusCode'] != 200) {
                   NotificationsService.showSnackbar(body['message']);
+                
+                  Provider.of<StrategyServices>(context, listen: false)
+                      .loadStrategy();
                 } else {
                   strategyPreferences.selectedMessage =
                       body["tradingview"]["message"];

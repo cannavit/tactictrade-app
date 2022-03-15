@@ -29,8 +29,7 @@ class StrategyScreen extends StatelessWidget {
                   isFollower: strategies.strategyList[index]['is_follower'],
                   isFavorite: strategies.strategyList[index]['is_liked'],
                   isStarred: strategies.strategyList[index]['is_favorite'],
-                  urlUser: strategies.strategyList[index]['owner']
-                      ['profile_image'],
+                  urlUser: strategies.strategyList[index]['owner']['profile_image'],
                   strategyName: strategies.strategyList[index]['strategyNews'],
                   urlSymbol: strategies.strategyList[index]['symbolUrl'],
                   timeTrade: strategies.strategyList[index]['timeTrade'],
