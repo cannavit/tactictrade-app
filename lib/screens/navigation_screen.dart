@@ -44,7 +44,7 @@ class _Pages extends StatelessWidget {
       children: <Widget>[
         StrategyScreen(),
         StrategiesOwnerScreen(),
-        PositionScreen(),
+        BotsScreen(),
         BotsScreen(),
         BrokersPages(),
       ],

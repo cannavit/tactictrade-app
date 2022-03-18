@@ -47,6 +47,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
       ChangeNotifierProvider(create: (_) => TradingConfig()),
       ChangeNotifierProvider(create: (_) => BrokerConfig()),
+      ChangeNotifierProvider(create: (_) => PositionServices()),
 
 
       // ChangeNotifierProvider(create: (_) => )
@@ -69,7 +70,6 @@ class MyApp extends StatelessWidget {
         // 'test': (_) => DropDownSelectBroker(),
         'home': (_) => HomeScreen(),
         'login': (_) => const LoginScreen(),
-        'positions': (_) => const PositionScreen(),
         'loading': (_) => LoadingScreen(),
         'navigation': (_) => const NavigationScreen(),
         'profile': (_) => const ProfileScreen(),

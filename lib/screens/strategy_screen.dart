@@ -21,7 +21,6 @@ class StrategyScreen extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (_) => new NavigationModel(),
         child: Scaffold(
-          // appBar: GenericAppBar(themeColors, context, 'Strategies'),
           body: ListView.builder(
               itemCount: strategies.strategyList.length,
               itemBuilder: (BuildContext context, int index) => ProductCard(

@@ -1,38 +1,45 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:tactictrade/services/auth_service.dart';
 
-class PositionServices {
-  final String baseUrl = 'localhost:8000';
+import '../models/environments_models.dart';
 
-  Future getPositions() async {
-    final url = Uri.http(baseUrl, '/trading/positions');
-    final token = 'Bearer ' + await AuthService.getToken();
+class PositionServices extends ChangeNotifier {
 
-    final response = await http.get(url,
-        headers: {'Content-Type': 'applicaction/json', 'Authorization': token});
+  bool isLoading = true;
+  List positionsList = [];
 
-    final body = json.decode(response.body);
-
-    //TODO use status for invalidate token.
-    final status = body['status'];
-
-    return body['positions'];
+  PositionServices() {
+    this.read();
   }
 
-  Future closePosition(String closePositionId) async {
-    final token = 'Bearer ' + await AuthService.getToken();
+  Future read() async {
+    this.isLoading = true;
+    notifyListeners();
 
-    final url =
-        Uri.http(baseUrl, '/trading/positions/close/${closePositionId}');
+    final url = Uri.http(Environment.baseUrl, '/transactions/opens');
+    final _storage = new FlutterSecureStorage();
 
-    final response = await http.delete(url,
-        headers: {'Content-Type': 'applicaction/json', 'Authorization': token});
+    final token = await _storage.read(key: 'token_access') ?? '';
 
-    final body = json.decode(response.body);
+    if (token == '') {
+      return '';
+    }
 
-    return body['message'];
+    final response = await http.get(url, headers: {
+      'Content-Type': 'applicaction/json',
+      'Authorization': 'Bearer ' + token
+    });
+
+    final data = json.decode(response.body)['results'];
+
+    this.positionsList = data;
+
+    this.isLoading = false;
+    notifyListeners();
+
+    return this.positionsList;
   }
 }
