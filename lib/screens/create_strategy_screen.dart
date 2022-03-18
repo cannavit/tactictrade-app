@@ -671,6 +671,12 @@ class ButtonNext extends StatelessWidget {
                   strategyPreferences.selectedWebhook =
                       body["tradingview"]["webhook"];
 
+                  Preferences.newFollowStrategyId = body["data"]["strategyNewsId"];
+                  Preferences.brokerNewUseTradingLong = false;
+                  Preferences.brokerNewUseTradingShort = false;
+                  Preferences.selectedBrokerInFollowStrategy = "{}";
+
+
                   showDialog(
                     context: context,
                     builder: (BuildContext context) =>

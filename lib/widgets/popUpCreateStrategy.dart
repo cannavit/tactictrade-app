@@ -108,20 +108,27 @@ class PopUpCreateStrategy extends StatelessWidget {
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   final data =
-                                      ClipboardData(text: webhookCtrl.text);
+                                      ClipboardData(text: messageCtrl.text);
                                   Clipboard.setData(data);
                                 },
                                 icon: const Icon(Icons.copy),
                               )),
                           RaisedButton(
                             onPressed: () {
-                              // Navigator.of(context).pop();
-                              Navigator.pushReplacementNamed(
-                                  context, 'navigation');
+
+            // Preferences.newFollowStrategyId = strategyId;
+            // Preferences.brokerNewUseTradingLong = false;
+            // Preferences.brokerNewUseTradingShort = false;
+            // Preferences.selectedBrokerInFollowStrategy = "{}";
+
+            Navigator.pushReplacementNamed(context, 'create_follow_trade');
+
+                              // Navigator.pushReplacementNamed(
+                              //     context, 'navigation');
                             },
                             color: Colors.blue,
                             child: const Text(
-                              'Done',
+                              'Continue',
                               style: TextStyle(color: Colors.white),
                             ),
                           ),

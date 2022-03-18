@@ -11,7 +11,6 @@ class StrategyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strategies = Provider.of<StrategyLoadServices>(context);
-
     // TODO update product part
 
     final themeColors = Theme.of(context);
@@ -28,7 +27,8 @@ class StrategyScreen extends StatelessWidget {
                   isFollower: strategies.strategyList[index]['is_follower'],
                   isFavorite: strategies.strategyList[index]['is_liked'],
                   isStarred: strategies.strategyList[index]['is_favorite'],
-                  urlUser: strategies.strategyList[index]['owner']['profile_image'],
+                  urlUser: strategies.strategyList[index]['owner']
+                      ['profile_image'],
                   strategyName: strategies.strategyList[index]['strategyNews'],
                   urlSymbol: strategies.strategyList[index]['symbolUrl'],
                   timeTrade: strategies.strategyList[index]['timeTrade'],
@@ -47,7 +47,6 @@ class StrategyScreen extends StatelessWidget {
                   netProfit: strategies.strategyList[index]['net_profit'],
                   likesNumber: strategies.strategyList[index]['likes_number'],
                   idStrategy: strategies.strategyList[index]['id'])),
-
           floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.blue,
             child: Icon(Icons.add),
