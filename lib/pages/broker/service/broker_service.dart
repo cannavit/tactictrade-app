@@ -48,6 +48,36 @@ class BrokerServices extends ChangeNotifier {
     return this.brokerList;
   }
 
+  Future loadBrokerv2() async {
+
+    final url = Uri.http(Environment.baseUrl, '/broker/v1/all');
+    final _storage = new FlutterSecureStorage();
+
+    final token = await _storage.read(key: 'token_access') ?? '';
+
+    print(token);
+
+    if (token == '') {
+      return '';
+    }
+
+    final response = await http.get(url, headers: {
+      'Content-Type': 'applicaction/json',
+      'Authorization': 'Bearer ' + token
+    });
+
+    print(response);
+
+    final data = json.decode(response.body)['results'];
+
+    print(data);
+
+    this.brokerList = data;
+
+    return this.brokerList;
+  }
+
+
   Future createBroker(bodyBroker) async {
     this.isLoading = true;
     notifyListeners();

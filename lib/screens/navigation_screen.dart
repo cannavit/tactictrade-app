@@ -45,7 +45,6 @@ class _Pages extends StatelessWidget {
         StrategyScreen(),
         StrategiesOwnerScreen(),
         BotsScreen(),
-        BotsScreen(),
         BrokersPages(),
       ],
     );

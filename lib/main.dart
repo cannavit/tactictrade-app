@@ -48,8 +48,6 @@ void main() async {
       ChangeNotifierProvider(create: (_) => TradingConfig()),
       ChangeNotifierProvider(create: (_) => BrokerConfig()),
       ChangeNotifierProvider(create: (_) => PositionServices()),
-
-
       // ChangeNotifierProvider(create: (_) => )
     ],
     child: const MyApp(),

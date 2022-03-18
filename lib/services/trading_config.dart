@@ -78,6 +78,35 @@ class TradingConfig extends ChangeNotifier {
     return this.tradingConfigList;
   }
 
+
+Future readv2() async {
+
+
+    final url = Uri.http(Environment.baseUrl, '/trading/all');
+    final _storage = new FlutterSecureStorage();
+    final token = await _storage.read(key: 'token_access') ?? '';
+
+    if (token == '') {
+      return '';
+    }
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    );
+
+    final data = json.decode(response.body)['results'];
+
+    this.tradingConfigList = data;
+
+    return this.tradingConfigList;
+  }
+
+
   Future delete(tradingConfigId) async {
     this.isLoading = true;
 

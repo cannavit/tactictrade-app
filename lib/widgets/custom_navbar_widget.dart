@@ -12,11 +12,13 @@ class CustomNavbar extends StatelessWidget {
     final themeColors = Theme.of(context);
 
     return BottomNavigationBar(
+      
       showSelectedLabels: true,
       showUnselectedLabels: false,
       unselectedItemColor: themeColors.secondaryHeaderColor,
       selectedItemColor: themeColors.primaryColor,
       currentIndex: navigationModel.currentPage,
+      backgroundColor: Colors.red,
       onTap: (i) => navigationModel.currentPage = i,
       elevation: 0,
 
@@ -25,8 +27,7 @@ class CustomNavbar extends StatelessWidget {
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(
             icon: Icon(Icons.play_arrow), label: 'Strategies'),
-        BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorite'),
-        BottomNavigationBarItem(icon: Icon(Icons.android), label: 'Bots'),
+        BottomNavigationBarItem(icon: Icon(Icons.transform_sharp), label: 'Opens'),
         BottomNavigationBarItem(icon: Icon(Icons.graphic_eq), label: 'Broker'),
       ],
     );
