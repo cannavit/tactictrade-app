@@ -1,6 +1,5 @@
 import 'dart:math';
 
-
 import 'package:expandable_text/expandable_text.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
@@ -107,14 +106,18 @@ class ProductCard extends StatelessWidget {
 
             const SizedBox(height: 5),
 
-            Container(
-              child: imageNetwork == null
-                  ? null
-                  : FadeInImage(
-                      placeholder: Preferences.isDarkmode
-                          ? AssetImage('assets/giphy.gif')
-                          : AssetImage('assets/giphyDarkLoading.gif'),
-                      image: NetworkImage(imageNetwork!)),
+            Visibility(
+              visible: imageNetwork == "" ? false : true,
+              maintainSize: false,
+              child: Container(
+                child: imageNetwork == null
+                    ? null
+                    : FadeInImage(
+                        placeholder: Preferences.isDarkmode
+                            ? AssetImage('assets/giphy.gif')
+                            : AssetImage('assets/giphyDarkLoading.gif'),
+                        image: NetworkImage(imageNetwork!)),
+              ),
             ),
             const Divider(height: 10, color: Color(0xff797979)),
 
