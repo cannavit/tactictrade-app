@@ -23,10 +23,10 @@ class LoadingScreen extends StatelessWidget {
                   children: const [
                     SizedBox(height: 50),
                     Text('Use Collaborative Trading Bots',
-                        style: TextStyle(color: Colors.black45, fontSize: 18)),
+                        style: TextStyle(color: Colors.white, fontSize: 18)),
                     SizedBox(height: 10),
                     Text('Doing Trade with a co-pilot',
-                        style: TextStyle(color: Colors.black45, fontSize: 18)),
+                        style: TextStyle(color: Colors.white, fontSize: 18)),
                     SizedBox(height: 5),
                     LogoImage(),
                     Text('Trade safely!!!',

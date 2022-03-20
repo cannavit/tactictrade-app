@@ -43,8 +43,6 @@ class TradingConfig extends ChangeNotifier {
     return message;
   }
 
-
-
   Future read() async {
     this.isLoading = true;
 
@@ -69,7 +67,6 @@ class TradingConfig extends ChangeNotifier {
 
     final data = json.decode(response.body)['results'];
 
-
     this.tradingConfigList = data;
 
     this.isLoading = false;
@@ -78,10 +75,7 @@ class TradingConfig extends ChangeNotifier {
     return this.tradingConfigList;
   }
 
-
-Future readv2() async {
-
-
+  Future readv2() async {
     final url = Uri.http(Environment.baseUrl, '/trading/all');
     final _storage = new FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
@@ -103,16 +97,18 @@ Future readv2() async {
 
     this.tradingConfigList = data;
 
+    notifyListeners();
+
     return this.tradingConfigList;
   }
-
 
   Future delete(tradingConfigId) async {
     this.isLoading = true;
 
     notifyListeners();
 
-    final url = Uri.http(Environment.baseUrl, '/trading/tradingvalues/${tradingConfigId}');
+    final url = Uri.http(
+        Environment.baseUrl, '/trading/tradingvalues/${tradingConfigId}');
     final _storage = new FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -140,5 +136,4 @@ Future readv2() async {
 
     return this.tradingConfigList;
   }
-
 }

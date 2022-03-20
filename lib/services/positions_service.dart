@@ -62,6 +62,8 @@ class PositionServices extends ChangeNotifier {
     final data = json.decode(response.body)['results'];
 
     this.positionsList = data;
+    notifyListeners();
+
 
     return this.positionsList;
   }

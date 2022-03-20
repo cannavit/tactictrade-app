@@ -258,9 +258,11 @@ class OpenPositionsWidgets extends StatelessWidget {
                         fontWeight: FontWeight.w500)),
                 Text('$currentPrice / $priceOpen',
                     style: TextStyle(
-                        color: currentPrice - priceOpen < 0
+                        color: operation == 'long' ? currentPrice - priceOpen < 0
                             ? Colors.red
-                            : Colors.green,
+                            : Colors.green : currentPrice - priceOpen < 0
+                            ? Colors.green
+                            : Colors.red,
                         fontSize: 14,
                         fontWeight: FontWeight.w300)),
               ],

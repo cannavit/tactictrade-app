@@ -11,13 +11,14 @@ class StrategiesOwnerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
 
     if (tradingConfig.isLoading) return LoadingStrategies();
 
     RefreshController _refreshController =
         RefreshController(initialRefresh: false);
-
+ 
         
 
     return ChangeNotifierProvider(
@@ -32,8 +33,11 @@ class StrategiesOwnerScreen extends StatelessWidget {
           waterDropColor: Colors.blue.shade400,
         ),
             onRefresh: () {
+
           tradingConfig.readv2();
+
           _refreshController.refreshCompleted();
+
         },
             
             )),
@@ -46,6 +50,7 @@ class StrategiesOwnerScreen extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       itemCount: tradingConfig.tradingConfigList.length,
       itemBuilder: (BuildContext context, int index) => StrategyCard(
+        totalOfTrades: tradingConfig.tradingConfigList[index]['totalOfTrades'],
         totalProfitUSD: tradingConfig.tradingConfigList[index]['totalProfitUSD'],
         totalTradingProfit: tradingConfig.tradingConfigList[index]['totalTradingProfit'],
         totalNumberOfWinTrades: tradingConfig.tradingConfigList[index]['totalNumberOfWinTrades'],

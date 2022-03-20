@@ -11,30 +11,32 @@ import '../popup_delete_trading_config.dart';
 class StrategyCard extends StatelessWidget {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
 
-  StrategyCard({
-    Key? key,
-    required this.initialCapitalLong,
-    required this.initialCapitalShort,
-    required this.currentCapitalLong,
-    required this.currentCapitalShort,
-    required this.percentageProfitLong,
-    required this.percentageProfitShort,
-    required this.urlPusher,
-    required this.strategyName,
-    required this.pusherName,
-    required this.brokerName,
-    required this.brokerUrl,
-    required this.closedTradeLong,
-    required this.closedTradeShort,
-    required this.timeTrade,
-    required this.symbol,
-    required this.symbolUrl,
-    required this.brokerType,
-    required this.tradingConfigId,
-    required this.totalNumberOfWinTrades,
-    required this.totalTradingProfit,
-    required this.totalProfitUSD
-  }) : super(key: key);
+  StrategyCard(
+      {Key? key,
+      required this.initialCapitalLong,
+      required this.initialCapitalShort,
+      required this.currentCapitalLong,
+      required this.currentCapitalShort,
+      required this.percentageProfitLong,
+      required this.percentageProfitShort,
+      required this.urlPusher,
+      required this.strategyName,
+      required this.pusherName,
+      required this.brokerName,
+      required this.brokerUrl,
+      required this.closedTradeLong,
+      required this.closedTradeShort,
+      required this.timeTrade,
+      required this.symbol,
+      required this.symbolUrl,
+      required this.brokerType,
+      required this.tradingConfigId,
+      required this.totalNumberOfWinTrades,
+      required this.totalTradingProfit,
+      required this.totalProfitUSD,
+      required this.totalOfTrades
+      })
+      : super(key: key);
 
   final double initialCapitalLong;
   final double initialCapitalShort;
@@ -59,6 +61,7 @@ class StrategyCard extends StatelessWidget {
   final int totalNumberOfWinTrades;
   final double totalTradingProfit;
   final double totalProfitUSD;
+  final int totalOfTrades;
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +112,7 @@ class StrategyCard extends StatelessWidget {
             color: Colors.white,
           ),
           StrategyCardSimple(
+            totalOfTrades: totalOfTrades,
             totalProfitUSD: totalProfitUSD,
             totalTradingProfit: totalTradingProfit,
             totalNumberOfWinTrades: totalNumberOfWinTrades,
@@ -170,6 +174,7 @@ class StrategyCard extends StatelessWidget {
             color: Colors.white,
           ),
           StrategyCardSimple(
+              totalOfTrades: totalOfTrades,
               totalProfitUSD: totalProfitUSD,
               totalTradingProfit: totalTradingProfit,
               symbolUrl: symbolUrl,
@@ -760,6 +765,7 @@ class StrategyCardSimple extends StatelessWidget {
     required this.totalNumberOfWinTrades,
     required this.totalTradingProfit,
     required this.totalProfitUSD,
+    required this.totalOfTrades,
   }) : super(key: key);
 
   final String symbolUrl;
@@ -768,6 +774,7 @@ class StrategyCardSimple extends StatelessWidget {
   final int totalNumberOfWinTrades;
   final double totalTradingProfit;
   final double totalProfitUSD;
+  final int totalOfTrades;
 
   @override
   Widget build(BuildContext context) {
@@ -842,7 +849,7 @@ class StrategyCardSimple extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w300)),
-                    Text('10',
+                    Text('$totalOfTrades',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 25,
@@ -857,9 +864,9 @@ class StrategyCardSimple extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Trading Profit',
+                Text('Trading Profit',
                     style: TextStyle(
-                        color: Color(0xff1BC232),
+                        color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 226, 46, 40),
                         fontSize: 15,
                         fontWeight: FontWeight.w300)),
                 Row(
@@ -868,13 +875,13 @@ class StrategyCardSimple extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text('$totalTradingProfit',
-                            style: TextStyle(
-                                color: Color(0xff1BC232),
+                            style:  TextStyle(
+                                color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 194, 33, 27),
                                 fontSize: 35,
                                 fontWeight: FontWeight.w700)),
                         Text('%',
                             style: TextStyle(
-                                color: Color(0xff1BC232),
+                                color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 194, 33, 27),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700)),
                       ],
@@ -887,12 +894,12 @@ class StrategyCardSimple extends StatelessWidget {
                         children: [
                           Text('$totalProfitUSD',
                               style: TextStyle(
-                                  color: Color(0xff1BC232),
+                                  color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 194, 33, 27),
                                   fontSize: 25,
                                   fontWeight: FontWeight.w700)),
                           Text('USD',
                               style: TextStyle(
-                                  color: Color(0xff1BC232),
+                                  color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 194, 33, 27),
                                   fontSize: 13,
                                   fontWeight: FontWeight.w400)),
                         ],

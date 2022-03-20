@@ -23,6 +23,7 @@ class BrokersCard extends StatelessWidget {
     required this.symbol,
     required this.symbolUrl,
     required this.totalNumberOfWinTrades,
+    required this.totalOfTrades,
   }) : super(key: key);
 
   final double initialCapitalLong;
@@ -43,6 +44,7 @@ class BrokersCard extends StatelessWidget {
   final String symbol;
   final String symbolUrl;
   final int totalNumberOfWinTrades;
+  final int totalOfTrades;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +77,7 @@ class BrokersCard extends StatelessWidget {
             color: Colors.white,
           ),
           BrokersCardSimple(
+            totalOfTrades: totalOfTrades,
             symbolUrl: symbolUrl,
             symbol: symbol,
             timeTrade: timeTrade,
@@ -124,6 +127,7 @@ class BrokersCard extends StatelessWidget {
             color: Colors.white,
           ),
           BrokersCardSimple(
+              totalOfTrades: totalOfTrades,
               symbolUrl: symbolUrl,
               symbol: symbol,
               timeTrade: timeTrade,
@@ -218,7 +222,9 @@ class _ControlButtoms extends StatelessWidget {
                         height: 1,
                       ),
                     )),
-                onChanged: (value) {}),
+                onChanged: (value) {
+                  
+                }),
           ),
           Expanded(child: Container()),
           Container(
@@ -702,12 +708,14 @@ class BrokersCardSimple extends StatelessWidget {
     required this.symbol,
     required this.timeTrade,
     required this.totalNumberOfWinTrades,
+    required this.totalOfTrades,
   }) : super(key: key);
 
   final String symbolUrl;
   final String symbol;
   final String timeTrade;
   final int totalNumberOfWinTrades;
+  final int totalOfTrades;
 
   @override
   Widget build(BuildContext context) {
@@ -782,7 +790,7 @@ class BrokersCardSimple extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w300)),
-                    Text('10',
+                    Text('$totalOfTrades',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 25,
@@ -800,7 +808,8 @@ class BrokersCardSimple extends StatelessWidget {
 
 class _CapitalAvailableWidget extends StatelessWidget {
   const _CapitalAvailableWidget({
-    Key? key, required this.totalProfitUSD,
+    Key? key,
+    required this.totalProfitUSD,
   }) : super(key: key);
 
   final double totalProfitUSD;
