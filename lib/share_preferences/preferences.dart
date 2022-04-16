@@ -11,7 +11,7 @@ class Preferences {
 
   //           Generic preferences.
   static String _name = '';
-  static bool isPaperTrading = true;
+  static bool _isPaperTrading = true;
   static int _gender = 1;
   static bool _isDarkmode = false;
   // static bool _isDarkmode = false;
@@ -41,6 +41,10 @@ class Preferences {
 
   static String _selectedBrokerInFollowStrategy = 'Select your Broker';
 
+  static String  _transactionRecordsServicesData = '';
+
+
+
   // Init Preferences
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -52,8 +56,8 @@ class Preferences {
     return _prefs.getString('name') ?? _name;
   }
 
-  static bool get isPaperLightMode {
-    return _prefs.getBool('isPaperLightMode') ?? isPaperTrading;
+  static bool get isPaperTrading {
+    return _prefs.getBool('isPaperTrading') ?? _isPaperTrading;
   }
 
   static int get gender {
@@ -144,11 +148,17 @@ class Preferences {
     return _prefs.getInt('newFollowStrategyId') ?? _newFollowStrategyId;
   }
 
-
   static String get selectedBrokerInFollowStrategy {
     return _prefs.getString('selectedBrokerInFollowStrategy') ??
         _selectedBrokerInFollowStrategy;
   }
+
+
+  static String get transactionRecordsServicesData {
+    return _prefs.getString('transactionRecordsServicesData') ?? _transactionRecordsServicesData;
+  }
+
+
 
   // Define seters -------------------------------------------------------
 
@@ -157,9 +167,9 @@ class Preferences {
     _prefs.setString('name', name);
   }
 
-  static set isPaperLightMode(bool value) {
-    isPaperTrading = value;
-    _prefs.setBool('isPaperLightMode', value);
+  static set isPaperTrading(bool value) {
+    _isPaperTrading = value;
+    _prefs.setBool('isPaperTrading', value);
   }
 
   static set gender(int value) {
@@ -255,6 +265,11 @@ class Preferences {
   static set selectedBrokerInFollowStrategy(String value) {
     _selectedBrokerInFollowStrategy = value;
     _prefs.setString('selectedBrokerInFollowStrategy', value);
+  }
+
+  static set transactionRecordsServicesData(String value) {
+    _transactionRecordsServicesData = value;
+    _prefs.setString('transactionRecordsServicesData', value);
   }
 
 }

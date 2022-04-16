@@ -3,6 +3,7 @@ import 'package:avatars/avatars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 AppBar GenericAppBar(
@@ -24,12 +25,9 @@ AppBar GenericAppBar(
           Container(
               width: 50,
               child: Image(image: AssetImage('assets/ZipiBotLogo_2.png'))),
-          const SizedBox(width: 6),
-          // const Text('Zipi',
-          //     style: TextStyle(
-          //         color: Color(0xff008CED),
-          //         fontSize: 25,
-          //         fontWeight: FontWeight.w800)),
+          
+     
+
         ],
       ),
     ),
@@ -43,6 +41,22 @@ AppBar GenericAppBar(
           children: [
             Row(
               children: [
+
+       Container(
+                  // margin: EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.only(top: 0, left: 1),
+                  padding: EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+
+                  decoration: BoxDecoration(
+                      // color: Preferences.isPaperTrading ? Color.fromARGB(255, 12, 108, 186) : Color.fromARGB(255, 222, 168, 7),
+                      borderRadius: BorderRadius.circular(40)),
+                  child: Text(Preferences.isPaperTrading ? 'Paper Trading' : 'Real Trading',
+                      style: GoogleFonts.openSans( textStyle:TextStyle(
+                          color: Preferences.isPaperTrading ? Color.fromARGB(255, 12, 108, 186) : Color.fromARGB(255, 222, 168, 7),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500))),
+                ),
+
                 IconButton(
                   icon: const Icon(
                     icon,

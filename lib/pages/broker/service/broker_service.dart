@@ -73,6 +73,8 @@ class BrokerServices extends ChangeNotifier {
     print(data);
 
     this.brokerList = data;
+    notifyListeners();
+
 
     return this.brokerList;
   }

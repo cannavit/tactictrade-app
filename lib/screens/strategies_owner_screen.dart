@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../providers/strtegy_categories_filter_provider.dart';
 import '../services/trading_config.dart';
+import '../widgets/carousel_list_home.dart';
 import '../widgets/dinamicCard/strategy_card_widget.dart';
 import 'loading_strategy.dart';
 import 'navigation_screen.dart';
@@ -13,6 +15,7 @@ class StrategiesOwnerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
+    final filterList = Provider.of<FiltersStrategiesSelected>(context, listen: true);
 
     if (tradingConfig.isLoading) return LoadingStrategies();
 
@@ -24,23 +27,36 @@ class StrategiesOwnerScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => new NavigationModel(),
       child: Scaffold(
-          body: SmartRefresher(
-            controller: _refreshController,
-            child: _ListViewStrategies(tradingConfig),
-            enablePullDown: true,
-        header: WaterDropHeader(
-          complete: Icon(Icons.check, color: Colors.blue[400]),
-          waterDropColor: Colors.blue.shade400,
-        ),
-            onRefresh: () {
+          body: Column(
+            children: [
+              
+              Container(
+                height: 30,
+                width: double.infinity,
+                child: CarouselListHome(categoriesList: filterList),
+              ),
 
-          tradingConfig.readv2();
+              Expanded(
+                child: SmartRefresher(
+                  controller: _refreshController,
+                  child: _ListViewStrategies(tradingConfig),
+                  enablePullDown: true,
+                  header: WaterDropHeader(
+                  complete: Icon(Icons.check, color: Colors.blue[400]),
+                  waterDropColor: Colors.blue.shade400,
+                      ),
+                  onRefresh: () {
 
-          _refreshController.refreshCompleted();
+                tradingConfig.readv2();
+
+                _refreshController.refreshCompleted();
 
         },
-            
-            )),
+                  
+                  ),
+              ),
+            ],
+          )),
     );
   }
 
@@ -90,6 +106,9 @@ class StrategiesOwnerScreen extends StatelessWidget {
         timeTrade: tradingConfig.tradingConfigList[index]['symbol_time'],
         symbol: tradingConfig.tradingConfigList[index]['symbol_name'],
         symbolUrl: tradingConfig.tradingConfigList[index]['symbol_url'],
+        isActiveTradeLong: tradingConfig.tradingConfigList[index]['is_active_long'],
+        isActiveTradeShort:  tradingConfig.tradingConfigList[index]['is_active_short'],
+
       ),
     );
   }

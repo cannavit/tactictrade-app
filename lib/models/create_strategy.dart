@@ -7,10 +7,6 @@ class StrategyData {
     required this.symbol,
     required this.isPublic,
     required this.isActive,
-    required this.netProfit,
-    required this.percentageProfitable,
-    required this.maxDrawdown,
-    required this.profitFactor,
     required this.period,
     required this.timer,
     required this.description,
@@ -20,10 +16,6 @@ class StrategyData {
   String symbol;
   String isPublic;
   String isActive;
-  String netProfit;
-  String percentageProfitable;
-  String maxDrawdown;
-  String profitFactor;
   String period;
   String timer;
   String description;
@@ -38,10 +30,6 @@ class StrategyData {
         symbol: json["symbol"],
         isPublic: json["is_public"],
         isActive: json["is_active"],
-        netProfit: json["net_profit"].toDouble(),
-        percentageProfitable: json["percentage_profitable"].toDouble(),
-        maxDrawdown: json["max_drawdown"].toDouble(),
-        profitFactor: json["profit_factor"].toDouble(),
         period: json["period"],
         timer: json["timer"],
         description: json["description"],
@@ -52,10 +40,6 @@ class StrategyData {
         "symbol": symbol,
         "is_public": isPublic,
         "is_active": isActive,
-        "net_profit": netProfit,
-        "percentage_profitable": percentageProfitable,
-        "max_drawdown": maxDrawdown,
-        "profit_factor": profitFactor,
         "period": period,
         "timer": timer,
         "description": description,

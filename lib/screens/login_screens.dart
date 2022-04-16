@@ -7,6 +7,7 @@ import 'package:sign_button/create_button.dart';
 import 'package:tactictrade/providers/login_form_provider.dart';
 import 'package:tactictrade/services/auth_service.dart';
 import 'package:tactictrade/services/notifications_service.dart';
+import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/customInputData.dart';
 import 'package:tactictrade/widgets/logo_center_widget.dart';
 
@@ -127,23 +128,37 @@ class __FormState extends State<_Form> {
   }
 }
 
-class _PaperTradingButtom extends StatelessWidget {
+class _PaperTradingButtom extends StatefulWidget {
   const _PaperTradingButtom({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<_PaperTradingButtom> createState() => _PaperTradingButtomState();
+}
+
+class _PaperTradingButtomState extends State<_PaperTradingButtom> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: SwitchListTile(
-          value: true,
+          activeTrackColor: Colors.blue.shade300,
+          activeColor: Colors.blue,
+          // inactiveThumbColor: Colors.amber.shade300,
+
+          value: Preferences.isPaperTrading,
           title: Text('Paper Trading',
               style: TextStyle(
                   color: Colors.blue[500],
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
-          onChanged: (value) {}),
+          onChanged: (value) {
+            Preferences.isPaperTrading = value;
+            setState(() {
+              
+            });
+          }),
     );
   }
 }

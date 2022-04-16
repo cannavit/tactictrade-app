@@ -223,7 +223,7 @@ class _ControlButtoms extends StatelessWidget {
                       ),
                     )),
                 onChanged: (value) {
-                  
+                  print(value);
                 }),
           ),
           Expanded(child: Container()),

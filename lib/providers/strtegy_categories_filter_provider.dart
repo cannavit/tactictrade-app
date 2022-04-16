@@ -2,20 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tactictrade/models/menu_home_categories.dart';
 
-class CategorySelected with ChangeNotifier {
+class FiltersStrategiesSelected with ChangeNotifier {
   // List
 
   List<Category> categories = [
-    Category(CupertinoIcons.graph_circle_fill, 'All', null),
-    Category(CupertinoIcons.square_favorites_alt_fill, 'Favorite', null),
-    Category(CupertinoIcons.person_3_fill, 'Winners', null),
-    Category(CupertinoIcons.playpause_fill, 'follows', null),
-    Category(CupertinoIcons.text_badge_checkmark, 'tutorials', null),
+    Category(null, 'All', null),    
+    Category(null, 'Active Strategies', null),
+    Category(null, 'Inactive Strategies', null),
+    Category(null, 'Winner Strategies', null),
+    Category(null, 'Losses Strategies', null),
   ];
 
+  FiltersStrategiesSelected() {
 
-  String _selectedCategory = 'dashboard';
-
+  }
+  
+  String _selectedCategory = 'All';
   String get selectedCategory => _selectedCategory;
   set selectedCategory(String value) {
     _selectedCategory = value;

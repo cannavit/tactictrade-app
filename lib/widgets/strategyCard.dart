@@ -10,32 +10,35 @@ import 'package:tactictrade/widgets/popUpTradeDataStrategy.dart';
 
 import '../pages/broker/service/broker_service.dart';
 import '../screens/createFollowerTrade.dart';
+import '../screens/transactions_records_screen.dart';
 import '../services/strategies_services.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard(
-      {Key? key,
-      required this.urlUser,
-      required this.strategyName,
-      required this.urlSymbol,
-      required this.timeTrade,
-      required this.mantainerName,
-      required this.urlPusher,
-      this.descriptionText = '',
-      this.isActive = false,
-      this.isVerify = false,
-      this.imageNetwork = null,
-      required this.historicalData,
-      required this.profitable,
-      required this.maxDrawdown,
-      required this.netProfit,
-      required this.isStarred,
-      required this.isFavorite,
-      required this.likesNumber,
-      required this.idStrategy,
-      required this.isOwner,
-      required this.isFollower})
-      : super(key: key);
+
+  const ProductCard({
+    Key? key,
+    required this.urlUser,
+    required this.strategyName,
+    required this.urlSymbol,
+    required this.timeTrade,
+    required this.mantainerName,
+    required this.urlPusher,
+    this.descriptionText = '',
+    this.isActive = false,
+    this.isVerify = false,
+    this.imageNetwork = null,
+    required this.historicalData,
+    required this.profitable,
+    required this.maxDrawdown,
+    required this.netProfit,
+    required this.isStarred,
+    required this.isFavorite,
+    required this.likesNumber,
+    required this.idStrategy,
+    required this.isOwner,
+    required this.isFollower,
+    required this.symbolName,
+  }) : super(key: key);
 
   final String urlUser;
   final String strategyName;
@@ -58,6 +61,8 @@ class ProductCard extends StatelessWidget {
   final int idStrategy;
   final bool isOwner;
   final bool isFollower;
+  final String symbolName;
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,23 +78,19 @@ class ProductCard extends StatelessWidget {
             // Header Cards ........
             const SizedBox(height: 10),
 
-            Container(
-              height: 70,
-              child: _headCardWidget(
-                mantainerName: mantainerName,
-                urlUser: urlUser,
-              ),
-            ),
+            MantainerCardStrategyWidget(
+                mantainerName: mantainerName, urlUser: urlUser),
 
             const Divider(height: 10, color: Color(0xff797979)),
 
-            _labelTwoStockAndPusher(
+            labelTwoStockAndPusher(
               isActive: isActive,
               isVerify: isVerify,
               strategyName: strategyName,
               urlSymbol: urlSymbol,
               timeTrade: timeTrade,
               urlPusher: urlPusher,
+              symbolName: symbolName,
             ),
 
             // Add Description
@@ -141,7 +142,16 @@ class ProductCard extends StatelessWidget {
                 isFavorite: isFavorite,
                 isStarred: isStarred,
                 likesNumber: likesNumber,
-                strategyId: idStrategy)
+                strategyId: idStrategy,
+                isActive: isActive,
+                isVerify: isVerify,
+                strategyName: strategyName,
+                symbolName: symbolName,
+                timeTrade: timeTrade,
+                urlPusher: urlPusher,
+                urlSymbol: urlSymbol,
+                mantainerName: mantainerName,
+                urlUser: urlUser)
           ],
         ),
       ),
@@ -185,6 +195,28 @@ class ProductCard extends StatelessWidget {
           ]);
 }
 
+class MantainerCardStrategyWidget extends StatelessWidget {
+  const MantainerCardStrategyWidget({
+    Key? key,
+    required this.mantainerName,
+    required this.urlUser,
+  }) : super(key: key);
+
+  final String mantainerName;
+  final String urlUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 70,
+      child: _headCardWidget(
+        mantainerName: mantainerName,
+        urlUser: urlUser,
+      ),
+    );
+  }
+}
+
 class _likeIcons extends StatelessWidget {
   const _likeIcons({
     Key? key,
@@ -194,6 +226,15 @@ class _likeIcons extends StatelessWidget {
     required this.strategyId,
     required this.isOwner,
     required this.isFollower,
+    required this.urlSymbol,
+    required this.urlPusher,
+    required this.timeTrade,
+    required this.strategyName,
+    required this.isActive,
+    required this.isVerify,
+    required this.symbolName,
+    required this.mantainerName,
+    required this.urlUser,
   }) : super(key: key);
 
   final bool isStarred;
@@ -202,6 +243,19 @@ class _likeIcons extends StatelessWidget {
   final int strategyId;
   final bool isOwner;
   final bool isFollower;
+
+  final String urlSymbol;
+  final String urlPusher;
+  final String timeTrade;
+  final String strategyName;
+  final bool isActive;
+  final bool isVerify;
+  final String symbolName;
+
+  final String mantainerName;
+  final String urlUser;
+
+  get onPressed => null;
 
   @override
   Widget build(BuildContext context) {
@@ -259,9 +313,35 @@ class _likeIcons extends StatelessWidget {
             ],
           ),
           Column(
-            children: const [
-              Icon(Icons.share),
-              Text('Share',
+            children: [
+              // Icon(Icons.history),
+              IconButton(
+                splashColor: Colors.amber,
+                icon: Icon(Icons.history),
+                onPressed: () {
+                  final isPrivateRecord = false;
+                  print('Open Transactions Records');
+                  print(strategyId);
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TransactionPageScreen(
+                                isPrivateRecord: false,
+                                strategyId: strategyId,
+                                urlSymbol: urlSymbol,
+                                isActive: isActive,
+                                isVerify: isVerify,
+                                strategyName: strategyName,
+                                symbolName: symbolName,
+                                timeTrade: timeTrade,
+                                urlPusher: urlPusher,
+                                mantainerName: mantainerName,
+                                urlUser: urlUser,
+                              )));
+                },
+              ),
+              Text('History',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
@@ -374,17 +454,18 @@ class _statisticsValues extends StatelessWidget {
   }
 }
 
-class _labelTwoStockAndPusher extends StatelessWidget {
+class labelTwoStockAndPusher extends StatelessWidget {
   //
-  const _labelTwoStockAndPusher({
-    Key? key,
-    required this.urlSymbol,
-    required this.urlPusher,
-    required this.timeTrade,
-    required this.strategyName,
-    required this.isActive,
-    required this.isVerify,
-  }) : super(key: key);
+  const labelTwoStockAndPusher(
+      {Key? key,
+      required this.urlSymbol,
+      required this.urlPusher,
+      required this.timeTrade,
+      required this.strategyName,
+      required this.isActive,
+      required this.isVerify,
+      required this.symbolName})
+      : super(key: key);
 
   final String urlSymbol;
   final String urlPusher;
@@ -392,6 +473,7 @@ class _labelTwoStockAndPusher extends StatelessWidget {
   final String strategyName;
   final bool isActive;
   final bool isVerify;
+  final String symbolName;
 
   @override
   Widget build(BuildContext context) {
@@ -438,7 +520,13 @@ class _labelTwoStockAndPusher extends StatelessWidget {
                           fontSize: 14,
                           fontWeight: FontWeight.w300)),
                   const SizedBox(width: 5),
-                  Icon(Icons.timer_rounded, color: Colors.white70, size: 14)
+                  Icon(Icons.timer_rounded, color: Colors.white70, size: 14),
+                  const SizedBox(width: 5),
+                  Text(symbolName,
+                      style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w300))
                 ],
               ),
             ],

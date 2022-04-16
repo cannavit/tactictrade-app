@@ -163,10 +163,6 @@ class _FormState extends State<_Form> {
   final isPublic = TextEditingController();
   final isActive = TextEditingController();
 
-  final netProfit = TextEditingController();
-  final porcentajeProfitable = TextEditingController();
-  final maxDrawdown = TextEditingController();
-  final profitFactor = TextEditingController();
   final descriptionCtrl = TextEditingController();
 
   final List<String> itemsData = [
@@ -333,77 +329,6 @@ class _FormState extends State<_Form> {
             icon: Icons.play_arrow,
             color: Colors.white54),
 
-        const SizedBox(height: 20),
-
-        const Text('Add the backtesting values',
-            style: TextStyle(
-                color: Colors.white54,
-                fontSize: 18,
-                fontWeight: FontWeight.w400)),
-
-        const SizedBox(height: 20),
-
-        Row(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: GeneralInputField(
-                  textController: netProfit,
-                  labelText: '*Net profit %',
-                  hintText: 'example 40%',
-                  validatorType: 'porcentaje',
-                  icon: const Icon(
-                    Icons.add_road_sharp,
-                    color: Colors.grey,
-                  )),
-            ),
-            Expanded(child: Container()),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: GeneralInputField(
-                  textController: porcentajeProfitable,
-                  labelText: '*% Profitable',
-                  hintText: 'example 1h',
-                  validatorType: 'porcentaje',
-                  icon: const Icon(
-                    Icons.money_sharp,
-                    color: Colors.grey,
-                  )),
-            ),
-          ],
-        ),
-
-        const SizedBox(height: 20),
-
-        Row(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: GeneralInputField(
-                  textController: maxDrawdown,
-                  labelText: '*Max Drawdown',
-                  hintText: 'example 17.2%',
-                  validatorType: 'porcentaje',
-                  icon: const Icon(
-                    Icons.arrow_circle_down_rounded,
-                    color: Colors.grey,
-                  )),
-            ),
-            Expanded(child: Container()),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: GeneralInputField(
-                  textController: profitFactor,
-                  labelText: '*Profit Factor',
-                  hintText: 'example 0.3',
-                  validatorType: 'porcentaje',
-                  icon: const Icon(
-                    Icons.money_sharp,
-                    color: Colors.grey,
-                  )),
-            ),
-          ],
-        ),
 
         const SizedBox(height: 40),
 
@@ -417,10 +342,6 @@ class _FormState extends State<_Form> {
                 'strategyUrlCtrl': this.strategyUrlCtrl,
                 'is_public': false,
                 'is_active': true,
-                'net_profit': netProfit,
-                'percentage_profitable': porcentajeProfitable,
-                'max_drawdown': maxDrawdown,
-                'profit_factor': profitFactor,
                 'description': this.descriptionCtrl,
               },
               btnEnabled: _btnEnabled,
@@ -642,12 +563,7 @@ class ButtonNext extends StatelessWidget {
                   description: bodyRequest["description"].value.text,
                   isActive: '${Preferences.isActiveNewStrategy}',
                   isPublic: '${Preferences.isPublicNewStrategy}',
-                  maxDrawdown: bodyRequest["max_drawdown"].value.text,
-                  netProfit: bodyRequest["net_profit"].value.text,
                   period: Preferences.selectedTimeNewStrategy,
-                  percentageProfitable:
-                      bodyRequest["percentage_profitable"].value.text,
-                  profitFactor: bodyRequest["profit_factor"].value.text,
                   symbol: bodyRequest["symbol"].value.text,
                   timer: bodyRequest["timeTradeCtrl"].value.text,
                 );
@@ -684,11 +600,7 @@ class ButtonNext extends StatelessWidget {
                   );
                 }
 
-                // strategyPreferences.selectedMessage =
-
-                //
-
-                // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+          
               }
             : null);
   }

@@ -6,10 +6,12 @@ class CategoryStrategiesSelected with ChangeNotifier {
   // List
 
   List<Category> categories = [
-    Category(null, 'all Strategies', null),
-    Category(null, 'me Strategies', null),
-    Category(null, 'Publics strategies', null),
-    Category(CupertinoIcons.add_circled, 'create strategy', 'create_strategy'),
+    Category(null, 'All', null),
+    Category(null, 'Favorite', null),
+    Category(null, 'Me Strategies', null),
+    Category(null, 'Winners', null),
+    Category(null, 'Top Shorts', null),
+    Category(null, 'Top Long', null),
     // Category(CupertinoIcons.person_3_fill, 'create strategy'),
   ];
 

@@ -21,7 +21,8 @@ class BrokerCapitalWidget extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 10),
-      color: Preferences.isDarkmode ? Color(0xffE7EDEF) : Color.fromARGB(255, 24, 26, 27),
+      color: Colors.transparent,
+      // color: Preferences.isDarkmode ? Color(0xffE7EDEF) : Color.fromARGB(255, 24, 26, 27),
       width: MediaQuery.of(context).size.width * 0.545,
       // width: double.infinity,
       // height: MediaQuery.of(context).size.width * 0.4,
@@ -32,9 +33,9 @@ class BrokerCapitalWidget extends StatelessWidget {
               brokerName,
               style: GoogleFonts.roboto(
                 textStyle: TextStyle(
-                  color: Preferences.isDarkmode ? Colors.black87 : Colors.white,
+                  // color: Preferences.isDarkmode ? Colors.black87 : Colors.white,
                   letterSpacing: .5,
-                  fontSize: 14,
+                  fontSize: 12,
                   height: 1.5,
                 ),
               ),
@@ -61,7 +62,7 @@ class BrokerCapitalWidget extends StatelessWidget {
                 textStyle: TextStyle(
                     color: Color(0xff1BC232),
                     letterSpacing: 1.5,
-                    fontSize: 20,
+                    fontSize: 17,
                     fontWeight: FontWeight.w300),
               ),
             ),
@@ -76,7 +77,7 @@ class BrokerCapitalWidget extends StatelessWidget {
                 textStyle: TextStyle(
                     color: Color(0xff1BC232),
                     letterSpacing: 0.7,
-                    fontSize: 30,
+                    fontSize: 20,
                     fontWeight: FontWeight.w700),
               ),
             ),
@@ -106,7 +107,7 @@ class BrokerCapitalWidget extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Text(tagPrice,
                       style: TextStyle(
-                          color: Colors.black,
+                          // color: Colors.black,
                           fontSize: 15,
                           fontWeight: FontWeight.w300)),
                 )),

@@ -147,6 +147,16 @@ class AuthService extends ChangeNotifier {
 
     final bodyProfile = json.decode(response_profile.body);
 
+    try {
+      if (bodyProfile['code'] == 'user_not_found'){
+        return '';
+      }
+    } catch (e){
+      print('The User exist');
+    };
+
+
+
     return {
       "about": bodyProfile['about'],
       "username": bodyProfile['username'],

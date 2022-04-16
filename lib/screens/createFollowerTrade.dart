@@ -381,8 +381,8 @@ class _FormState extends State<_Form> {
             enabled: true,
             textInputType: TextInputType.number,
             textController: widget.shortQtyCtrl,
-            labelText: 'Quantity USD',
-            hintText: 'example: 435',
+            labelText: 'Quantity Actions',
+            hintText: 'example: 1 unit',
             validatorType: 'porcentaje',
             icon: const Icon(
               Icons.attach_money_outlined,

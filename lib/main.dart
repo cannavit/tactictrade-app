@@ -8,9 +8,13 @@ import 'package:tactictrade/pages/broker/service/broker_service.dart';
 import 'package:tactictrade/pages/broker/create_broker_screen.dart';
 import 'package:tactictrade/providers/home_categories_provider.dart';
 import 'package:tactictrade/providers/providers.dart';
+import 'package:tactictrade/providers/strtegy_categories_filter_provider.dart';
 import 'package:tactictrade/screens/createFollowerTrade.dart';
 import 'package:tactictrade/screens/screens.dart';
+import 'package:tactictrade/screens/strategy_historial_screen.dart';
+import 'package:tactictrade/screens/transactions_records_screen.dart';
 import 'package:tactictrade/services/broker_service.dart';
+import 'package:tactictrade/services/transactions_record_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/forms_components/dropdown_custom.dart';
 import 'package:tactictrade/widgets/social_login/google_login_widget.dart';
@@ -48,6 +52,10 @@ void main() async {
       ChangeNotifierProvider(create: (_) => TradingConfig()),
       ChangeNotifierProvider(create: (_) => BrokerConfig()),
       ChangeNotifierProvider(create: (_) => PositionServices()),
+      ChangeNotifierProvider(create: (_) => FiltersStrategiesSelected()),
+      ChangeNotifierProvider(create: (_) => TransactionRecordsServices()),
+
+
       // ChangeNotifierProvider(create: (_) => )
     ],
     child: const MyApp(),
@@ -66,6 +74,7 @@ class MyApp extends StatelessWidget {
       initialRoute: 'loading',
       routes: {
         // 'test': (_) => DropDownSelectBroker(),
+        // 'strategy_historial': (_) => StrategyHistorialScreen(),
         'home': (_) => HomeScreen(),
         'login': (_) => const LoginScreen(),
         'loading': (_) => LoadingScreen(),
@@ -79,6 +88,7 @@ class MyApp extends StatelessWidget {
         'brokers': (_) => BrokersPages(),
         'create_broker': (_) => const NewBrokerScreen(),
         'create_follow_trade': (_) => CreateFollowTrade(),
+        // 'transactions_records': (_) =>TransactionPageScreen(),
       },
       theme: Provider.of<ThemeProvider>(context).currentTheme,
     );

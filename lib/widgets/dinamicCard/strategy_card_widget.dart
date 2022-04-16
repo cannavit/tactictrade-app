@@ -34,8 +34,9 @@ class StrategyCard extends StatelessWidget {
       required this.totalNumberOfWinTrades,
       required this.totalTradingProfit,
       required this.totalProfitUSD,
-      required this.totalOfTrades
-      })
+      required this.totalOfTrades,
+      required this.isActiveTradeLong,
+      required this.isActiveTradeShort})
       : super(key: key);
 
   final double initialCapitalLong;
@@ -62,6 +63,9 @@ class StrategyCard extends StatelessWidget {
   final double totalTradingProfit;
   final double totalProfitUSD;
   final int totalOfTrades;
+
+  final bool isActiveTradeShort;
+  final bool isActiveTradeLong;
 
   @override
   Widget build(BuildContext context) {
@@ -147,6 +151,7 @@ class StrategyCard extends StatelessWidget {
   }
 
   Widget _buildInnerWidget(BuildContext context) {
+
     final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
 
     return Container(
@@ -194,7 +199,12 @@ class StrategyCard extends StatelessWidget {
             closedTradeLong: closedTradeLong,
           ),
 
-          _ControlButtoms(),
+          _ControlButtoms(
+              isActiveTradeLong: isActiveTradeLong,
+              isActiveTradeShort: isActiveTradeShort,
+              tradingConfigId: tradingConfigId,
+              ),
+
           Row(
             children: [
               Expanded(child: Container()),
@@ -256,20 +266,35 @@ class StrategyCard extends StatelessWidget {
   }
 }
 
-class _ControlButtoms extends StatelessWidget {
-  const _ControlButtoms({
+class _ControlButtoms extends StatefulWidget {
+  _ControlButtoms({
     Key? key,
+    required this.isActiveTradeLong,
+    required this.isActiveTradeShort,
+    required this.tradingConfigId,
   }) : super(key: key);
 
+  late bool isActiveTradeLong;
+  late bool isActiveTradeShort;
+  final int tradingConfigId;
+
+  @override
+  State<_ControlButtoms> createState() => _ControlButtomsState();
+}
+
+class _ControlButtomsState extends State<_ControlButtoms> {
   @override
   Widget build(BuildContext context) {
+
+    final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
+
     return Container(
       child: Row(
         children: [
           Container(
             width: 160,
             child: SwitchListTile(
-                value: true,
+                value: widget.isActiveTradeLong,
                 title: Text('Active Trading Long',
                     style: GoogleFonts.openSans(
                       textStyle: const TextStyle(
@@ -279,13 +304,23 @@ class _ControlButtoms extends StatelessWidget {
                         height: 1,
                       ),
                     )),
-                onChanged: (value) {}),
+                onChanged: (value) {
+
+                  widget.isActiveTradeLong = value;
+
+                  tradingConfig.edit_tradingconfig(
+                      widget.tradingConfigId,
+                      {"is_active_long": value}
+                  );
+
+                  setState(() {});
+                }),
           ),
           Expanded(child: Container()),
           Container(
             width: 160,
             child: SwitchListTile(
-                value: true,
+                value: widget.isActiveTradeShort,
                 title: Text('Active Trading Short',
                     style: GoogleFonts.openSans(
                       textStyle: const TextStyle(
@@ -295,7 +330,19 @@ class _ControlButtoms extends StatelessWidget {
                         height: 1.4,
                       ),
                     )),
-                onChanged: (value) {}),
+                onChanged: (value) {
+
+                  widget.isActiveTradeShort = value;
+
+                  tradingConfig.edit_tradingconfig(
+                      widget.tradingConfigId,
+                      {"is_active_short": value}
+                  );
+
+                  setState(() {});
+
+
+                }),
           ),
         ],
       ),
@@ -598,7 +645,7 @@ class _ColumnTableUSD extends StatelessWidget {
                     style: GoogleFonts.oswald(
                       textStyle: TextStyle(
                         color: Colors.green, letterSpacing: .5,
-                        fontSize: 18,
+                        fontSize: 16,
                         height: 1.4,
                         // letterSpacing: .1,
                       ),
@@ -714,7 +761,7 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
                             ? Colors.green
                             : Colors.red,
                         letterSpacing: .5,
-                        fontSize: 13,
+                        fontSize: 11,
                         height: 1,
                         // letterSpacing: .1,
                       ),
@@ -742,7 +789,7 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
                             ? Colors.green
                             : Colors.red,
                         letterSpacing: .5,
-                        fontSize: 13,
+                        fontSize: 11,
                         height: 1,
                         // letterSpacing: .1,
                       ),
@@ -866,7 +913,9 @@ class StrategyCardSimple extends StatelessWidget {
               children: [
                 Text('Trading Profit',
                     style: TextStyle(
-                        color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 226, 46, 40),
+                        color: totalTradingProfit >= 0
+                            ? Color(0xff1BC232)
+                            : Color.fromARGB(255, 226, 46, 40),
                         fontSize: 15,
                         fontWeight: FontWeight.w300)),
                 Row(
@@ -875,13 +924,17 @@ class StrategyCardSimple extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text('$totalTradingProfit',
-                            style:  TextStyle(
-                                color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 194, 33, 27),
-                                fontSize: 35,
+                            style: TextStyle(
+                                color: totalTradingProfit >= 0
+                                    ? Color(0xff1BC232)
+                                    : Color.fromARGB(255, 194, 33, 27),
+                                fontSize: 30,
                                 fontWeight: FontWeight.w700)),
                         Text('%',
                             style: TextStyle(
-                                color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 194, 33, 27),
+                                color: totalTradingProfit >= 0
+                                    ? Color(0xff1BC232)
+                                    : Color.fromARGB(255, 194, 33, 27),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700)),
                       ],
@@ -894,13 +947,17 @@ class StrategyCardSimple extends StatelessWidget {
                         children: [
                           Text('$totalProfitUSD',
                               style: TextStyle(
-                                  color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 194, 33, 27),
+                                  color: totalTradingProfit >= 0
+                                      ? Color(0xff1BC232)
+                                      : Color.fromARGB(255, 194, 33, 27),
                                   fontSize: 25,
                                   fontWeight: FontWeight.w700)),
                           Text('USD',
                               style: TextStyle(
-                                  color: totalTradingProfit >= 0 ? Color(0xff1BC232) : Color.fromARGB(255, 194, 33, 27),
-                                  fontSize: 13,
+                                  color: totalTradingProfit >= 0
+                                      ? Color(0xff1BC232)
+                                      : Color.fromARGB(255, 194, 33, 27),
+                                  fontSize: 11,
                                   fontWeight: FontWeight.w400)),
                         ],
                       ),

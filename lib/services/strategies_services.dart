@@ -8,6 +8,8 @@ import 'package:tactictrade/models/environments_models.dart';
 import 'package:tactictrade/services/auth_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
+import '../models/strategy_models.dart';
+
 class StrategyServices extends ChangeNotifier {
   bool isLoading = true;
 
@@ -38,10 +40,6 @@ class StrategyServices extends ChangeNotifier {
     imageUploadRequest.fields['description'] = body.description;
     imageUploadRequest.fields['is_public'] = body.isPublic;
     imageUploadRequest.fields['is_active'] = body.isActive;
-    imageUploadRequest.fields['net_profit'] = body.netProfit;
-    imageUploadRequest.fields['percentage_profitable'] = body.netProfit;
-    imageUploadRequest.fields['max_drawdown'] = body.maxDrawdown;
-    imageUploadRequest.fields['profit_factor'] = body.profitFactor;
     imageUploadRequest.fields['period'] = body.period;
     imageUploadRequest.fields['strategyNews'] = body.strategyNews;
 
@@ -93,7 +91,7 @@ class StrategyServices extends ChangeNotifier {
 
 class StrategyLoadServices extends ChangeNotifier {
   bool isLoading = true;
-  List strategyList = [];
+  dynamic  strategyList = [];
   File? newPictureFile;
 
   StrategyLoadServices() {
@@ -118,9 +116,10 @@ class StrategyLoadServices extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     });
 
-    final data = json.decode(response.body)['results'];
 
-    this.strategyList = data;
+    final strategyList = StrategyModel.fromJson(response.body);
+
+    this.strategyList = strategyList;
 
     this.isLoading = false;
     notifyListeners();
@@ -165,4 +164,3 @@ class StrategySocial extends ChangeNotifier {
     return data;
   }
 }
-

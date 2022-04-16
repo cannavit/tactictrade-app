@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/providers/home_categories_provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
@@ -19,7 +20,7 @@ class CarouselListHome extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: 40,
+      height: 35,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
@@ -29,7 +30,6 @@ class CarouselListHome extends StatelessWidget {
           final cName = categoriesList.categories[index].name;
           return GestureDetector(
             onTap: () {
-              print(' --- --- --- --- --- --- --- ---');
               print('${categoriesList.categories[index].name}');
               categoriesList.selectedCategory =
                   categoriesList.categories[index].name;
@@ -44,13 +44,13 @@ class CarouselListHome extends StatelessWidget {
               // };
             },
             child: Padding(
-              padding: EdgeInsets.all(2),
+              padding: EdgeInsets.all(1),
               child: Container(
                 decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     color:
-                        Preferences.isDarkmode ? Colors.white : Colors.white70,
-                    borderRadius: BorderRadius.circular(8)),
+                        Preferences.isDarkmode ? Color.fromARGB(0, 0, 0, 0) : Color.fromARGB(255, 33, 37, 50),
+                    borderRadius: BorderRadius.circular(14)),
                 child: Row(
                   children: [
                     // Icon
@@ -76,15 +76,16 @@ class CarouselListHome extends StatelessWidget {
 
                     Text(
                       '${cName[0].toUpperCase()}${cName.substring(1)}',
-                      style: TextStyle(
+                      style: GoogleFonts.openSans( textStyle: TextStyle(
+                       
                           color: (categoriesList.selectedCategory == cName)
                               ? themeColors.accentColor
-                              : Color(0xff142A32),
-                          fontSize: 16,
+                              : Colors.white,
+                          fontSize: 12,
                           fontWeight: (categoriesList.selectedCategory == cName)
                               ? FontWeight.w600
                               : FontWeight.w400),
-                    ),
+                    )),
                     const SizedBox(width: 10),
                   ],
                 ),

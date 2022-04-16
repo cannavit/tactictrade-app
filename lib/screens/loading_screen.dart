@@ -22,15 +22,13 @@ class LoadingScreen extends StatelessWidget {
                 child: Column(
                   children: const [
                     SizedBox(height: 50),
-                    Text('Use Collaborative Trading Bots',
-                        style: TextStyle(color: Colors.white, fontSize: 18)),
+                    // Text('Use Collaborative Trading with Strategies',
+                    // style: TextStyle(color: Colors.white, fontSize: 15)),
                     SizedBox(height: 10),
-                    Text('Doing Trade with a co-pilot',
-                        style: TextStyle(color: Colors.white, fontSize: 18)),
                     SizedBox(height: 5),
                     LogoImage(),
-                    Text('Trade safely!!!',
-                        style: TextStyle(color: Colors.blue, fontSize: 20)),
+                    // Text('Trade safely!!!',
+                    //     style: TextStyle(color: Colors.blue, fontSize: 20)),
                     SizedBox(height: 60),
                     Image(image: AssetImage('assets/TradingImage.png')),
                   ],
@@ -57,6 +55,14 @@ class LoadingScreen extends StatelessWidget {
 
     if (logged) {
       final profileData = await authService.readProfileData(token);
+
+      if (profileData == '') {
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+              pageBuilder: (_, __, ___) => const LoginScreen(),
+              transitionDuration: const Duration(seconds: 0)));
+      }
 
       Preferences.about = profileData['about'];
       Preferences.username = profileData['username'];

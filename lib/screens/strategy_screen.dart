@@ -5,48 +5,78 @@ import 'package:tactictrade/screens/navigation_screen.dart';
 import 'package:tactictrade/services/strategies_services.dart';
 import 'package:tactictrade/widgets/strategyCard.dart';
 
-class StrategyScreen extends StatelessWidget {
+import '../providers/strategies_categories_provider.dart';
+import '../widgets/carousel_list_home.dart';
+
+class StrategyScreen extends StatefulWidget {
   StrategyScreen({Key? key}) : super(key: key);
 
   @override
+  State<StrategyScreen> createState() => _StrategyScreenState();
+}
+
+class _StrategyScreenState extends State<StrategyScreen> {
+  @override
   Widget build(BuildContext context) {
     final strategies = Provider.of<StrategyLoadServices>(context);
-    // TODO update product part
+    final ScrollController scrollController = ScrollController();
 
     final themeColors = Theme.of(context);
+    final categoriesList = Provider.of<CategoryStrategiesSelected>(context);
 
     if (strategies.isLoading) return LoadingStrategies();
+
+    @override
+    void initState() {
+      super.initState();
+      scrollController.addListener(() {
+        print(
+            '${scrollController.position.pixels}, ${scrollController.position.maxScrollExtent}');
+      });
+    }
 
     return ChangeNotifierProvider(
         create: (_) => new NavigationModel(),
         child: Scaffold(
-          body: ListView.builder(
-              itemCount: strategies.strategyList.length,
-              itemBuilder: (BuildContext context, int index) => ProductCard(
-                  isOwner: strategies.strategyList[index]['is_owner'],
-                  isFollower: strategies.strategyList[index]['is_follower'],
-                  isFavorite: strategies.strategyList[index]['is_liked'],
-                  isStarred: strategies.strategyList[index]['is_favorite'],
-                  urlUser: strategies.strategyList[index]['owner']
-                      ['profile_image'],
-                  strategyName: strategies.strategyList[index]['strategyNews'],
-                  urlSymbol: strategies.strategyList[index]['symbolUrl'],
-                  timeTrade: strategies.strategyList[index]['timeTrade'],
-                  mantainerName: strategies.strategyList[index]['owner']
-                      ['username'],
-                  urlPusher: strategies.strategyList[index]['pusher'],
-                  descriptionText: strategies.strategyList[index]
-                      ['description'],
-                  isActive: strategies.strategyList[index]['is_active'],
-                  isVerify: strategies.strategyList[index]['is_verified'],
-                  imageNetwork: strategies.strategyList[index]['post_image'],
-                  historicalData: [],
-                  profitable: strategies.strategyList[index]
-                      ['percentage_profitable'],
-                  maxDrawdown: strategies.strategyList[index]['max_drawdown'],
-                  netProfit: strategies.strategyList[index]['net_profit'],
-                  likesNumber: strategies.strategyList[index]['likes_number'],
-                  idStrategy: strategies.strategyList[index]['id'])),
+          body: Column(
+            children: [
+              Container(
+                height: 30,
+                width: double.infinity,
+                child: CarouselListHome(categoriesList: categoriesList),
+              ),
+              Expanded(
+                // height: double.infinity,
+                child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: strategies.strategyList.results.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        ProductCard(
+                          isOwner: strategies.strategyList.results[index].isOwner,
+                          isFollower: strategies.strategyList.results[index].isFollower,
+                          isFavorite: strategies.strategyList.results[index].isLiked,
+                          isStarred: strategies.strategyList.results[index].isFavorite,
+                          urlUser: strategies.strategyList.results[index].owner.profileImage,
+                          strategyName: strategies.strategyList.results[index].strategyNews,
+                          urlSymbol: strategies.strategyList.results[index].symbolUrl,
+                          timeTrade: strategies.strategyList.results[index].timeTrade,
+                          mantainerName: strategies.strategyList.results[index].owner.username,
+                          urlPusher: strategies.strategyList.results[index].pusher,
+                          descriptionText: strategies.strategyList.results[index].description,
+                          isActive: strategies.strategyList.results[index].isActive,
+                          isVerify: strategies.strategyList.results[index].isVerified,
+                          imageNetwork: strategies.strategyList.results[index].postImage,
+                          historicalData: [],
+                          profitable: strategies.strategyList.results[index].percentageProfitable,
+                          maxDrawdown: strategies.strategyList.results[index].maxDrawdown,
+                          netProfit: strategies.strategyList.results[index].netProfit,
+                          likesNumber: strategies.strategyList.results[index].likesNumber,
+                          idStrategy: strategies.strategyList.results[index].id,
+                          symbolName: strategies.strategyList.results[index].symbolName
+                        )),
+              ),
+            ],
+          ),
           floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.blue,
             child: Icon(Icons.add),

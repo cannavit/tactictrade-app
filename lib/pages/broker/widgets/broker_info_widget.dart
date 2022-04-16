@@ -14,7 +14,7 @@ class BrokerInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Preferences.isDarkmode ? Color(0xffA6B4B9) : Colors.black,
+        // color: Preferences.isDarkmode ? Color(0xffA6B4B9) : Colors.black,
         height: 160,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
