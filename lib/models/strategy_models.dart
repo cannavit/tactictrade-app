@@ -15,7 +15,7 @@ class StrategyModel {
     int? count;
     dynamic next;
     dynamic previous;
-    List<Result> results;
+    List<Strategy> results;
 
     factory StrategyModel.fromJson(String str) => StrategyModel.fromMap(json.decode(str));
 
@@ -25,7 +25,7 @@ class StrategyModel {
         count: json["count"],
         next: json["next"],
         previous: json["previous"],
-        results: List<Result>.from(json["results"].map((x) => Result.fromMap(x))),
+        results: List<Strategy>.from(json["results"].map((x) => Strategy.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
@@ -36,8 +36,8 @@ class StrategyModel {
     };
 }
 
-class Result {
-    Result({
+class Strategy {
+    Strategy({
         required this.id,
         required this.strategyNews,
         required this.pusher,
@@ -93,13 +93,13 @@ class Result {
     double netProfitVerified;
     double percentageProfitableVerified;
     int ranking;
-    String strategyLink;
+    String? strategyLink;
     String strategyToken;
     String period;
     int timer;
     String description;
-    String postImage;
-    String urlImage;
+    String? postImage;
+    String? urlImage;
     String emailBot;
     Owner owner;
     int symbol;
@@ -117,11 +117,11 @@ class Result {
     int likesNumber;
     bool isFollower;
 
-    factory Result.fromJson(String str) => Result.fromMap(json.decode(str));
+    factory Strategy.fromJson(String str) => Strategy.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Result.fromMap(Map<String, dynamic> json) => Result(
+    factory Strategy.fromMap(Map<String, dynamic> json) => Strategy(
         id: json["id"],
         strategyNews: json["strategyNews"],
         pusher: json["pusher"],

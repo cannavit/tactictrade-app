@@ -104,7 +104,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
 
         Column(children: [
 
-          Text('${create_at}',
+          Text('${create_at}'.substring(0,create_at.length -4),
             style: GoogleFonts.openSans( textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
@@ -112,7 +112,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
                 ),
           const SizedBox(height: 8),
 
-          Text('${updated_at}',
+          Text('${updated_at}'.substring(0,create_at.length -4),
             style: GoogleFonts.openSans( textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,

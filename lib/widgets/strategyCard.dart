@@ -323,6 +323,9 @@ class _likeIcons extends StatelessWidget {
                   print('Open Transactions Records');
                   print(strategyId);
 
+
+                  
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(

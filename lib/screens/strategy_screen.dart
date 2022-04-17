@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tactictrade/models/strategy_models.dart';
 import 'package:tactictrade/screens/loading_strategy.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
 import 'package:tactictrade/services/strategies_services.dart';
@@ -9,30 +10,51 @@ import '../providers/strategies_categories_provider.dart';
 import '../widgets/carousel_list_home.dart';
 
 class StrategyScreen extends StatefulWidget {
-  StrategyScreen({Key? key}) : super(key: key);
+  StrategyScreen({Key? key, required this.strategyProvider}) : super(key: key);
 
+  final StrategyLoadServices strategyProvider;
   @override
   State<StrategyScreen> createState() => _StrategyScreenState();
 }
 
 class _StrategyScreenState extends State<StrategyScreen> {
+  final ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if ((scrollController.position.pixels + 500) >=
+          scrollController.position.maxScrollExtent) {
+        print("Load New Values");
+        print("Load New Values");
+
+        print("Load New Values");
+        print("Load New Values");
+        print("Load New Values");
+        print("Load New Values");
+
+
+        widget.strategyProvider.loadStrategy();
+        // widget.
+
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final strategies = Provider.of<StrategyLoadServices>(context);
-    final ScrollController scrollController = ScrollController();
+    // final strategies = Provider.of<StrategyLoadServices>(context);
+
+    final strategies = widget.strategyProvider;
 
     final themeColors = Theme.of(context);
     final categoriesList = Provider.of<CategoryStrategiesSelected>(context);
 
-    if (strategies.isLoading) return LoadingStrategies();
+    // if (strategies.isLoading) return LoadingStrategies();
 
-    @override
-    void initState() {
-      super.initState();
-      scrollController.addListener(() {
-        print(
-            '${scrollController.position.pixels}, ${scrollController.position.maxScrollExtent}');
-      });
+    void addStrategies() {
+      final lastId = strategies.strategyList.last;
     }
 
     return ChangeNotifierProvider(
@@ -48,32 +70,43 @@ class _StrategyScreenState extends State<StrategyScreen> {
               Expanded(
                 // height: double.infinity,
                 child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
                     controller: scrollController,
-                    itemCount: strategies.strategyList.results.length,
+                    itemCount: strategies.strategyList.length,
                     itemBuilder: (BuildContext context, int index) =>
                         ProductCard(
-                          isOwner: strategies.strategyList.results[index].isOwner,
-                          isFollower: strategies.strategyList.results[index].isFollower,
-                          isFavorite: strategies.strategyList.results[index].isLiked,
-                          isStarred: strategies.strategyList.results[index].isFavorite,
-                          urlUser: strategies.strategyList.results[index].owner.profileImage,
-                          strategyName: strategies.strategyList.results[index].strategyNews,
-                          urlSymbol: strategies.strategyList.results[index].symbolUrl,
-                          timeTrade: strategies.strategyList.results[index].timeTrade,
-                          mantainerName: strategies.strategyList.results[index].owner.username,
-                          urlPusher: strategies.strategyList.results[index].pusher,
-                          descriptionText: strategies.strategyList.results[index].description,
-                          isActive: strategies.strategyList.results[index].isActive,
-                          isVerify: strategies.strategyList.results[index].isVerified,
-                          imageNetwork: strategies.strategyList.results[index].postImage,
-                          historicalData: [],
-                          profitable: strategies.strategyList.results[index].percentageProfitable,
-                          maxDrawdown: strategies.strategyList.results[index].maxDrawdown,
-                          netProfit: strategies.strategyList.results[index].netProfit,
-                          likesNumber: strategies.strategyList.results[index].likesNumber,
-                          idStrategy: strategies.strategyList.results[index].id,
-                          symbolName: strategies.strategyList.results[index].symbolName
-                        )),
+                            isOwner: strategies.strategyList[index].isOwner,
+                            isFollower:
+                                strategies.strategyList[index].isFollower,
+                            isFavorite: strategies.strategyList[index].isLiked,
+                            isStarred:
+                                strategies.strategyList[index].isFavorite,
+                            urlUser: strategies
+                                .strategyList[index].owner.profileImage,
+                            strategyName:
+                                strategies.strategyList[index].strategyNews,
+                            urlSymbol: strategies.strategyList[index].symbolUrl,
+                            timeTrade: strategies.strategyList[index].timeTrade,
+                            mantainerName:
+                                strategies.strategyList[index].owner.username,
+                            urlPusher: strategies.strategyList[index].pusher,
+                            descriptionText:
+                                strategies.strategyList[index].description,
+                            isActive: strategies.strategyList[index].isActive,
+                            isVerify: strategies.strategyList[index].isVerified,
+                            imageNetwork:
+                                strategies.strategyList[index].postImage,
+                            historicalData: [],
+                            profitable: strategies
+                                .strategyList[index].percentageProfitable,
+                            maxDrawdown:
+                                strategies.strategyList[index].maxDrawdown,
+                            netProfit: strategies.strategyList[index].netProfit,
+                            likesNumber:
+                                strategies.strategyList[index].likesNumber,
+                            idStrategy: strategies.strategyList[index].id,
+                            symbolName:
+                                strategies.strategyList[index].symbolName)),
               ),
             ],
           ),

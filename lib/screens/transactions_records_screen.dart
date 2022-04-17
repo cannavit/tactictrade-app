@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../models/record_model.dart';
 import '../services/transactions_record_service.dart';
 import '../share_preferences/preferences.dart';
 import '../widgets/strategyCard.dart';
@@ -51,184 +52,210 @@ class TransactionPageScreen extends StatelessWidget {
       'body': {"private": false}
     });
 
-    Preferences.transactionRecordsServicesData = data;
+    final recordsProvider =
+        Provider.of<TransactionRecordsServices>(context, listen: false);
 
-    final records = Provider.of<TransactionRecordsServices>(context);
-
-    if (records.isLoading) return LoadingStrategies();
-
+    // if (records.isLoading) return LoadingStrategies();
 
     // Build the data for Graph
-    final List<double> recordsShortProfit = [];
-    final List<double> recordsLongProfit = [];
 
-    var countElement = -1;
-    for (var r in records.recordsList) {
-      countElement = countElement + 1;
-      if (r['operation'] == 'short') {
-        recordsShortProfit.add(r['profit_percentage']);
-      } else {
-        recordsLongProfit.add(r['profit_percentage']);
-      }
-    }
+    return FutureBuilder(
+        future: recordsProvider
+            .getTransactionRecord(strategyId, {"private": false}),
+        builder: (_, AsyncSnapshot<List<Record>> snapshot) {
+          if (!snapshot.hasData) return const LoadingStrategies();
 
+          final List<double> recordsShortProfit = [];
+          final List<double> recordsLongProfit = [];
 
+          var countElement = -1;
+          for (var r in recordsProvider.recordsList) {
+            countElement = countElement + 1;
+            if (r.operation == 'short') {
+              recordsShortProfit.add(r.profitPercentage);
+            } else {
+              recordsLongProfit.add(r.profitPercentage);
+            }
+          }
 
-    var recordsShortProfitReverser = new List.from(recordsShortProfit.reversed);
-    var recordsLongProfitReverser = new List.from(recordsLongProfit.reversed);
+          if (recordsProvider.recordsList.length == 0) {
+            recordsShortProfit.add(0);
+            recordsShortProfit.add(0);
+            recordsShortProfit.add(0);
+            recordsLongProfit.add(0);
+            recordsLongProfit.add(0);
+            recordsLongProfit.add(0);
+          }
 
-    final totalList = new List.from(recordsShortProfit)
-      ..addAll(recordsLongProfit);
+          var recordsShortProfitReverser =
+              new List.from(recordsShortProfit.reversed);
+          var recordsLongProfitReverser =
+              new List.from(recordsLongProfit.reversed);
 
-    final value1 = (recordsLongProfit.reduce(max));
-    final value2 = (recordsLongProfit.reduce(min));
+          final totalList = new List.from(recordsShortProfit)
+            ..addAll(recordsLongProfit);
 
-    var xMaxValue;
-    var xMinValue;
-    if (value1 > value2) {
-      xMaxValue = value1;
-      xMinValue = value2;
-    } else {
-      xMaxValue = value2;
-      xMinValue = value1;
-    }
+          final value1 = (recordsLongProfit.reduce(max));
+          final value2 = (recordsLongProfit.reduce(min));
+
+          var xMaxValue;
+          var xMinValue;
+          if (value1 > value2) {
+            xMaxValue = value1;
+            xMinValue = value2;
+          } else {
+            xMaxValue = value2;
+            xMinValue = value1;
+          }
 // reversed
-    List<FlSpot> recordsShortProfitSpots =
-        recordsShortProfitReverser.asMap().entries.map((e) {
-      return FlSpot(e.key.toDouble(), e.value);
-    }).toList();
+          List<FlSpot> recordsShortProfitSpots =
+              recordsShortProfitReverser.asMap().entries.map((e) {
+            return FlSpot(e.key.toDouble(), e.value);
+          }).toList();
 
-    List<FlSpot> recordsLongProfitSpots =
-        recordsLongProfitReverser.asMap().entries.map((e) {
-      return FlSpot(e.key.toDouble(), e.value);
-    }).toList();
+          List<FlSpot> recordsLongProfitSpots =
+              recordsLongProfitReverser.asMap().entries.map((e) {
+            return FlSpot(e.key.toDouble(), e.value);
+          }).toList();
 
-    print(recordsShortProfit);
-    return Scaffold(
-        appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarIconBrightness:
-                Preferences.isDarkmode ? Brightness.dark : Brightness.light,
-            statusBarBrightness:
-                Preferences.isDarkmode ? Brightness.light : Brightness.dark,
-          ),
-          title: Text('Strategy Transactions Records',
-              style: TextStyle(
-                  color: themeColors.secondaryHeaderColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w300)),
-          backgroundColor: Colors.transparent,
-          leading: BackButton(
-            color: themeColors.primaryColor,
-            onPressed: () {
-              Preferences.navigationCurrentPage = 0;
-              Preferences.tempStrategyImage = "";
+          print(recordsShortProfit);
 
-              records.isLoading = true;
-
-              Navigator.pushReplacementNamed(context, 'navigation');
-            },
-          ),
-          actions: [],
-          elevation: 0,
-        ),
-        body: Column(
-          children: [
-            MantainerCardStrategyWidget(
-                mantainerName: mantainerName, urlUser: urlUser),
-
-            labelTwoStockAndPusher(
-              isActive: isActive,
-              isVerify: isVerify,
-              strategyName: strategyName,
-              urlPusher: urlPusher,
-              timeTrade: timeTrade,
-              symbolName: symbolName,
-              urlSymbol: urlSymbol,
-            ),
-
-            Divider(height: 1),
-
-            // Graph 2D -----------------------------------------
-            Container(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                width: double.infinity,
-                height: 200,
-                child: LineChart(
-                  LineChartData(
-                    minY: xMinValue,
-                    maxY: xMaxValue,
-                    minX: 0,
-                    maxX: recordsShortProfit.length > recordsLongProfit.length ? recordsShortProfit.length.toDouble() - 1 :  recordsLongProfit.length.toDouble() - 1,
-                    // maxX: recordsShortProfit.length > recordsLongProfit.length  ? recordsShortProfit.length : recordsShortProfit.length,
-                    titlesData: FlTitlesData(show: false),
-                    gridData: FlGridData(show: true, drawVerticalLine: false),
-                    borderData: FlBorderData(show: false),
-                    lineBarsData: [
-                      // The red line
-                      LineChartBarData(
-                        spots: recordsShortProfitSpots,
-                        isCurved: true,
-                        barWidth: 3,
-                        color: Colors.green
-
-                      ),
-                      // The orange line
-                      LineChartBarData(
-                          spots: recordsLongProfitSpots,
-                          isCurved: true,
-                          barWidth: 3,
-                          color: Colors.blue
-                          
-                          ),
-                      // The blue line
-                    ],
-                  ),
+          return Scaffold(
+              appBar: AppBar(
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarIconBrightness: Preferences.isDarkmode
+                      ? Brightness.dark
+                      : Brightness.light,
+                  statusBarBrightness: Preferences.isDarkmode
+                      ? Brightness.light
+                      : Brightness.dark,
                 ),
+                title: Text('Strategy Transactions Records',
+                    style: TextStyle(
+                        color: themeColors.secondaryHeaderColor,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w300)),
+                backgroundColor: Colors.transparent,
+                leading: BackButton(
+                  color: themeColors.primaryColor,
+                  onPressed: () {
+                    Preferences.navigationCurrentPage = 0;
+                    Preferences.tempStrategyImage = "";
+
+                    recordsProvider.isLoading = true;
+
+                    Navigator.pushReplacementNamed(context, 'navigation');
+                  },
+                ),
+                actions: [],
+                elevation: 0,
               ),
-            ),
+              body: Column(
+                children: [
+                  MantainerCardStrategyWidget(
+                      mantainerName: mantainerName, urlUser: urlUser),
 
-            // -------------------------------------------------
-            const SizedBox(height: 20),
+                  labelTwoStockAndPusher(
+                    isActive: isActive,
+                    isVerify: isVerify,
+                    strategyName: strategyName,
+                    urlPusher: urlPusher,
+                    timeTrade: timeTrade,
+                    symbolName: symbolName,
+                    urlSymbol: urlSymbol,
+                  ),
 
-            ColumnTitlesTransactionsRecordsWidget(),
+                  Divider(height: 1),
 
-            Expanded(
-              // height: double.infinity,
-              child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(),
-                  itemCount: records.recordsList.length,
-                  itemBuilder: (BuildContext context, int index) =>
-                      TransactionRecordRowWidget(
-                        order: records.recordsList[index]['order'],
-                        operation: records.recordsList[index]['operation'],
-                        qty_open: records.recordsList[index]['qty_open'],
-                        qty_close: records.recordsList[index]['qty_close'],
-                        price_open: records.recordsList[index]['price_open'],
-                        price_closed: records.recordsList[index]
-                            ['price_closed'],
-                        base_cost: records.recordsList[index]['base_cost'],
-                        close_cost: records.recordsList[index]['close_cost'],
-                        amount_open: records.recordsList[index]['amount_open'],
-                        amount_close: records.recordsList[index]
-                            ['amount_close'],
-                        spread: records.recordsList[index]['spread'],
-                        create_at: records.recordsList[index]['create_at'],
-                        updated_at: records.recordsList[index]['updated_at'],
-                        is_winner: records.recordsList[index]['is_winner'],
-                        profit: records.recordsList[index]['profit'],
-                        profit_percentage: records.recordsList[index]
-                            ['profit_percentage'],
-                      )),
-            ),
+                  // Graph 2D -----------------------------------------
+                  Container(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      width: double.infinity,
+                      height: 200,
+                      child: LineChart(
+                        LineChartData(
+                          minY: xMinValue,
+                          maxY: xMaxValue,
+                          minX: 0,
+                          maxX: recordsShortProfit.length >
+                                  recordsLongProfit.length
+                              ? recordsShortProfit.length.toDouble() - 1
+                              : recordsLongProfit.length.toDouble() - 1,
+                          // maxX: recordsShortProfit.length > recordsLongProfit.length  ? recordsShortProfit.length : recordsShortProfit.length,
+                          titlesData: FlTitlesData(show: false),
+                          gridData:
+                              FlGridData(show: true, drawVerticalLine: false),
+                          borderData: FlBorderData(show: false),
+                          lineBarsData: [
+                            // The red line
+                            LineChartBarData(
+                                spots: recordsShortProfitSpots,
+                                isCurved: true,
+                                barWidth: 3,
+                                color: Colors.green),
+                            // The orange line
+                            LineChartBarData(
+                                spots: recordsLongProfitSpots,
+                                isCurved: true,
+                                barWidth: 3,
+                                color: Colors.blue),
+                            // The blue line
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
 
-            // Create table:
+                  // -------------------------------------------------
+                  const SizedBox(height: 20),
 
-            // Center(child: Text('TransactionPage Screen ${strategyId}')
-          ],
-        ));
+                  ColumnTitlesTransactionsRecordsWidget(),
+
+                  Expanded(
+                    // height: double.infinity,
+                    child: ListView.separated(
+                        separatorBuilder: (BuildContext context, int index) =>
+                            Divider(),
+                        itemCount: recordsProvider.recordsList.length,
+                        itemBuilder: (BuildContext context, int index) => TransactionRecordRowWidget(
+                            order: recordsProvider.recordsList[index].order,
+                            operation:
+                                recordsProvider.recordsList[index].operation,
+                            qty_open:
+                                recordsProvider.recordsList[index].qtyOpen,
+                            qty_close:
+                                recordsProvider.recordsList[index].qtyClose,
+                            price_open:
+                                recordsProvider.recordsList[index].priceOpen,
+                            price_closed:
+                                recordsProvider.recordsList[index].priceClosed,
+                            base_cost:
+                                recordsProvider.recordsList[index].baseCost,
+                            close_cost:
+                                recordsProvider.recordsList[index].closeCost,
+                            amount_open:
+                                recordsProvider.recordsList[index].amountOpen,
+                            amount_close:
+                                recordsProvider.recordsList[index].amountClose,
+                            spread: recordsProvider.recordsList[index].spread,
+                            create_at:
+                                recordsProvider.recordsList[index].createAt,
+                            updated_at:
+                                recordsProvider.recordsList[index].updatedAt,
+                            is_winner:
+                                recordsProvider.recordsList[index].isWinner,
+                            profit: recordsProvider.recordsList[index].profit,
+                            profit_percentage: recordsProvider.recordsList[index].profitPercentage)),
+                  ),
+
+                  // Create table:
+
+                  // Center(child: Text('TransactionPage Screen ${strategyId}')
+                ],
+              ));
+        });
   }
 }
 

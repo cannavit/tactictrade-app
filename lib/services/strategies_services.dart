@@ -91,18 +91,21 @@ class StrategyServices extends ChangeNotifier {
 
 class StrategyLoadServices extends ChangeNotifier {
   bool isLoading = true;
-  dynamic  strategyList = [];
+
+  List<Strategy> strategyList = [];
+  List<Strategy> strategyResults = [];
+
+  int strategyPage = 0;
+
   File? newPictureFile;
 
   StrategyLoadServices() {
     this.loadStrategy();
   }
 
-  Future loadStrategy() async {
-    this.isLoading = true;
-    notifyListeners();
+  Future<String> _getJsonData(String endpoint, [int page = 1]) async {
+    final url = Uri.http(Environment.baseUrl, endpoint, {'page': '$page'});
 
-    final url = Uri.http(Environment.baseUrl, '/strategy/v1/all');
     final _storage = new FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
@@ -116,15 +119,29 @@ class StrategyLoadServices extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     });
 
+    return response.body;
+  }
 
-    final strategyList = StrategyModel.fromJson(response.body);
+  Future loadStrategy() async {
+    this.isLoading = true;
+    notifyListeners();
 
-    this.strategyList = strategyList;
+    strategyPage++;
+    final jsonData = await _getJsonData('/strategy/v1/all',strategyPage);
+
+    final strategyList = StrategyModel.fromJson(jsonData);
+
+    strategyResults = [
+      ...strategyResults,
+      ...strategyList.results,
+    ];
+
+    this.strategyList = strategyResults;
 
     this.isLoading = false;
     notifyListeners();
 
-    return this.strategyList;
+    return strategyResults;
   }
 
   void updateSelectedProductImage(String path) {
