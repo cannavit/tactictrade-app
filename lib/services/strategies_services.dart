@@ -118,7 +118,7 @@ class StrategyLoadServices extends ChangeNotifier {
     if (token == '') {
       return '';
     }
-
+    
     final response = await http.get(url, headers: {
       'Content-Type': 'applicaction/json',
       'Authorization': 'Bearer ' + token

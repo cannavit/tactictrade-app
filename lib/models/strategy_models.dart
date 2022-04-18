@@ -100,7 +100,7 @@ class Strategy {
     String description;
     String? postImage;
     String? urlImage;
-    String emailBot;
+    String? emailBot;
     Owner owner;
     int symbol;
     List<dynamic> likes;

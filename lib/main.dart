@@ -45,16 +45,24 @@ void main() async {
       ChangeNotifierProvider(create: (_) => CategoryStrategiesSelected()),
       ChangeNotifierProvider(create: (_) => NewStrategyProvider()),
       ChangeNotifierProvider(create: (_) => StrategyServices()),
-      ChangeNotifierProvider(create: (_) => StrategyLoadServices(), lazy: false,),
-      ChangeNotifierProvider(create: (_) => StrategySocial(),lazy: false,),
-      ChangeNotifierProvider(create: (_) => BrokerServices(),lazy: false,),
+      ChangeNotifierProvider(
+        create: (_) => StrategyLoadServices(),
+        lazy: false,
+      ),
+      ChangeNotifierProvider(
+        create: (_) => StrategySocial(),
+        lazy: false,
+      ),
+      ChangeNotifierProvider(
+        create: (_) => BrokerServices(),
+        lazy: false,
+      ),
       ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
-      ChangeNotifierProvider(create: (_) => TradingConfig(),lazy: false),
+      ChangeNotifierProvider(create: (_) => TradingConfig(), lazy: false),
       ChangeNotifierProvider(create: (_) => BrokerConfig()),
       ChangeNotifierProvider(create: (_) => PositionServices()),
       ChangeNotifierProvider(create: (_) => FiltersStrategiesSelected()),
       ChangeNotifierProvider(create: (_) => TransactionRecordsServices()),
-
 
       // ChangeNotifierProvider(create: (_) => )
     ],
@@ -82,7 +90,10 @@ class MyApp extends StatelessWidget {
         'profile': (_) => const ProfileScreen(),
         'edit_profile': (_) => EditProfileScreen(),
         'settings': (_) => const SettingsScreen(),
-        'strategy': (_) => StrategyScreen(strategyProvider: Provider.of<StrategyLoadServices>(context), categoriesList: Provider.of<CategoryStrategiesSelected>(context), ),
+        'strategy': (_) => StrategyScreen(
+              strategyProvider: Provider.of<StrategyLoadServices>(context),
+              categoriesList: Provider.of<CategoryStrategiesSelected>(context),
+            ),
         'create_strategy': (_) => CreateStrategyScreen(),
         'list_strategies': (_) => ListStrategyScreen(),
         'brokers': (_) => BrokersPages(),
