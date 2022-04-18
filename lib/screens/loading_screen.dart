@@ -54,6 +54,8 @@ class LoadingScreen extends StatelessWidget {
     Preferences.selectedTimeNewStrategy = 'minutes';
     Preferences.updateTheStrategies = false;
     Preferences.categoryStrategySelected = 'all';
+    Preferences.categoryStrategyOwnerSelected = 'all';
+    Preferences.updateStrategyOwnerSelected = false;
 
     if (logged) {
       final profileData = await authService.readProfileData(token);

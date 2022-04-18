@@ -2,6 +2,7 @@ import 'package:folding_cell/folding_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:tactictrade/share_preferences/preferences.dart';
 
 import '../../providers/theme_provider.dart';
 import '../../screens/createFollowerTrade.dart';
@@ -36,7 +37,8 @@ class StrategyCard extends StatelessWidget {
       required this.totalProfitUSD,
       required this.totalOfTrades,
       required this.isActiveTradeLong,
-      required this.isActiveTradeShort})
+      required this.isActiveTradeShort, 
+      })
       : super(key: key);
 
   final double initialCapitalLong;
@@ -66,6 +68,7 @@ class StrategyCard extends StatelessWidget {
 
   final bool isActiveTradeShort;
   final bool isActiveTradeLong;
+
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +154,6 @@ class StrategyCard extends StatelessWidget {
   }
 
   Widget _buildInnerWidget(BuildContext context) {
-
     final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
 
     return Container(
@@ -200,10 +202,10 @@ class StrategyCard extends StatelessWidget {
           ),
 
           _ControlButtoms(
-              isActiveTradeLong: isActiveTradeLong,
-              isActiveTradeShort: isActiveTradeShort,
-              tradingConfigId: tradingConfigId,
-              ),
+            isActiveTradeLong: isActiveTradeLong,
+            isActiveTradeShort: isActiveTradeShort,
+            tradingConfigId: tradingConfigId,
+          ),
 
           Row(
             children: [
@@ -285,7 +287,6 @@ class _ControlButtoms extends StatefulWidget {
 class _ControlButtomsState extends State<_ControlButtoms> {
   @override
   Widget build(BuildContext context) {
-
     final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
 
     return Container(
@@ -305,13 +306,12 @@ class _ControlButtomsState extends State<_ControlButtoms> {
                       ),
                     )),
                 onChanged: (value) {
+                  Preferences.updateStrategyOwnerSelected = true;
 
                   widget.isActiveTradeLong = value;
 
                   tradingConfig.edit_tradingconfig(
-                      widget.tradingConfigId,
-                      {"is_active_long": value}
-                  );
+                      widget.tradingConfigId, {"is_active_long": value});
 
                   setState(() {});
                 }),
@@ -331,17 +331,14 @@ class _ControlButtomsState extends State<_ControlButtoms> {
                       ),
                     )),
                 onChanged: (value) {
+                  Preferences.updateStrategyOwnerSelected = true;
 
                   widget.isActiveTradeShort = value;
 
                   tradingConfig.edit_tradingconfig(
-                      widget.tradingConfigId,
-                      {"is_active_short": value}
-                  );
+                      widget.tradingConfigId, {"is_active_short": value});
 
                   setState(() {});
-
-
                 }),
           ),
         ],

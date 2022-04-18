@@ -47,6 +47,10 @@ class Preferences {
 
   static bool _updateTheStrategies = false;
 
+  static String _categoryStrategyOwnerSelected = 'all';
+
+  static bool _updateStrategyOwnerSelected = false;
+
   // Init Preferences
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -166,8 +170,17 @@ class Preferences {
   }
 
   static bool get updateTheStrategies {
-    return _prefs.getBool('updateTheStrategies') ??
-        _updateTheStrategies;
+    return _prefs.getBool('updateTheStrategies') ?? _updateTheStrategies;
+  }
+
+  static String get categoryStrategyOwnerSelected {
+    return _prefs.getString('categoryStrategyOwnerSelected') ??
+        _categoryStrategyOwnerSelected;
+  }
+
+
+  static bool get updateStrategyOwnerSelected {
+    return _prefs.getBool('updateStrategyOwnerSelected') ?? _updateStrategyOwnerSelected;
   }
 
 
@@ -291,6 +304,16 @@ class Preferences {
   static set updateTheStrategies(bool value) {
     _updateTheStrategies = value;
     _prefs.setBool('updateTheStrategies', value);
+  }
+
+  static set categoryStrategyOwnerSelected(String value) {
+    _categoryStrategyOwnerSelected = value;
+    _prefs.setString('categoryStrategyOwnerSelected', value);
+  }
+
+  static set updateStrategyOwnerSelected(bool value) {
+    _updateStrategyOwnerSelected = value;
+    _prefs.setBool('updateStrategyOwnerSelected', value);
   }
 
 }

@@ -6,11 +6,11 @@ class FiltersStrategiesSelected with ChangeNotifier {
   // List
 
   List<Category> categories = [
-    Category(null, 'All', null, ''),    
-    Category(null, 'Active Strategies', null, ''),
-    Category(null, 'Inactive Strategies', null,''),
-    Category(null, 'Winner Strategies', null,''),
-    Category(null, 'Losses Strategies', null,''),
+    Category(null, 'All', null, 'all'),    
+    Category(null, 'Active Strategies', null, 'active'),
+    Category(null, 'Inactive Strategies', null,'inactive'),
+    Category(null, 'Winners Strategies', null,'winners'),
+    Category(null, 'Losses Strategies', null,'losses'),
   ];
 
   FiltersStrategiesSelected() {

@@ -1,6 +1,7 @@
 import 'package:folding_cell/folding_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tactictrade/share_preferences/preferences.dart';
 
 class BrokersCard extends StatelessWidget {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
@@ -223,6 +224,7 @@ class _ControlButtoms extends StatelessWidget {
                       ),
                     )),
                 onChanged: (value) {
+                  Preferences.updateStrategyOwnerSelected = true;
                   print(value);
                 }),
           ),
@@ -240,7 +242,10 @@ class _ControlButtoms extends StatelessWidget {
                         height: 1.4,
                       ),
                     )),
-                onChanged: (value) {}),
+                onChanged: (value) {
+                  Preferences.updateStrategyOwnerSelected = true;
+
+                }),
           ),
         ],
       ),

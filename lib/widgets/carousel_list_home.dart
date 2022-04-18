@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/providers/home_categories_provider.dart';
 import 'package:tactictrade/services/strategies_services.dart';
+import 'package:tactictrade/services/trading_config.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 class CarouselListHome extends StatelessWidget {
@@ -11,13 +12,17 @@ class CarouselListHome extends StatelessWidget {
   const CarouselListHome({
     Key? key,
     required this.categoriesList,
+    this.pageCarausel = '',
   }) : super(key: key);
+
+  final String pageCarausel;
 
   @override
   Widget build(BuildContext context) {
     // final categoriesList = Provider.of<CategorySelected>(context);
 
     final themeColors = Theme.of(context);
+    
 
     return Container(
       width: double.infinity,
@@ -38,15 +43,31 @@ class CarouselListHome extends StatelessWidget {
 
               print('${categoriesList.categories[index].parameterFilter}');
 
-              Preferences.categoryStrategySelected =
-                  '${categoriesList.categories[index].parameterFilter}';
+              if (pageCarausel == '') {
+                Preferences.categoryStrategySelected =
+                    '${categoriesList.categories[index].parameterFilter}';
+
+                final strategies =
+                  Provider.of<StrategyLoadServices>(context, listen: false);
+
+                strategies.loadStrategy();
+              }
+
+              if (pageCarausel == 'ownerStrategies') {
+
+                Preferences.categoryStrategyOwnerSelected =
+                    '${categoriesList.categories[index].parameterFilter}';
+
+                final tradingConfig = Provider.of<TradingConfig>(context, listen: false);    
+             
+                tradingConfig.readv2();
+              }
+
+              
 
               // print("@Note-01 ---- 804689847 -----");
               // print(Preferences.categoryStrategySelected);
-              final strategies =
-                  Provider.of<StrategyLoadServices>(context, listen: false);
 
-              strategies.loadStrategy();
               // if (categoriesList.categories[index].navigationPage) {
 
               // Navigator.pushReplacementNamed(context,

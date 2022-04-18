@@ -5,12 +5,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:tactictrade/models/create_strategy.dart';
 import 'package:tactictrade/models/environments_models.dart';
+import 'package:tactictrade/models/trading_config_model.dart';
 import 'package:tactictrade/services/auth_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 class TradingConfig extends ChangeNotifier {
   bool isLoading = true;
   List tradingConfigList = [];
+  List<TradingConfig> tradingConfigData = [];
+
+  Map categoriesStrategy = {};
 
   TradingConfig() {
     this.read();
@@ -65,9 +69,9 @@ class TradingConfig extends ChangeNotifier {
       },
     );
 
-    final data = json.decode(response.body)['results'];
+    final tradingConfigData = TradingConfigModel.fromJson(response.body);
 
-    this.tradingConfigList = data;
+    this.tradingConfigList = tradingConfigData.results;
 
     this.isLoading = false;
     notifyListeners();
@@ -76,7 +80,19 @@ class TradingConfig extends ChangeNotifier {
   }
 
   Future readv2() async {
-    final url = Uri.http(Environment.baseUrl, '/trading/all');
+    final category = Preferences.categoryStrategyOwnerSelected;
+    final updateList = Preferences.updateStrategyOwnerSelected;
+    final categoryListData = categoriesStrategy[category];
+    // Check if the data exist in memory
+    if (categoriesStrategy[category] != null && !updateList) {
+      this.tradingConfigList = categoriesStrategy[category];
+      Preferences.updateStrategyOwnerSelected = false;
+      return categoriesStrategy[category];
+    }
+
+    final url =
+        Uri.http(Environment.baseUrl, '/trading/all', {'category': category});
+
     final _storage = new FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -93,9 +109,11 @@ class TradingConfig extends ChangeNotifier {
       },
     );
 
-    final data = json.decode(response.body)['results'];
+    final tradingConfigData = TradingConfigModel.fromJson(response.body);
 
-    this.tradingConfigList = data;
+    this.tradingConfigList = tradingConfigData.results;
+
+    categoriesStrategy[category] = tradingConfigData.results;
 
     notifyListeners();
 
@@ -138,7 +156,6 @@ class TradingConfig extends ChangeNotifier {
   }
 
   Future edit_tradingconfig(int tradingConfigId, dynamic body) async {
-
     final _storage = new FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
