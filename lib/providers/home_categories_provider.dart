@@ -6,11 +6,12 @@ class CategorySelected with ChangeNotifier {
   // List
 
   List<Category> categories = [
-    Category(CupertinoIcons.graph_circle_fill, 'All', null),
-    Category(CupertinoIcons.square_favorites_alt_fill, 'Favorite', null),
-    Category(CupertinoIcons.person_3_fill, 'Winners', null),
-    Category(CupertinoIcons.playpause_fill, 'follows', null),
-    Category(CupertinoIcons.text_badge_checkmark, 'tutorials', null),
+    Category(CupertinoIcons.graph_circle_fill, 'All', null, 'all'),
+    Category(CupertinoIcons.square_favorites_alt_fill, 'Favorite', null, 'favorite'),
+    // Category(CupertinoIcons.square_favorites_alt_fill, 'Likes', null, 'likes'),
+    Category(CupertinoIcons.person_3_fill, 'Winners', null, 'winners'),
+    Category(CupertinoIcons.playpause_fill, 'follows', null, 'all'),
+    Category(CupertinoIcons.text_badge_checkmark, 'tutorials', null, ''),
   ];
 
 

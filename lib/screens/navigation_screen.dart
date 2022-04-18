@@ -10,6 +10,7 @@ import 'package:tactictrade/widgets/custom_navbar_widget.dart';
 import 'package:tactictrade/widgets/generic_appbar_widget.dart';
 
 import '../pages/broker/broker_page.dart';
+import '../providers/strategies_categories_provider.dart';
 import '../services/strategies_services.dart';
 import 'favorite_page.dart';
 
@@ -39,12 +40,15 @@ class _Pages extends StatelessWidget {
   Widget build(BuildContext context) {
     final navigationModel = Provider.of<NavigationModel>(context);
     final strategies = Provider.of<StrategyLoadServices>(context);
-    
+
+    final categoriesList = Provider.of<CategoryStrategiesSelected>(context);
+
     return PageView(
       controller: navigationModel.pageController,
       physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
-        StrategyScreen(strategyProvider: strategies),
+        StrategyScreen(
+            strategyProvider: strategies, categoriesList: categoriesList),
         StrategiesOwnerScreen(),
         BotsScreen(),
         BrokersPages(),

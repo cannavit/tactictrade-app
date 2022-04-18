@@ -14,7 +14,6 @@ import '../screens/transactions_records_screen.dart';
 import '../services/strategies_services.dart';
 
 class ProductCard extends StatelessWidget {
-
   const ProductCard({
     Key? key,
     required this.urlUser,
@@ -62,7 +61,6 @@ class ProductCard extends StatelessWidget {
   final bool isOwner;
   final bool isFollower;
   final String symbolName;
-
 
   @override
   Widget build(BuildContext context) {
@@ -275,6 +273,7 @@ class _likeIcons extends StatelessWidget {
                 isFavorite: isFavorite,
                 valueChanged: (_isFavorite) {
                   print('Is Favorite $_isFavorite)');
+                  Preferences.updateTheStrategies = true;
 
                   strategySocial.put(strategyId, {"likes": _isFavorite});
 
@@ -301,6 +300,7 @@ class _likeIcons extends StatelessWidget {
                 iconSize: 40,
                 isStarred: isStarred,
                 valueChanged: (_isFavorite) {
+                  Preferences.updateTheStrategies = true;
                   print('Is Favorite $_isFavorite)');
                   strategySocial.put(strategyId, {"favorite": _isFavorite});
                 },
@@ -322,9 +322,6 @@ class _likeIcons extends StatelessWidget {
                   final isPrivateRecord = false;
                   print('Open Transactions Records');
                   print(strategyId);
-
-
-                  
 
                   Navigator.push(
                       context,
@@ -391,7 +388,36 @@ class _FollowButton extends StatelessWidget {
             Preferences.brokerNewUseTradingShort = false;
             Preferences.selectedBrokerInFollowStrategy = "{}";
 
-            Navigator.pushReplacementNamed(context, 'create_follow_trade');
+            Preferences.navigationCurrentPage = 0;
+            Preferences.tempStrategyImage = "";
+            Preferences.selectedBrokerInFollowStrategy = "{}";
+
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text("  Connect/Follower Strategy"),
+                  content:
+                      Text("Do you want use this strategy for doing trade?"),
+                  actions: <Widget>[
+                    FlatButton(
+                        color: Colors.green,
+                        onPressed: () {
+                          // Navigator.of(context).pop(true);
+                          Navigator.pushReplacementNamed(
+                              context, 'create_follow_trade');
+                        },
+                        child: const Text("USE FOR TRADE")),
+                    // const SizedBox(width:30 ),
+                    FlatButton(
+                      color: Colors.red,
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text("CANCEL"),
+                    ),
+                  ],
+                );
+              },
+            );
           },
         ),
         // Icon(Icons.play_arrow_rounded),

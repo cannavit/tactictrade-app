@@ -137,6 +137,7 @@ class CreateFollowTrade extends StatelessWidget {
                   message: 'You are sure of move it? Current data will be lost',
                 ),
               );
+
               //TODO active this.
               // Navigator.pushReplacementNamed(context, 'navigation');
               // Preferences.tempStrategyImage = '';

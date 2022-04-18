@@ -52,16 +52,18 @@ class LoadingScreen extends StatelessWidget {
     final String token = loggedResult['token'];
 
     Preferences.selectedTimeNewStrategy = 'minutes';
+    Preferences.updateTheStrategies = false;
+    Preferences.categoryStrategySelected = 'all';
 
     if (logged) {
       final profileData = await authService.readProfileData(token);
 
       if (profileData == '') {
         Navigator.pushReplacement(
-          context,
-          PageRouteBuilder(
-              pageBuilder: (_, __, ___) => const LoginScreen(),
-              transitionDuration: const Duration(seconds: 0)));
+            context,
+            PageRouteBuilder(
+                pageBuilder: (_, __, ___) => const LoginScreen(),
+                transitionDuration: const Duration(seconds: 0)));
       }
 
       Preferences.about = profileData['about'];

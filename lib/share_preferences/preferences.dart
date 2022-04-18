@@ -41,9 +41,11 @@ class Preferences {
 
   static String _selectedBrokerInFollowStrategy = 'Select your Broker';
 
-  static String  _transactionRecordsServicesData = '';
+  static String _transactionRecordsServicesData = '';
 
+  static String _categoryStrategySelected = 'all';
 
+  static bool _updateTheStrategies = false;
 
   // Init Preferences
   static Future init() async {
@@ -153,11 +155,20 @@ class Preferences {
         _selectedBrokerInFollowStrategy;
   }
 
-
   static String get transactionRecordsServicesData {
-    return _prefs.getString('transactionRecordsServicesData') ?? _transactionRecordsServicesData;
+    return _prefs.getString('transactionRecordsServicesData') ??
+        _transactionRecordsServicesData;
   }
 
+  static String get categoryStrategySelected {
+    return _prefs.getString('categoryStrategySelected') ??
+        _categoryStrategySelected;
+  }
+
+  static bool get updateTheStrategies {
+    return _prefs.getBool('updateTheStrategies') ??
+        _updateTheStrategies;
+  }
 
 
   // Define seters -------------------------------------------------------
@@ -270,6 +281,16 @@ class Preferences {
   static set transactionRecordsServicesData(String value) {
     _transactionRecordsServicesData = value;
     _prefs.setString('transactionRecordsServicesData', value);
+  }
+
+  static set categoryStrategySelected(String value) {
+    _categoryStrategySelected = value;
+    _prefs.setString('categoryStrategySelected', value);
+  }
+
+  static set updateTheStrategies(bool value) {
+    _updateTheStrategies = value;
+    _prefs.setBool('updateTheStrategies', value);
   }
 
 }

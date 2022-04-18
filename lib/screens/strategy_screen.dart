@@ -10,9 +10,14 @@ import '../providers/strategies_categories_provider.dart';
 import '../widgets/carousel_list_home.dart';
 
 class StrategyScreen extends StatefulWidget {
-  StrategyScreen({Key? key, required this.strategyProvider}) : super(key: key);
+
+  StrategyScreen(
+      {Key? key, required this.strategyProvider, required this.categoriesList})
+      : super(key: key);
 
   final StrategyLoadServices strategyProvider;
+  final CategoryStrategiesSelected categoriesList;
+
   @override
   State<StrategyScreen> createState() => _StrategyScreenState();
 }
@@ -26,15 +31,6 @@ class _StrategyScreenState extends State<StrategyScreen> {
     scrollController.addListener(() {
       if ((scrollController.position.pixels + 500) >=
           scrollController.position.maxScrollExtent) {
-        print("Load New Values");
-        print("Load New Values");
-
-        print("Load New Values");
-        print("Load New Values");
-        print("Load New Values");
-        print("Load New Values");
-
-
         widget.strategyProvider.loadStrategy();
         // widget.
 
@@ -44,12 +40,12 @@ class _StrategyScreenState extends State<StrategyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final strategies = Provider.of<StrategyLoadServices>(context);
 
-    final strategies = widget.strategyProvider;
+    final strategies = Provider.of<StrategyLoadServices>(context, listen: true);
 
+    // final strategies = widget.strategyProvider;
     final themeColors = Theme.of(context);
-    final categoriesList = Provider.of<CategoryStrategiesSelected>(context);
+    final categoriesList = widget.categoriesList;
 
     // if (strategies.isLoading) return LoadingStrategies();
 

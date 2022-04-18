@@ -63,7 +63,7 @@ class StrategyServices extends ChangeNotifier {
   }
 
   Future loadStrategy() async {
-    this.isLoading = true;
+    isLoading = true;
     notifyListeners();
     final url = Uri.http(Environment.baseUrl, '/strategy/v1/all');
 
@@ -84,7 +84,7 @@ class StrategyServices extends ChangeNotifier {
 
     Preferences.selectedTimeNewStrategy = '';
 
-    this.isLoading = false;
+    isLoading = false;
     notifyListeners();
   }
 }
@@ -95,16 +95,21 @@ class StrategyLoadServices extends ChangeNotifier {
   List<Strategy> strategyList = [];
   List<Strategy> strategyResults = [];
 
+  Map categoriesStrategy = {};
+  Map strategyPageCategory = {};
+
   int strategyPage = 0;
 
   File? newPictureFile;
 
   StrategyLoadServices() {
-    this.loadStrategy();
+    loadStrategy();
   }
 
-  Future<String> _getJsonData(String endpoint, [int page = 1]) async {
-    final url = Uri.http(Environment.baseUrl, endpoint, {'page': '$page'});
+  Future<String> _getJsonData(String endpoint,
+      [int page = 1, String category = 'all']) async {
+    final url = Uri.http(Environment.baseUrl, endpoint,
+        {'page': '$page', 'category': '$category'});
 
     final _storage = new FlutterSecureStorage();
 
@@ -123,30 +128,73 @@ class StrategyLoadServices extends ChangeNotifier {
   }
 
   Future loadStrategy() async {
-    this.isLoading = true;
+    final category = Preferences.categoryStrategySelected;
+
+    strategyPageCategory[category] = strategyPageCategory[category] == null
+        ? 1
+        : strategyPageCategory[category];
+
+    final page = strategyPageCategory[category];
+
+    // Check if data exist inside of the memory object
+
+    final updateTheStrategies = Preferences.updateTheStrategies;
+
+    if (categoriesStrategy[category] != null && !updateTheStrategies) {
+      if (categoriesStrategy[category].length > 0) {
+        this.strategyList = categoriesStrategy[category];
+        Preferences.categoryStrategySelected = 'all';
+        return categoriesStrategy[category];
+      }
+    }
+
+    Preferences.updateTheStrategies = false;
+
+    isLoading = true;
     notifyListeners();
 
     strategyPage++;
-    final jsonData = await _getJsonData('/strategy/v1/all',strategyPage);
+
+    // final jsonData =
+    // await _getJsonData('/strategy/v1/all', strategyPage, category);
+
+    final jsonData = await _getJsonData('/strategy/v1/all', page, category);
 
     final strategyList = StrategyModel.fromJson(jsonData);
 
-    strategyResults = [
+    // strategyResults = [
+    //   ...strategyResults,
+    //   ...strategyList.results,
+    // ];
+
+    strategyResults = categoriesStrategy[category] == null
+        ? strategyResults
+        : categoriesStrategy[category];
+
+    // strategyResults = [
+    //   ...strategyResults,
+    //   ...strategyList.results,
+    // ];
+
+    categoriesStrategy[category] = [
       ...strategyResults,
       ...strategyList.results,
     ];
 
-    this.strategyList = strategyResults;
+    strategyPageCategory[category] = strategyPageCategory[category]++;
+    this.strategyList = categoriesStrategy[category];
 
-    this.isLoading = false;
+    isLoading = false;
     notifyListeners();
 
-    return strategyResults;
+    Preferences.categoryStrategySelected = 'all';
+
+    return categoriesStrategy[category];
   }
 
   void updateSelectedProductImage(String path) {
     Preferences.tempStrategyImage = path;
-    this.newPictureFile = File.fromUri(Uri(path: path));
+    newPictureFile = File.fromUri(Uri(path: path));
 
     notifyListeners();
   }

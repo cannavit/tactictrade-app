@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
         'profile': (_) => const ProfileScreen(),
         'edit_profile': (_) => EditProfileScreen(),
         'settings': (_) => const SettingsScreen(),
-        'strategy': (_) => StrategyScreen(strategyProvider: Provider.of<StrategyLoadServices>(context),),
+        'strategy': (_) => StrategyScreen(strategyProvider: Provider.of<StrategyLoadServices>(context), categoriesList: Provider.of<CategoryStrategiesSelected>(context), ),
         'create_strategy': (_) => CreateStrategyScreen(),
         'list_strategies': (_) => ListStrategyScreen(),
         'brokers': (_) => BrokersPages(),

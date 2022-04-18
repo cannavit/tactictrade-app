@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/providers/home_categories_provider.dart';
+import 'package:tactictrade/services/strategies_services.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 class CarouselListHome extends StatelessWidget {
@@ -31,15 +32,25 @@ class CarouselListHome extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               print('${categoriesList.categories[index].name}');
+
               categoriesList.selectedCategory =
                   categoriesList.categories[index].name;
 
-              print('${categoriesList.categories[index].navigationPage}');
+              print('${categoriesList.categories[index].parameterFilter}');
 
+              Preferences.categoryStrategySelected =
+                  '${categoriesList.categories[index].parameterFilter}';
+
+              // print("@Note-01 ---- 804689847 -----");
+              // print(Preferences.categoryStrategySelected);
+              final strategies =
+                  Provider.of<StrategyLoadServices>(context, listen: false);
+
+              strategies.loadStrategy();
               // if (categoriesList.categories[index].navigationPage) {
 
-              Navigator.pushReplacementNamed(context,
-                  '${categoriesList.categories[index].navigationPage}');
+              // Navigator.pushReplacementNamed(context,
+              // '${categoriesList.categories[index].navigationPage}');
 
               // };
             },
@@ -48,8 +59,9 @@ class CarouselListHome extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
-                    color:
-                        Preferences.isDarkmode ? Color.fromARGB(0, 0, 0, 0) : Color.fromARGB(255, 33, 37, 50),
+                    color: Preferences.isDarkmode
+                        ? Color.fromARGB(0, 0, 0, 0)
+                        : Color.fromARGB(255, 33, 37, 50),
                     borderRadius: BorderRadius.circular(14)),
                 child: Row(
                   children: [
@@ -74,18 +86,18 @@ class CarouselListHome extends StatelessWidget {
                               )
                             : Icon(null)),
 
-                    Text(
-                      '${cName[0].toUpperCase()}${cName.substring(1)}',
-                      style: GoogleFonts.openSans( textStyle: TextStyle(
-                       
-                          color: (categoriesList.selectedCategory == cName)
-                              ? themeColors.accentColor
-                              : Colors.white,
-                          fontSize: 12,
-                          fontWeight: (categoriesList.selectedCategory == cName)
-                              ? FontWeight.w600
-                              : FontWeight.w400),
-                    )),
+                    Text('${cName[0].toUpperCase()}${cName.substring(1)}',
+                        style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                              color: (categoriesList.selectedCategory == cName)
+                                  ? themeColors.accentColor
+                                  : Colors.white,
+                              fontSize: 12,
+                              fontWeight:
+                                  (categoriesList.selectedCategory == cName)
+                                      ? FontWeight.w600
+                                      : FontWeight.w400),
+                        )),
                     const SizedBox(width: 10),
                   ],
                 ),

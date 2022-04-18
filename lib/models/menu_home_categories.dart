@@ -4,6 +4,7 @@ class Category {
   final IconData? icon;
   final String name;
   final String? navigationPage;
+  final String parameterFilter;
 
-  Category(this.icon, this.name, this.navigationPage);
+  Category(this.icon, this.name, this.navigationPage, this.parameterFilter);
 }
