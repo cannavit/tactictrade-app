@@ -46,16 +46,30 @@ class LoadingScreen extends StatelessWidget {
 
     final authService = Provider.of<AuthService>(context, listen: false);
 
-    final loggedResult = await authService.isLoggedIn();
+    var loggedResult = await authService.isLoggedIn();
 
-    final bool logged = loggedResult['isLogged'];
-    final String token = loggedResult['token'];
+    var logged = loggedResult['isLogged'];
+    var token = loggedResult['token'];
 
     Preferences.selectedTimeNewStrategy = 'minutes';
     Preferences.updateTheStrategies = false;
     Preferences.categoryStrategySelected = 'all';
     Preferences.categoryStrategyOwnerSelected = 'all';
     Preferences.updateStrategyOwnerSelected = false;
+
+    // Remember me password. 
+    if (!logged && Preferences.rememberMeLoginData) {
+
+      final email = Preferences.emailLoginSaved;
+      final password = Preferences.passwordLoginSaved;
+
+      await authService.login(email, password);
+
+      loggedResult = await authService.isLoggedIn();
+
+      logged = loggedResult['isLogged'];
+      token = loggedResult['token'];
+    }
 
     if (logged) {
       final profileData = await authService.readProfileData(token);

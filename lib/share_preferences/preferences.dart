@@ -51,6 +51,12 @@ class Preferences {
 
   static bool _updateStrategyOwnerSelected = false;
 
+  static bool _rememberMeLoginData = false;
+
+  static String _passwordLoginSaved = '';
+  static String _emailLoginSaved = '';
+
+
   // Init Preferences
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -178,11 +184,26 @@ class Preferences {
         _categoryStrategyOwnerSelected;
   }
 
-
   static bool get updateStrategyOwnerSelected {
-    return _prefs.getBool('updateStrategyOwnerSelected') ?? _updateStrategyOwnerSelected;
+    return _prefs.getBool('updateStrategyOwnerSelected') ??
+        _updateStrategyOwnerSelected;
   }
 
+  static bool get rememberMeLoginData {
+    return _prefs.getBool('rememberMeLoginData') ?? _rememberMeLoginData;
+  }
+
+
+  static String get passwordLoginSaved {
+    return _prefs.getString('passwordLoginSaved') ??
+        _passwordLoginSaved;
+  }
+
+
+  static String get emailLoginSaved {
+    return _prefs.getString('emailLoginSaved') ??
+        _emailLoginSaved;
+  }
 
   // Define seters -------------------------------------------------------
 
@@ -315,5 +336,22 @@ class Preferences {
     _updateStrategyOwnerSelected = value;
     _prefs.setBool('updateStrategyOwnerSelected', value);
   }
+
+  static set rememberMeLoginData(bool value) {
+    _rememberMeLoginData = value;
+    _prefs.setBool('rememberMeLoginData', value);
+  }
+
+  static set passwordLoginSaved(String value) {
+    _passwordLoginSaved = value;
+    _prefs.setString('passwordLoginSaved', value);
+  }
+
+  static set emailLoginSaved(String value) {
+    _emailLoginSaved = value;
+    _prefs.setString('emailLoginSaved', value);
+  }
+
+
 
 }

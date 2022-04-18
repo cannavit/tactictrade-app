@@ -33,6 +33,7 @@ class AuthService extends ChangeNotifier {
   }
 
   Future login(String email, String password) async {
+    
     final url = Uri.http(Environment.baseUrl, '/account/login/');
 
     final Map<String, dynamic> authData = {

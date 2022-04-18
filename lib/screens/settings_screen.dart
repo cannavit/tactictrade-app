@@ -95,7 +95,12 @@ class _DarkModeSettingState extends State<_DarkModeSetting> {
             margin: EdgeInsets.symmetric(horizontal: 16),
             child: TextButton(
                 onPressed: () {
+
+                  
                   authService.logout();
+                  Preferences.rememberMeLoginData = false;
+                  Preferences.emailLoginSaved = '';
+                  Preferences.passwordLoginSaved = '';
                   Navigator.pushReplacementNamed(context, 'login');
                 },
                 child: Row(

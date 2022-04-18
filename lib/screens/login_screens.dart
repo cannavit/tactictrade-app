@@ -29,7 +29,8 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const LogoImage(),
-              Text('Login', style: TextStyle(fontSize: 30)),
+              Text('Login', style: TextStyle(fontSize: 20)),
+
               ChangeNotifierProvider(
                 create: (_) => LoginFormProvider(),
                 child: _Form(),
@@ -42,8 +43,6 @@ class LoginScreen extends StatelessWidget {
                 child: SignInButton(
                     buttonType: ButtonType.google,
                     onPressed: () async {
-                      print('click ----------------');
-
                       final providerGoogleSignIn =
                           Provider.of<GoogleSignInProvider>(context,
                               listen: false);
@@ -155,9 +154,7 @@ class _PaperTradingButtomState extends State<_PaperTradingButtom> {
                   fontWeight: FontWeight.bold)),
           onChanged: (value) {
             Preferences.isPaperTrading = value;
-            setState(() {
-              
-            });
+            setState(() {});
           }),
     );
   }
@@ -218,6 +215,13 @@ class ButtonLogin extends StatelessWidget {
           }
 
           loginForm.isValidForm();
+
+          if (Preferences.rememberMeLoginData) {
+            Preferences.emailLoginSaved = emailCtrl.text;
+            Preferences.passwordLoginSaved = passCtrl.text;
+          }
+
+          
         });
   }
 }
@@ -227,23 +231,65 @@ class _Labels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 10),
-              GestureDetector(
-                  child: const Text('Sign Up',
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w300)),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, 'register');
-                  }),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  GestureDetector(
+                      child: const Text('Sign Up',
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300)),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, 'register');
+                      }),
+                  Expanded(child: Container()),
+                  _signUpCheckbox()
+                ],
+              )
             ],
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _signUpCheckbox extends StatefulWidget {
+  const _signUpCheckbox({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<_signUpCheckbox> createState() => _signUpCheckboxState();
+}
+
+class _signUpCheckboxState extends State<_signUpCheckbox> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      child: Row(
+        children: <Widget>[
+          Checkbox(
+              value: Preferences.rememberMeLoginData,
+              activeColor: Colors.blue,
+              onChanged: (value) {
+                Preferences.rememberMeLoginData =
+                    !Preferences.rememberMeLoginData;
+                setState(() {});
+              }),
+          const Text('Remember me',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300)),
         ],
       ),
     );
