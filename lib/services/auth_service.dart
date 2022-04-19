@@ -111,6 +111,8 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<dynamic> isLoggedIn() async {
+
+    //TODO When the token exist but is expirad or the user is deleted the app not open
     final _storage = new FlutterSecureStorage();
 
     final logged = {'token': ""};
