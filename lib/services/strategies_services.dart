@@ -9,6 +9,7 @@ import 'package:tactictrade/services/auth_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 import '../models/strategy_models.dart';
+import '../screens/login_screens.dart';
 
 class StrategyServices extends ChangeNotifier {
   bool isLoading = true;
@@ -90,7 +91,10 @@ class StrategyServices extends ChangeNotifier {
 }
 
 class StrategyLoadServices extends ChangeNotifier {
+  
   bool isLoading = true;
+
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   List<Strategy> strategyList = [];
   List<Strategy> strategyResults = [];
@@ -108,17 +112,21 @@ class StrategyLoadServices extends ChangeNotifier {
 
   Future<String> _getJsonData(String endpoint,
       [int page = 1, String category = 'all']) async {
+
     final url = Uri.http(Environment.baseUrl, endpoint,
         {'page': '$page', 'category': '$category'});
+
 
     final _storage = new FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
-      return '';
+        navigatorKey.currentState?.pushNamed('login');
     }
-    
+
+
+
     final response = await http.get(url, headers: {
       'Content-Type': 'applicaction/json',
       'Authorization': 'Bearer ' + token
@@ -128,6 +136,10 @@ class StrategyLoadServices extends ChangeNotifier {
   }
 
   Future loadStrategy() async {
+
+    isLoading = true;
+    notifyListeners();
+
     final category = Preferences.categoryStrategySelected;
 
     strategyPageCategory[category] = strategyPageCategory[category] == null
@@ -149,11 +161,8 @@ class StrategyLoadServices extends ChangeNotifier {
     }
 
     Preferences.updateTheStrategies = false;
-
-    isLoading = true;
-    notifyListeners();
-
     strategyPage++;
+
 
     // final jsonData =
     // await _getJsonData('/strategy/v1/all', strategyPage, category);

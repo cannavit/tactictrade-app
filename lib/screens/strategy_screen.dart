@@ -10,7 +10,6 @@ import '../providers/strategies_categories_provider.dart';
 import '../widgets/carousel_list_home.dart';
 
 class StrategyScreen extends StatefulWidget {
-
   StrategyScreen(
       {Key? key, required this.strategyProvider, required this.categoriesList})
       : super(key: key);
@@ -28,26 +27,29 @@ class _StrategyScreenState extends State<StrategyScreen> {
   @override
   void initState() {
     super.initState();
+
     scrollController.addListener(() {
       if ((scrollController.position.pixels + 500) >=
           scrollController.position.maxScrollExtent) {
         widget.strategyProvider.loadStrategy();
         // widget.
-
       }
     });
+
   }
 
   @override
   Widget build(BuildContext context) {
-
     final strategies = Provider.of<StrategyLoadServices>(context, listen: true);
 
     // final strategies = widget.strategyProvider;
     final themeColors = Theme.of(context);
     final categoriesList = widget.categoriesList;
 
-    // if (strategies.isLoading) return LoadingStrategies();
+    if (strategies.strategyList.length == 0) {
+  
+      if (strategies.isLoading) return LoadingStrategies();
+    }
 
     void addStrategies() {
       final lastId = strategies.strategyList.last;

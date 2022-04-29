@@ -57,6 +57,9 @@ class Preferences {
   static String _emailLoginSaved = '';
 
 
+
+  static String _selectedOptionStrategiesSettings = '';
+
   // Init Preferences
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -193,16 +196,16 @@ class Preferences {
     return _prefs.getBool('rememberMeLoginData') ?? _rememberMeLoginData;
   }
 
-
   static String get passwordLoginSaved {
-    return _prefs.getString('passwordLoginSaved') ??
-        _passwordLoginSaved;
+    return _prefs.getString('passwordLoginSaved') ?? _passwordLoginSaved;
   }
 
-
   static String get emailLoginSaved {
-    return _prefs.getString('emailLoginSaved') ??
-        _emailLoginSaved;
+    return _prefs.getString('emailLoginSaved') ?? _emailLoginSaved;
+  }
+
+  static String get selectedOptionStrategiesSettings {
+    return _prefs.getString('selectedOptionStrategiesSettings') ?? _selectedOptionStrategiesSettings;
   }
 
   // Define seters -------------------------------------------------------
@@ -352,6 +355,10 @@ class Preferences {
     _prefs.setString('emailLoginSaved', value);
   }
 
-
+  static set selectedOptionStrategiesSettings(String value) {
+    _selectedOptionStrategiesSettings = value;
+    _prefs.setString('selectedOptionStrategiesSettings', value);
+  }
+  
 
 }

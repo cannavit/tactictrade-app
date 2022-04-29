@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
+import 'package:tactictrade/widgets/forms_components/dropdown_trading_config.dart';
 
 import '../../providers/theme_provider.dart';
 import '../../screens/createFollowerTrade.dart';
@@ -162,6 +163,8 @@ class StrategyCard extends StatelessWidget {
       decoration: _BackgroundCardColor(context),
       child: Column(
         children: [
+
+          
           Row(
             children: [
               PusherStrategyImageText(
@@ -176,10 +179,12 @@ class StrategyCard extends StatelessWidget {
               ),
             ],
           ),
+
           Divider(
             height: 2,
             color: Colors.white,
           ),
+
           StrategyCardSimple(
               totalOfTrades: totalOfTrades,
               totalProfitUSD: totalProfitUSD,
@@ -207,32 +212,36 @@ class StrategyCard extends StatelessWidget {
             tradingConfigId: tradingConfigId,
           ),
 
-          Row(
-            children: [
-              Expanded(child: Container()),
-              IconButton(
-                  onPressed: () async {
-                    //TODO check how work this part.
+          Container(
+            // color: Colors.green,
+            // height: 100,
+            // width: 10,
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.baseline,
+              children: [
+                // Expanded(child: Container()),                
 
-                    await showDialog(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          PopUpDeleteTradingConfigSecure(
-                        tradingConfigId: tradingConfigId,
-                        titleHeader: 'Are you sure to delete this strategy?',
-                        message:
-                            ' ⛔️ We will not be able to close trades opened by you. In case of continuing make sure to close your position manually.',
+                    Container(
+                      color: Colors.red,
+                      width: 20,
+                      height: 20,
+                      child:  DropdownTradingConfig(tradingConfigId: tradingConfigId,)
                       ),
-                    );
-                  },
-                  icon: Icon(Icons.delete_outline, color: Colors.red)),
-              // IconButton(
-              //     onPressed: () {},
-              //     icon: Icon(Icons.settings, color: Colors.grey.shade600))
-            ],
+
+                    //   Expanded(child: Container()),
+
+                    
+
+                // IconButton(
+                //     onPressed: () {},
+                //     icon: Icon(Icons.settings, color: Colors.grey.shade600))
+              ],
+            ),
           ),
 
-          Expanded(child: Container()),
+          // Expanded(child: Container()),
           Center(
             child: TextButton(
               onPressed: () => _foldingCellKey.currentState?.toggleFold(),

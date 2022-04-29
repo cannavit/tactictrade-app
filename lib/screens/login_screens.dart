@@ -220,8 +220,6 @@ class ButtonLogin extends StatelessWidget {
             Preferences.emailLoginSaved = emailCtrl.text;
             Preferences.passwordLoginSaved = passCtrl.text;
           }
-
-          
         });
   }
 }

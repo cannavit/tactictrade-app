@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
+import 'forms_components/dropdown_profile.dart';
+import 'forms_components/dropdown_trading_config.dart';
+
 AppBar GenericAppBar(
     ThemeData themeColors, BuildContext context, String textNavBar) {
   const icon = CupertinoIcons.settings;
@@ -23,10 +26,8 @@ AppBar GenericAppBar(
       child: Row(
         children: [
           Container(
-              width: 50,
-              child: Image(image: AssetImage('assets/ZipiBotLogo_2.png'))),
-          
-     
+              width: 40,
+              child: Image(image: AssetImage('assets/ReduceBrokerTacticTradeIconV2.png'))),
 
         ],
       ),
@@ -57,39 +58,26 @@ AppBar GenericAppBar(
                           fontWeight: FontWeight.w500))),
                 ),
 
-                IconButton(
-                  icon: const Icon(
-                    icon,
-                    color: const Color(0xff008CED),
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    // do something
-                    Navigator.pushReplacementNamed(context, 'settings');
-                  },
-                ),
-                Container(
-                  child: ClipOval(
-                    child: Container(
-                      // color: color,
-                      padding: const EdgeInsets.all(0),
 
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacementNamed(context, 'profile');
-                        },
-                        child: CircleAvatar(
-                          backgroundColor: Colors.red,
-                          child: CircleAvatar(
-                            radius: 38,
-                            backgroundImage:
-                                NetworkImage(Preferences.profileImage),
-                          ),
-                        ),
+                const SizedBox(width: 10),
+                // IconButton(
+                //   icon: const Icon(
+                //     icon,
+                //     color: const Color(0xff008CED),
+                //     size: 25,
+                //   ),
+                //   onPressed: () {
+                //     // do something
+                //     // Navigator.pushReplacementNamed(context, 'settings');
+                //   },
+                // ),
+
+                Container(
+                      color: Colors.red,
+                      width: 35,
+                      height: 35,
+                      child:  DropdownProfile(tradingConfigId: 1,)
                       ),
-                    ),
-                  ),
-                ),
               ],
             )
           ],

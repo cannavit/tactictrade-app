@@ -6,6 +6,8 @@ import 'package:tactictrade/providers/theme_provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 import '../services/auth_service.dart';
+import '../services/settings_services.dart';
+import 'loading_strategy.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -34,7 +36,7 @@ class SettingsScreen extends StatelessWidget {
           leading: BackButton(
             color: themeColors.primaryColor,
             onPressed: () {
-              Navigator.pushReplacementNamed(context, 'profile');
+              Navigator.pushReplacementNamed(context, 'navigation');
             },
           ),
           actions: [],
@@ -64,61 +66,119 @@ class _DarkModeSettingState extends State<_DarkModeSetting> {
     final themeColors = Theme.of(context);
 
     final authService = Provider.of<AuthService>(context, listen: false);
-
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    final settingsService = Provider.of<SettingServices>(context, listen: true);
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SwitchListTile.adaptive(
-              secondary:
-                  Icon(widget.icon, size: 30, color: themeColors.primaryColor),
-              value: Preferences.isDarkmode,
-              title: const Text('Light Mode',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
-              onChanged: (value) {
-                // print(value);
+    if (settingsService.isLoading) return LoadingStrategies();
 
-                Preferences.isDarkmode = value;
+    return Container(
+      width: double.infinity,
+      // height: 1000,
+      child: ListView.builder(
+          itemCount: settingsService.settingList.length,
+          itemBuilder: (BuildContext context, int index) => Column(
+                children: [
+                  // Create dynamic title name.
+                  Divider(),
+                  Container(
+                    child: ListTile(
+                      title: Text('${settingsService.settingFamily[index]}'),
+                    ),
+                  ),
 
-                value
-                    ? themeProvider.setDarkmode()
-                    : themeProvider.setLightMode();
+                  // Expanded(
+                  // width: double.infinity,
+                  // height: 16,
 
-                setState(() {});
-              }),
+                  _settingSwitch(
+                    settingsService: settingsService,
+                    themeColors: themeColors,
+                    index: index,
+                  ),
+                ],
+              )),
+    );
+  }
+}
 
-          // height:,
-          SizedBox(height: MediaQuery.of(context).size.height * 0.7),
+class _settingSwitch extends StatefulWidget {
+  const _settingSwitch({
+    Key? key,
+    required this.settingsService,
+    required this.themeColors,
+    required this.index,
+  }) : super(key: key);
 
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            child: TextButton(
-                onPressed: () {
+  final SettingServices settingsService;
+  final ThemeData themeColors;
+  final int index;
 
-                  
-                  authService.logout();
-                  Preferences.rememberMeLoginData = false;
-                  Preferences.emailLoginSaved = '';
-                  Preferences.passwordLoginSaved = '';
-                  Navigator.pushReplacementNamed(context, 'login');
-                },
-                child: Row(
-                  children: [
-                    Expanded(child: Container()),
-                    Text('Logout',
-                        style: TextStyle(
-                            // color: Colors.black54,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w300)),
-                    const SizedBox(width: 10),
-                    Icon(Icons.logout,
-                        size: 25, color: themeColors.primaryColor),
-                  ],
-                )),
-          )
-        ],
-      ),
+  @override
+  State<_settingSwitch> createState() => _settingSwitchState();
+}
+
+class _settingSwitchState extends State<_settingSwitch> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // width: double.infinity,
+      height: 200,
+
+      child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: widget
+              .settingsService
+              .settingList[
+                  '${widget.settingsService.settingFamily[widget.index]}']
+              .length,
+          itemBuilder: (BuildContext context, int index2) => Row(children: [
+                Expanded(
+                  child: SwitchListTile.adaptive(
+                      activeColor: Colors.blue,
+                      secondary: Icon(
+                          // IconData(
+                          //     int.parse(widget
+                          //         .settingsService
+                          //         .settingList[
+                          //             '${widget.settingsService.settingFamily[widget.index]}']
+                          //             [index2]
+                          //         .icon
+                          //         ),
+                          //     fontFamily: 'MaterialIcons'),
+
+                          Icons.notifications_active_outlined,
+
+                          size: 20,
+                          color: widget.themeColors.primaryColor),
+                      value: widget
+                          .settingsService
+                          .settingList[
+                              '${widget.settingsService.settingFamily[widget.index]}']
+                              [index2]
+                          .boolValue,
+                      title: Text(
+                          widget
+                              .settingsService
+                              .settingList[
+                                  '${widget.settingsService.settingFamily[widget.index]}']
+                                  [index2]
+                              .setting,
+                          style: TextStyle(fontWeight: FontWeight.w300)),
+                      onChanged: (value) {
+                        final settings = widget.settingsService.settingList[
+                                '${widget.settingsService.settingFamily[widget.index]}']
+                            [index2];
+
+                        settings.boolValue = value;
+
+                        widget.settingsService.put(settings);
+
+                        setState(() {});
+
+                        // setState(() {});
+                      }),
+                ),
+              ])),
     );
   }
 }

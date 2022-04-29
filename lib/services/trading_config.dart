@@ -180,4 +180,52 @@ class TradingConfig extends ChangeNotifier {
 
     // final body = json.encode(data);
   }
+
+  Future openLong(int tradingConfigId) async {
+    final _storage = new FlutterSecureStorage();
+    final token = await _storage.read(key: 'token_access') ?? '';
+
+    if (token == '') {
+      return '';
+    }
+
+
+    final url =
+        Uri.http(Environment.baseUrl, '/trading/openlong/${tradingConfigId}');
+
+    final response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        });
+
+
+    // final body = json.encode(data);
+  }
+
+  Future openShort(int tradingConfigId) async {
+    final _storage = new FlutterSecureStorage();
+
+    final token = await _storage.read(key: 'token_access') ?? '';
+
+    if (token == '') {
+      return '';
+    }
+
+    final url =
+        Uri.http(Environment.baseUrl, '/trading/openshort/${tradingConfigId}');
+
+    final response = await http.post(url, headers: {
+      'Content-Type': 'application/json',
+      'accept': 'application/json',
+      'Authorization': 'Bearer ' + token
+    });
+
+    // print(response);
+
+    // final message = json.decode(response.body)['message'];
+
+    // final body = json.encode(data);
+  }
 }

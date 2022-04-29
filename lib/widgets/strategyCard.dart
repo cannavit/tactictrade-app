@@ -341,7 +341,7 @@ class _likeIcons extends StatelessWidget {
                               )));
                 },
               ),
-              Text('History',
+              const Text('History',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,

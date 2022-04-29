@@ -138,10 +138,6 @@ class CreateFollowTrade extends StatelessWidget {
                 ),
               );
 
-              //TODO active this.
-              // Navigator.pushReplacementNamed(context, 'navigation');
-              // Preferences.tempStrategyImage = '';
-              // Preferences.formValidatorCounter = 0;
             },
           ),
           actions: [],
@@ -260,7 +256,6 @@ class _FormState extends State<_Form> {
 
         DropDownSelectBroker(brokerList: brokerConfig.BrokerConfigList),
 
-        // TODO add list here
 
         const Divider(
           color: Colors.white30,
@@ -274,7 +269,6 @@ class _FormState extends State<_Form> {
         const SizedBox(
           height: 20,
         ),
-        //TODO
 
         _SwiftList(
           isTradingLong: true,
@@ -366,7 +360,6 @@ class _FormState extends State<_Form> {
         const SizedBox(
           height: 20,
         ),
-        //TODO
 
         _SwiftList(
           isTradingLong: false,

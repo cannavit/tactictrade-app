@@ -58,7 +58,7 @@ class _DropDownSelectBrokerState extends State<DropDownSelectBroker> {
                 ),
                 Expanded(
                   child: Text(
-                    'Select your broker',
+                    'Select your broker 2',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,

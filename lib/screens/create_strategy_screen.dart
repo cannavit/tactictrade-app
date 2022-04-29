@@ -116,10 +116,6 @@ class CreateStrategyScreen extends StatelessWidget {
                   message: 'You are sure of move it? Current data will be lost',
                 ),
               );
-              //TODO active this.
-              // Navigator.pushReplacementNamed(context, 'navigation');
-              // Preferences.tempStrategyImage = '';
-              // Preferences.formValidatorCounter = 0;
             },
           ),
           actions: [],
@@ -373,7 +369,6 @@ class _DropDownState extends State<DropDown> {
         // width: MediaQuery.of(context).size.width * 0.3,
         height: 47,
         child: Container(
-            //TODO active this
             child: DropdownButton2(
               hint: Row(
                 children: [

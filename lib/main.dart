@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,6 +15,8 @@ import 'package:tactictrade/screens/screens.dart';
 import 'package:tactictrade/screens/strategy_historial_screen.dart';
 import 'package:tactictrade/screens/transactions_records_screen.dart';
 import 'package:tactictrade/services/broker_service.dart';
+import 'package:tactictrade/services/push_notification_service.dart';
+import 'package:tactictrade/services/settings_services.dart';
 import 'package:tactictrade/services/transactions_record_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/forms_components/dropdown_custom.dart';
@@ -22,15 +25,18 @@ import 'services/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'services/trading_config.dart';
+// import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  // await dotenv.load(fileName: Environment.fileName);
-
-  await dotenv.load(
+  dotenv.load(
     fileName: '.env',
   );
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await PushNotificationService.initializeApp();
+  // await dotenv.load(fileName: Environment.fileName);
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await Preferences.init();
@@ -63,6 +69,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => PositionServices()),
       ChangeNotifierProvider(create: (_) => FiltersStrategiesSelected()),
       ChangeNotifierProvider(create: (_) => TransactionRecordsServices()),
+      ChangeNotifierProvider(create: (_) => SettingServices(), lazy: false),
 
       // ChangeNotifierProvider(create: (_) => )
     ],
@@ -70,16 +77,43 @@ void main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+  final GlobalKey<ScaffoldMessengerState> messengerKey =
+      new GlobalKey<ScaffoldMessengerState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Push notification services.
+    PushNotificationService.messageStreamController.listen((message) {
+      // Show snackbar.
+      final snackBar = SnackBar(content: Text(message));
+      messengerKey.currentState?.showSnackBar(snackBar);
+      // Navigation of specific screen
+      navigatorKey.currentState?.pushNamed('settings', arguments: message);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      scaffoldMessengerKey: NotificationsService.messagerKey,
+      // scaffoldMessengerKey: NotificationsService.messagerKey,
+      scaffoldMessengerKey: messengerKey,
+
       title: 'Material App',
       initialRoute: 'loading',
+      navigatorKey: navigatorKey,
       routes: {
         // 'test': (_) => DropDownSelectBroker(),
         // 'strategy_historial': (_) => StrategyHistorialScreen(),
@@ -99,6 +133,8 @@ class MyApp extends StatelessWidget {
         'brokers': (_) => BrokersPages(),
         'create_broker': (_) => const NewBrokerScreen(),
         'create_follow_trade': (_) => CreateFollowTrade(),
+        // 'test_screen': (_) => ScreenTest(),
+
         // 'transactions_records': (_) =>TransactionPageScreen(),
       },
       theme: Provider.of<ThemeProvider>(context).currentTheme,

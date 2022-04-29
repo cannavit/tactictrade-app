@@ -33,7 +33,6 @@ class AuthService extends ChangeNotifier {
   }
 
   Future login(String email, String password) async {
-    
     final url = Uri.http(Environment.baseUrl, '/account/login/');
 
     final Map<String, dynamic> authData = {
@@ -111,7 +110,6 @@ class AuthService extends ChangeNotifier {
   }
 
   Future<dynamic> isLoggedIn() async {
-
     //TODO When the token exist but is expirad or the user is deleted the app not open
     final _storage = new FlutterSecureStorage();
 
@@ -119,7 +117,7 @@ class AuthService extends ChangeNotifier {
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
-    final url = Uri.http(Environment.baseUrl, '/strategy/v1/all');
+    final url = Uri.http(Environment.baseUrl, '/broker/v1/all');
 
     if (token == '') {
       return {'isLogged': false, 'token': ''};
@@ -131,13 +129,17 @@ class AuthService extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     });
 
-    final body = json.decode(response.body);
+    try {
+      final body = json.decode(response.body);
 
-    if (body['code'] == "token_not_valid") {
+      if (body['code'] == "token_not_valid") {
+        return {'isLogged': false, 'token': ''};
+      }
+
+      return {'isLogged': true, 'token': token};
+    } catch (e) {
       return {'isLogged': false, 'token': ''};
     }
-
-    return {'isLogged': true, 'token': token};
   }
 
   Future readProfileData(String token) async {
@@ -151,14 +153,13 @@ class AuthService extends ChangeNotifier {
     final bodyProfile = json.decode(response_profile.body);
 
     try {
-      if (bodyProfile['code'] == 'user_not_found'){
+      if (bodyProfile['code'] == 'user_not_found') {
         return '';
       }
-    } catch (e){
+    } catch (e) {
       print('The User exist');
-    };
-
-
+    }
+    ;
 
     return {
       "about": bodyProfile['about'],

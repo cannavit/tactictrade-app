@@ -62,6 +62,7 @@ class StrategiesOwnerScreen extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       itemCount: tradingConfig.tradingConfigList.length,
       itemBuilder: (BuildContext context, int index) => StrategyCard(
+        
         totalOfTrades: tradingConfig.tradingConfigList[index].totalOfTrades,
         totalProfitUSD: tradingConfig.tradingConfigList[index].totalProfitUsd,
         totalTradingProfit:

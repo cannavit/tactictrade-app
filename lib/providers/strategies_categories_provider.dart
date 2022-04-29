@@ -34,6 +34,5 @@ class CategoryStrategiesSelected with ChangeNotifier {
   }
 
   getArticulesByCategory(String category) async {
-    //TODO call the API
   }
 }

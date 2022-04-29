@@ -57,9 +57,8 @@ class LoadingScreen extends StatelessWidget {
     Preferences.categoryStrategyOwnerSelected = 'all';
     Preferences.updateStrategyOwnerSelected = false;
 
-    // Remember me password. 
+    // Remember me password.
     if (!logged && Preferences.rememberMeLoginData) {
-
       final email = Preferences.emailLoginSaved;
       final password = Preferences.passwordLoginSaved;
 
