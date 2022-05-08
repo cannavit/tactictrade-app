@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/screens/login_screens.dart';
 import 'package:tactictrade/services/auth_service.dart';
@@ -56,6 +57,16 @@ class LoadingScreen extends StatelessWidget {
     Preferences.categoryStrategySelected = 'all';
     Preferences.categoryStrategyOwnerSelected = 'all';
     Preferences.updateStrategyOwnerSelected = false;
+    Preferences.brokerSelectedPreferences = 1;
+
+
+    final _storage = new FlutterSecureStorage();
+
+    final token_saved = await _storage.read(key: 'token_access') ?? '';
+
+    if (token_saved == '') {
+      logged = false;
+    }
 
     // Remember me password.
     if (!logged && Preferences.rememberMeLoginData) {

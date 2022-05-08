@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,40 +8,42 @@ import 'package:tactictrade/widgets/forms_components/dropdown_trading_config.dar
 
 import '../../providers/theme_provider.dart';
 import '../../screens/createFollowerTrade.dart';
+import '../../screens/transactions_records_screen.dart';
 import '../../services/trading_config.dart';
+import '../../services/transactions_record_service.dart';
 import '../popup_delete_trading_config.dart';
 
 class StrategyCard extends StatelessWidget {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
 
-  StrategyCard(
-      {Key? key,
-      required this.initialCapitalLong,
-      required this.initialCapitalShort,
-      required this.currentCapitalLong,
-      required this.currentCapitalShort,
-      required this.percentageProfitLong,
-      required this.percentageProfitShort,
-      required this.urlPusher,
-      required this.strategyName,
-      required this.pusherName,
-      required this.brokerName,
-      required this.brokerUrl,
-      required this.closedTradeLong,
-      required this.closedTradeShort,
-      required this.timeTrade,
-      required this.symbol,
-      required this.symbolUrl,
-      required this.brokerType,
-      required this.tradingConfigId,
-      required this.totalNumberOfWinTrades,
-      required this.totalTradingProfit,
-      required this.totalProfitUSD,
-      required this.totalOfTrades,
-      required this.isActiveTradeLong,
-      required this.isActiveTradeShort, 
-      })
-      : super(key: key);
+  StrategyCard({
+    Key? key,
+    required this.initialCapitalLong,
+    required this.initialCapitalShort,
+    required this.currentCapitalLong,
+    required this.currentCapitalShort,
+    required this.percentageProfitLong,
+    required this.percentageProfitShort,
+    required this.urlPusher,
+    required this.strategyName,
+    required this.pusherName,
+    required this.brokerName,
+    required this.brokerUrl,
+    required this.closedTradeLong,
+    required this.closedTradeShort,
+    required this.timeTrade,
+    required this.symbol,
+    required this.symbolUrl,
+    required this.brokerType,
+    required this.tradingConfigId,
+    required this.totalNumberOfWinTrades,
+    required this.totalTradingProfit,
+    required this.totalProfitUSD,
+    required this.totalOfTrades,
+    required this.isActiveTradeLong,
+    required this.isActiveTradeShort,
+    required this.strategyNewsId,
+  }) : super(key: key);
 
   final double initialCapitalLong;
   final double initialCapitalShort;
@@ -70,6 +73,7 @@ class StrategyCard extends StatelessWidget {
   final bool isActiveTradeShort;
   final bool isActiveTradeLong;
 
+  final int strategyNewsId;
 
   @override
   Widget build(BuildContext context) {
@@ -156,6 +160,8 @@ class StrategyCard extends StatelessWidget {
 
   Widget _buildInnerWidget(BuildContext context) {
     final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
+    final transactionServiceData =
+        Provider.of<TransactionRecordsServices>(context, listen: true);
 
     return Container(
       // color: Color(0xFFecf2f9),
@@ -163,8 +169,6 @@ class StrategyCard extends StatelessWidget {
       decoration: _BackgroundCardColor(context),
       child: Column(
         children: [
-
-          
           Row(
             children: [
               PusherStrategyImageText(
@@ -221,18 +225,59 @@ class StrategyCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               // crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
-                // Expanded(child: Container()),                
+                // Expanded(child: Container()),
 
-                    Container(
-                      color: Colors.red,
-                      width: 20,
-                      height: 20,
-                      child:  DropdownTradingConfig(tradingConfigId: tradingConfigId,)
-                      ),
+                Container(
+                    color: Colors.red,
+                    width: 20,
+                    height: 20,
+                    child: DropdownTradingConfig(
+                      tradingConfigId: tradingConfigId,
+                    )),
 
-                    //   Expanded(child: Container()),
+                const SizedBox(width: 20),
 
-                    
+                IconButton(
+                  icon: const Icon(
+                    Icons.remove_red_eye_outlined,
+                    color: Colors.blue,
+                    size: 20,
+                  ),
+
+
+                  onPressed: () {
+
+                    transactionServiceData.getTransactionRecord(
+                        strategyNewsId, {"private": true});
+
+                    // final recordsProvider =
+                    //   Provider.of<TransactionRecordsServices>(context, listen: true);
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TransactionPageScreen(
+                                  isPrivateRecord: false,
+                                  strategyId: strategyNewsId,
+                                  urlSymbol: symbolUrl,
+                                  isActive: isActiveTradeLong,
+                                  isVerify: true,
+                                  strategyName: strategyName,
+                                  symbolName: symbol,
+                                  timeTrade: timeTrade,
+                                  urlPusher: urlPusher,
+                                  mantainerName: brokerName,
+                                  urlUser: brokerUrl,
+                                  titleLevelOne: 'Broker',
+                                  recordsProvider: transactionServiceData,
+                                  isPrivate: true,
+                                )));
+
+                    // do something
+                  },
+                ),
+
+                //   Expanded(child: Container()),
 
                 // IconButton(
                 //     onPressed: () {},
@@ -304,6 +349,7 @@ class _ControlButtomsState extends State<_ControlButtoms> {
           Container(
             width: 160,
             child: SwitchListTile(
+                activeColor: Colors.blue,
                 value: widget.isActiveTradeLong,
                 title: Text('Active Trading Long',
                     style: GoogleFonts.openSans(
@@ -329,6 +375,7 @@ class _ControlButtomsState extends State<_ControlButtoms> {
           Container(
             width: 160,
             child: SwitchListTile(
+                activeColor: Colors.blue,
                 value: widget.isActiveTradeShort,
                 title: Text('Active Trading Short',
                     style: GoogleFonts.openSans(
@@ -869,7 +916,7 @@ class StrategyCardSimple extends StatelessWidget {
                             Icon(
                               Icons.timer,
                               color: Colors.white,
-                              size: 20,
+                              size: 18,
                             )
                           ],
                         ),

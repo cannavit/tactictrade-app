@@ -14,11 +14,17 @@ class StrategiesOwnerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
     final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
+
     final filterList =
         Provider.of<FiltersStrategiesSelected>(context, listen: true);
 
-    if (tradingConfig.isLoading) return LoadingStrategies();
+    if (tradingConfig.isLoading) {
+      // tradingConfig.read();
+      LoadingStrategies();
+    }
 
     RefreshController _refreshController =
         RefreshController(initialRefresh: false);
@@ -62,48 +68,50 @@ class StrategiesOwnerScreen extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       itemCount: tradingConfig.tradingConfigList.length,
       itemBuilder: (BuildContext context, int index) => StrategyCard(
-        
-        totalOfTrades: tradingConfig.tradingConfigList[index].totalOfTrades,
-        totalProfitUSD: tradingConfig.tradingConfigList[index].totalProfitUsd,
-        totalTradingProfit:
-            tradingConfig.tradingConfigList[index].totalTradingProfit,
-        totalNumberOfWinTrades:
-            tradingConfig.tradingConfigList[index].totalNumberOfWinTrades,
-        tradingConfigId: tradingConfig.tradingConfigList[index].id,
-        initialCapitalLong:
-            tradingConfig.tradingConfigList[index].initialCapitalUsdLong,
-        initialCapitalShort:
-            tradingConfig.tradingConfigList[index].initialCapitalUsdShort,
-        currentCapitalLong:
-            tradingConfig.tradingConfigList[index].quantityUsdLong,
-        currentCapitalShort:
-            tradingConfig.tradingConfigList[index].quantityUsdShort,
-        percentageProfitLong:
-            tradingConfig.tradingConfigList[index].profitPorcentageLong,
-        percentageProfitShort:
-            tradingConfig.tradingConfigList[index].profitPorcentageShort,
-        urlPusher: tradingConfig.tradingConfigList[index].strategyNewsPusher
-            .toString(),
-        strategyName:
-            tradingConfig.tradingConfigList[index].strategyNewsName.toString(),
-        pusherName: "TradingView",
-        brokerName: tradingConfig.tradingConfigList[index].brokerBrokerName,
-        brokerType: tradingConfig.tradingConfigList[index].brokerName,
-        brokerUrl:
-            tradingConfig.tradingConfigList[index].brokerName == "Papertrade"
-                ? "assets/ReduceBrokerTacticTradeIcon.png"
-                : "assets/AlpacaMiniLogo.png",
-        closedTradeLong:
-            tradingConfig.tradingConfigList[index].closedTradeLong.toString(),
-        closedTradeShort:
-            tradingConfig.tradingConfigList[index].closedTradeShort.toString(),
-        timeTrade: tradingConfig.tradingConfigList[index].symbolTime,
-        symbol: tradingConfig.tradingConfigList[index].symbolName,
-        symbolUrl: tradingConfig.tradingConfigList[index].symbolUrl,
-        isActiveTradeLong: tradingConfig.tradingConfigList[index].isActiveLong,
-        isActiveTradeShort:
-            tradingConfig.tradingConfigList[index].isActiveShort,
-      ),
+          totalOfTrades: tradingConfig.tradingConfigList[index].totalOfTrades,
+          totalProfitUSD: tradingConfig.tradingConfigList[index].totalProfitUsd,
+          totalTradingProfit:
+              tradingConfig.tradingConfigList[index].totalTradingProfit,
+          totalNumberOfWinTrades:
+              tradingConfig.tradingConfigList[index].totalNumberOfWinTrades,
+          tradingConfigId: tradingConfig.tradingConfigList[index].id,
+          initialCapitalLong:
+              tradingConfig.tradingConfigList[index].initialCapitalUsdLong,
+          initialCapitalShort:
+              tradingConfig.tradingConfigList[index].initialCapitalUsdShort,
+          currentCapitalLong:
+              tradingConfig.tradingConfigList[index].quantityUsdLong,
+          currentCapitalShort:
+              tradingConfig.tradingConfigList[index].quantityUsdShort,
+          percentageProfitLong:
+              tradingConfig.tradingConfigList[index].profitPorcentageLong,
+          percentageProfitShort:
+              tradingConfig.tradingConfigList[index].profitPorcentageShort,
+          urlPusher: tradingConfig.tradingConfigList[index].strategyNewsPusher
+              .toString(),
+          strategyName: tradingConfig.tradingConfigList[index].strategyNewsName
+              .toString(),
+          pusherName: "TradingView",
+          brokerName: tradingConfig.tradingConfigList[index].brokerBrokerName,
+          brokerType: tradingConfig.tradingConfigList[index].brokerName,
+          brokerUrl:
+              tradingConfig.tradingConfigList[index].brokerName == "Papertrade"
+                  ? "assets/ReduceBrokerTacticTradeIcon.png"
+                  : "assets/AlpacaMiniLogo.png",
+          closedTradeLong:
+              tradingConfig.tradingConfigList[index].closedTradeLong.toString(),
+          closedTradeShort: tradingConfig
+              .tradingConfigList[index].closedTradeShort
+              .toString(),
+          timeTrade: tradingConfig.tradingConfigList[index].symbolTime,
+          symbol: tradingConfig.tradingConfigList[index].symbolName,
+          symbolUrl: tradingConfig.tradingConfigList[index].symbolUrl,
+          isActiveTradeLong:
+              tradingConfig.tradingConfigList[index].isActiveLong,
+          isActiveTradeShort:
+              tradingConfig.tradingConfigList[index].isActiveShort,
+          strategyNewsId:
+              tradingConfig.tradingConfigList[index].strategyNewsId),
     );
   }
 }

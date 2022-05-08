@@ -15,33 +15,40 @@ class BrokersPages extends StatelessWidget {
   Widget build(BuildContext context) {
     final brokerServices = Provider.of<BrokerServices>(context);
     // final themeColors = Theme.of(context);
-   RefreshController _refreshController =
+    RefreshController _refreshController =
         RefreshController(initialRefresh: false);
 
-    if (brokerServices.isLoading) return LoadingStrategies();
+    if (brokerServices.isLoading) {
+      // brokerServices.loadBroker();
+      LoadingStrategies();
+    }
+    ;
 
     return ChangeNotifierProvider(
       create: (_) => new NavigationModel(),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.blue,
-            child: Icon(Icons.add),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, 'create_broker');
-            },
-          ),
+          backgroundColor: Colors.blue,
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, 'create_broker');
+          },
+        ),
         body: SmartRefresher(
           controller: _refreshController,
           child: _listViewBrokers(brokerServices),
           enablePullDown: true,
           header: WaterDropHeader(
-            complete: Icon(Icons.check, color: Colors.blue[400]),
+            complete: Icon(
+              Icons.check,
+              color: Colors.blue[400],
+            ),
             waterDropColor: Colors.blue.shade400,
           ),
           onRefresh: () {
-          brokerServices.loadBrokerv2();
-          _refreshController.refreshCompleted();
-        },
+            brokerServices.loadBrokerv2();
+            _refreshController.refreshCompleted();
+          },
         ),
       ),
     );
@@ -49,17 +56,17 @@ class BrokersPages extends StatelessWidget {
 
   ListView _listViewBrokers(BrokerServices brokerServices) {
     return ListView.separated(
-        separatorBuilder: (BuildContext context, int index) => Divider(),
-        physics: BouncingScrollPhysics(),
-        itemCount: brokerServices.brokerList.length,
-        itemBuilder: (BuildContext context, int index) => cardBrokerWidget(
-          broker: brokerServices.brokerList[index]['broker'],
-          tagBroker: brokerServices.brokerList[index]['tagBroker'],
-          brokerName: brokerServices.brokerList[index]['brokerName'],
-          capital: brokerServices.brokerList[index]['capital'],
-          tagPrice: brokerServices.brokerList[index]['tagPrice'],
-        ),
-      );
+      separatorBuilder: (BuildContext context, int index) => Divider(),
+      physics: BouncingScrollPhysics(),
+      itemCount: brokerServices.brokerList.length,
+      itemBuilder: (BuildContext context, int index) => cardBrokerWidget(
+        broker: brokerServices.brokerList[index]['broker'],
+        tagBroker: brokerServices.brokerList[index]['tagBroker'],
+        brokerName: brokerServices.brokerList[index]['brokerName'],
+        capital: brokerServices.brokerList[index]['capital'],
+        tagPrice: brokerServices.brokerList[index]['tagPrice'],
+      ),
+    );
   }
 }
 
@@ -71,6 +78,8 @@ class cardBrokerWidget extends StatelessWidget {
     required this.brokerName,
     required this.capital,
     required this.tagPrice,
+    this.simpleView = false,
+    this.hideEditIcon = false,
   }) : super(key: key);
 
   final String broker;
@@ -78,19 +87,25 @@ class cardBrokerWidget extends StatelessWidget {
   final String brokerName;
   final double capital;
   final String tagPrice;
+  final bool simpleView;
+  final bool hideEditIcon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: simpleView ? 100 : 160,
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: IntrinsicHeight(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            BrokerInfo(tagBroker: tagBroker, broker: broker),
+            BrokerInfo(
+                tagBroker: tagBroker, broker: broker, simpleView: simpleView),
             Container(
               child: BrokerCapitalWidget(
+                  hideEditIcon: hideEditIcon,
+                  simpleView: simpleView,
                   brokerName: brokerName,
                   capital: capital,
                   tagBroker: tagBroker,

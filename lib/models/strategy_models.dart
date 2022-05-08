@@ -58,7 +58,7 @@ class Strategy {
         required this.period,
         required this.timer,
         required this.description,
-        required this.postImage,
+         this.postImage = '',
         required this.urlImage,
         required this.emailBot,
         required this.owner,

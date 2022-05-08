@@ -98,7 +98,7 @@ class CreateStrategyScreen extends StatelessWidget {
             statusBarBrightness:
                 Preferences.isDarkmode ? Brightness.light : Brightness.dark,
           ),
-          title: Text('Create Strategy',
+          title: Text('Connect Strategy',
               style: TextStyle(
                   color: themeColors.secondaryHeaderColor,
                   fontSize: 20,
@@ -336,8 +336,8 @@ class _FormState extends State<_Form> {
                 'symbol': this.symbolCtrl,
                 'timeTradeCtrl': this.timeTradeCtrl,
                 'strategyUrlCtrl': this.strategyUrlCtrl,
-                'is_public': false,
-                'is_active': true,
+                // 'is_public': true,
+                // 'is_active': true,
                 'description': this.descriptionCtrl,
               },
               btnEnabled: _btnEnabled,
@@ -503,7 +503,7 @@ class ButtonNext extends StatelessWidget {
     Key? key,
     required this.bodyRequest,
     required this.btnEnabled,
-    this.buttomText = 'Create Strategy',
+    this.buttomText = 'Connect Strategy',
   }) : super(key: key);
 
   final dynamic bodyRequest;
@@ -536,6 +536,7 @@ class ButtonNext extends StatelessWidget {
                 // Validate form. ----------------------------------------------------
 
                 var isMandatory = false;
+                
                 bodyRequest.forEach((k, v) {
                   var bd = bodyRequest[k];
                   try {
@@ -548,10 +549,11 @@ class ButtonNext extends StatelessWidget {
                   }
                 });
 
-                if (isMandatory) {
-                  NotificationsService.showSnackbar(
-                      'It has fields that are mandatory empty');
-                }
+                //TODO fix the validators and notification message
+                // if (isMandatory) {
+                //   NotificationsService.showSnackbar(
+                //       'It has fields that are mandatory empty');
+                // }
 
                 final data = StrategyData(
                   strategyNews: bodyRequest["strategyNews"].value.text,
@@ -567,15 +569,17 @@ class ButtonNext extends StatelessWidget {
                     Provider.of<StrategyServices>(context, listen: false);
 
                 final response = await strategyApi.postStrategy(data);
+
                 var body = json.decode(response['body']);
                 body = json.decode(response['body']);
 
                 if (response['statusCode'] != 200) {
-                  NotificationsService.showSnackbar(body['message']);
+                  NotificationsService.showSnackbar(context, body['message']);
                 
                   Provider.of<StrategyServices>(context, listen: false)
                       .loadStrategy();
                 } else {
+                  
                   strategyPreferences.selectedMessage =
                       body["tradingview"]["message"];
 

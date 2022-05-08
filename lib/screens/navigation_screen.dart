@@ -38,9 +38,9 @@ class _Pages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final navigationModel = Provider.of<NavigationModel>(context);
     final strategies = Provider.of<StrategyLoadServices>(context);
-
     final categoriesList = Provider.of<CategoryStrategiesSelected>(context);
 
     return PageView(

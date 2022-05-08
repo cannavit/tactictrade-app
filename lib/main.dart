@@ -9,7 +9,11 @@ import 'package:tactictrade/pages/broker/service/broker_service.dart';
 import 'package:tactictrade/pages/broker/create_broker_screen.dart';
 import 'package:tactictrade/providers/home_categories_provider.dart';
 import 'package:tactictrade/providers/providers.dart';
+import 'package:tactictrade/providers/show_graph2d_profit_provider.dart';
 import 'package:tactictrade/providers/strtegy_categories_filter_provider.dart';
+import 'package:tactictrade/providers/timer_categories_provider.dart';
+import 'package:tactictrade/providers/trading_config_input_long_provider.dart';
+import 'package:tactictrade/providers/trading_config_short_provider.dart';
 import 'package:tactictrade/screens/createFollowerTrade.dart';
 import 'package:tactictrade/screens/screens.dart';
 import 'package:tactictrade/screens/strategy_historial_screen.dart';
@@ -21,6 +25,7 @@ import 'package:tactictrade/services/transactions_record_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/forms_components/dropdown_custom.dart';
 import 'package:tactictrade/widgets/social_login/google_login_widget.dart';
+import 'providers/select_broker_trading_config_provider.dart';
 import 'services/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -70,6 +75,13 @@ void main() async {
       ChangeNotifierProvider(create: (_) => FiltersStrategiesSelected()),
       ChangeNotifierProvider(create: (_) => TransactionRecordsServices()),
       ChangeNotifierProvider(create: (_) => SettingServices(), lazy: false),
+      ChangeNotifierProvider(create: (_) => CategoryTimerSelected()),
+      ChangeNotifierProvider(create: (_) => ShowGraph2dProfitProvider()),
+      ChangeNotifierProvider(create: (_) => TradingConfigProvider()),
+      ChangeNotifierProvider(create: (_) => SelectBrokerTradingConfig()),
+      ChangeNotifierProvider(create: (_) => TradingConfigInputLongProvider()),
+
+
 
       // ChangeNotifierProvider(create: (_) => )
     ],

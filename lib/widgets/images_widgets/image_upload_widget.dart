@@ -60,8 +60,10 @@ class _UploadImage extends StatefulWidget {
 class _UploadImageState extends State<_UploadImage> {
   @override
   Widget build(BuildContext context) {
+    
     final themeColors = Theme.of(context);
     final strategyLoadServices = Provider.of<StrategyLoadServices>(context);
+    
     return Center(
       child: Stack(
         children: [

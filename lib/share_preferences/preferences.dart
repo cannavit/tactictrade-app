@@ -56,7 +56,7 @@ class Preferences {
   static String _passwordLoginSaved = '';
   static String _emailLoginSaved = '';
 
-
+  static bool _showProfitGraph = true;
 
   static String _selectedOptionStrategiesSettings = '';
 
@@ -64,6 +64,9 @@ class Preferences {
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
   }
+
+  static int _brokerSelectedPreferences = 0;
+
 
   // Define geters -------------------------------------------------------
 
@@ -205,8 +208,19 @@ class Preferences {
   }
 
   static String get selectedOptionStrategiesSettings {
-    return _prefs.getString('selectedOptionStrategiesSettings') ?? _selectedOptionStrategiesSettings;
+    return _prefs.getString('selectedOptionStrategiesSettings') ??
+        _selectedOptionStrategiesSettings;
   }
+
+
+  static bool get showProfitGraph {
+    return _prefs.getBool('showProfitGraph') ?? _showProfitGraph;
+  }
+
+  static int get brokerSelectedPreferences {
+    return _prefs.getInt('brokerSelectedPreferences') ?? _brokerSelectedPreferences;
+  }
+
 
   // Define seters -------------------------------------------------------
 
@@ -359,6 +373,16 @@ class Preferences {
     _selectedOptionStrategiesSettings = value;
     _prefs.setString('selectedOptionStrategiesSettings', value);
   }
-  
+
+
+    static set showProfitGraph(bool value) {
+    _showProfitGraph = value;
+    _prefs.setBool('showProfitGraph', value);
+  }
+
+  static set brokerSelectedPreferences(int value) {
+    _brokerSelectedPreferences = value;
+    _prefs.setInt('brokerSelectedPreferences', value);
+  }  
 
 }

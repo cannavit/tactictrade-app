@@ -63,30 +63,43 @@ class TransactionRecordsServices extends ChangeNotifier {
   }
 
   Future<List<Record>> getTransactionRecord(
+
       int strategyId, dynamic body) async {
+        
+    final private = body['private'];
+    
     // Check if exist this value in memory
-    if (recordsListMemory.containsKey(strategyId)) {
-      recordsList = recordsListMemory[strategyId];
-      return recordsListMemory[strategyId];
+    if (recordsListMemory.containsKey('${strategyId}_${private}')) {
+      recordsList = recordsListMemory['${strategyId}_${private}'];
+      this.recordsList = recordsList;
+      notifyListeners();
+      return recordsListMemory['${strategyId}_${private}'];
     }
 
-    final url =
-        Uri.http(Environment.baseUrl, '/transactions/records/$strategyId');
+
+    
+    final url = Uri.http(
+        Environment.baseUrl, '/transactions/records/$strategyId/${private}');
 
     final _storage = new FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
-    final response = await http.get(url, headers: {
-      'Content-Type': 'applicaction/json',
-      'Authorization': 'Bearer ' + token,
-    });
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'applicaction/json',
+        'Authorization': 'Bearer ' + token,
+      },
+    );
 
-    final dataJson = RecordModel.fromJson(response.body);
+    final dataJson = await RecordModel.fromJson(response.body);
     recordsList = dataJson.results;
 
-    recordsListMemory[strategyId] = dataJson.results;
+    recordsListMemory['${strategyId}_${private}'] = dataJson.results;
+    this.recordsList = recordsList;
 
+    notifyListeners();
     return recordsList;
   }
 }

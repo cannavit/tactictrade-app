@@ -7,6 +7,7 @@ import 'package:tactictrade/share_preferences/preferences.dart';
 
 import '../pages/broker/service/broker_service.dart';
 import '../providers/theme_provider.dart';
+import '../providers/trading_config_short_provider.dart';
 import '../screens/create_strategy_screen.dart';
 import '../screens/loading_strategy.dart';
 import '../services/strategies_services.dart';
@@ -193,7 +194,7 @@ class _FormCardState extends State<_FormCard> {
 
             // Input quantity, stoploss, isActive, takeProfit, isDynamicStopLoss
             GeneralInputField(
-                enabled: Preferences.brokerNewUseTradingLong,
+                enabled: false,
                 textInputType: TextInputType.number,
                 textController: widget.longQtyCtrl,
                 labelText: 'Quantity USD',
@@ -411,6 +412,9 @@ class _SwiftList extends StatefulWidget {
 class _SwiftListState extends State<_SwiftList> {
   @override
   Widget build(BuildContext context) {
+
+    final tradingConfigProvider = Provider.of<TradingConfigProvider>(context);
+
     return Container(
       child: SwitchListTile.adaptive(
           secondary: Icon(widget.iconSwift, size: 30, color: widget.iconColor),
@@ -422,6 +426,7 @@ class _SwiftListState extends State<_SwiftList> {
 
             if (widget.isTradingLong) {
               Preferences.brokerNewUseTradingLong = value;
+              
             } else {
               Preferences.brokerNewUseTradingLong = value;
             }

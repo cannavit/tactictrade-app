@@ -2,12 +2,16 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:tactictrade/widgets/carousel_list_home.dart';
 
 import '../models/record_model.dart';
+import '../providers/show_graph2d_profit_provider.dart';
+import '../providers/timer_categories_provider.dart';
 import '../services/transactions_record_service.dart';
 import '../share_preferences/preferences.dart';
 import '../widgets/strategyCard.dart';
@@ -28,6 +32,9 @@ class TransactionPageScreen extends StatelessWidget {
     required this.symbolName,
     required this.mantainerName,
     required this.urlUser,
+    this.titleLevelOne = 'Mantainer',
+    required this.recordsProvider,
+    required this.isPrivate,
   }) : super(key: key);
 
   final bool isPrivateRecord;
@@ -42,26 +49,34 @@ class TransactionPageScreen extends StatelessWidget {
   final String symbolName;
   final String mantainerName;
   final String urlUser;
+  final String titleLevelOne;
+  final bool isPrivate;
+
+  final TransactionRecordsServices recordsProvider;
 
   @override
   Widget build(BuildContext context) {
     final themeColors = Theme.of(context);
+    var showGraph = true;
+
+    final filterList =
+        Provider.of<CategoryTimerSelected>(context, listen: false);
 
     final data = json.encode({
       'strategyId': strategyId,
       'body': {"private": false}
     });
 
-    final recordsProvider =
-        Provider.of<TransactionRecordsServices>(context, listen: false);
+    // final recordsProvider =
+    //     Provider.of<TransactionRecordsServices>(context, listen: true);
 
-    // if (records.isLoading) return LoadingStrategies();
+    if (recordsProvider.isLoading) return LoadingStrategies();
 
     // Build the data for Graph
 
     return FutureBuilder(
         future: recordsProvider
-            .getTransactionRecord(strategyId, {"private": false}),
+            .getTransactionRecord(strategyId, {"private": isPrivate}),
         builder: (_, AsyncSnapshot<List<Record>> snapshot) {
           if (!snapshot.hasData) return const LoadingStrategies();
 
@@ -89,6 +104,7 @@ class TransactionPageScreen extends StatelessWidget {
 
           var recordsShortProfitReverser =
               new List.from(recordsShortProfit.reversed);
+
           var recordsLongProfitReverser =
               new List.from(recordsLongProfit.reversed);
 
@@ -100,6 +116,7 @@ class TransactionPageScreen extends StatelessWidget {
 
           var xMaxValue;
           var xMinValue;
+
           if (value1 > value2) {
             xMaxValue = value1;
             xMinValue = value2;
@@ -141,9 +158,7 @@ class TransactionPageScreen extends StatelessWidget {
                   onPressed: () {
                     Preferences.navigationCurrentPage = 0;
                     Preferences.tempStrategyImage = "";
-
                     recordsProvider.isLoading = true;
-
                     Navigator.pushReplacementNamed(context, 'navigation');
                   },
                 ),
@@ -153,7 +168,9 @@ class TransactionPageScreen extends StatelessWidget {
               body: Column(
                 children: [
                   MantainerCardStrategyWidget(
-                      mantainerName: mantainerName, urlUser: urlUser),
+                      mantainerName: mantainerName,
+                      urlUser: urlUser,
+                      titleLevelOne: titleLevelOne),
 
                   labelTwoStockAndPusher(
                     isActive: isActive,
@@ -168,48 +185,35 @@ class TransactionPageScreen extends StatelessWidget {
                   Divider(height: 1),
 
                   // Graph 2D -----------------------------------------
-                  Container(
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                      width: double.infinity,
-                      height: 200,
-                      child: LineChart(
-                        LineChartData(
-                          minY: xMinValue,
-                          maxY: xMaxValue,
-                          minX: 0,
-                          maxX: recordsShortProfit.length >
-                                  recordsLongProfit.length
-                              ? recordsShortProfit.length.toDouble() - 1
-                              : recordsLongProfit.length.toDouble() - 1,
-                          // maxX: recordsShortProfit.length > recordsLongProfit.length  ? recordsShortProfit.length : recordsShortProfit.length,
-                          titlesData: FlTitlesData(show: false),
-                          gridData:
-                              FlGridData(show: true, drawVerticalLine: false),
-                          borderData: FlBorderData(show: false),
-                          lineBarsData: [
-                            // The red line
-                            LineChartBarData(
-                                spots: recordsShortProfitSpots,
-                                isCurved: true,
-                                barWidth: 3,
-                                color: Colors.green),
-                            // The orange line
-                            LineChartBarData(
-                                spots: recordsLongProfitSpots,
-                                isCurved: true,
-                                barWidth: 3,
-                                color: Colors.blue),
-                            // The blue line
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  _2dGraphProfit(
+                      xMinValue: xMinValue,
+                      xMaxValue: xMaxValue,
+                      recordsShortProfit: recordsShortProfit,
+                      recordsLongProfit: recordsLongProfit,
+                      recordsShortProfitSpots: recordsShortProfitSpots,
+                      recordsLongProfitSpots: recordsLongProfitSpots),
 
                   // -------------------------------------------------
                   const SizedBox(height: 20),
+
+                  // Row Filters --------------------------------------
+                  Container(
+                    height: 25,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 30,
+                          width: 30,
+                          child: _buttonChangeGraph(),
+                        ),
+                        Expanded(
+                          child: CarouselListHome(
+                              categoriesList: filterList, pageCarausel: 'year'),
+                        ),
+                      ],
+                    ),
+                  ),
 
                   ColumnTitlesTransactionsRecordsWidget(),
 
@@ -256,6 +260,136 @@ class TransactionPageScreen extends StatelessWidget {
                 ],
               ));
         });
+  }
+}
+
+class _2dGraphProfit extends StatelessWidget {
+  const _2dGraphProfit({
+    Key? key,
+    required this.xMinValue,
+    required this.xMaxValue,
+    required this.recordsShortProfit,
+    required this.recordsLongProfit,
+    required this.recordsShortProfitSpots,
+    required this.recordsLongProfitSpots,
+  }) : super(key: key);
+
+  final xMinValue;
+  final xMaxValue;
+  final List<double> recordsShortProfit;
+  final List<double> recordsLongProfit;
+  final List<FlSpot> recordsShortProfitSpots;
+  final List<FlSpot> recordsLongProfitSpots;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Visibility(
+        visible: Provider.of<ShowGraph2dProfitProvider>(context, listen: true)
+            .read(),
+        child: _2dProfitGraph(
+            xMinValue: xMinValue,
+            xMaxValue: xMaxValue,
+            recordsShortProfit: recordsShortProfit,
+            recordsLongProfit: recordsLongProfit,
+            recordsShortProfitSpots: recordsShortProfitSpots,
+            recordsLongProfitSpots: recordsLongProfitSpots),
+      ),
+    );
+  }
+}
+
+class _2dProfitGraph extends StatelessWidget {
+  const _2dProfitGraph({
+    Key? key,
+    required this.xMinValue,
+    required this.xMaxValue,
+    required this.recordsShortProfit,
+    required this.recordsLongProfit,
+    required this.recordsShortProfitSpots,
+    required this.recordsLongProfitSpots,
+  }) : super(key: key);
+
+  final xMinValue;
+  final xMaxValue;
+  final List<double> recordsShortProfit;
+  final List<double> recordsLongProfit;
+  final List<FlSpot> recordsShortProfitSpots;
+  final List<FlSpot> recordsLongProfitSpots;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      width: double.infinity,
+      height: 200,
+      child: LineChart(
+        LineChartData(
+          minY: xMinValue,
+          maxY: xMaxValue,
+          minX: 0,
+          maxX: recordsShortProfit.length > recordsLongProfit.length
+              ? recordsShortProfit.length.toDouble() - 1
+              : recordsLongProfit.length.toDouble() - 1,
+          // maxX: recordsShortProfit.length > recordsLongProfit.length  ? recordsShortProfit.length : recordsShortProfit.length,
+          titlesData: FlTitlesData(show: false),
+          gridData: FlGridData(show: true, drawVerticalLine: false),
+          borderData: FlBorderData(show: false),
+          lineBarsData: [
+            // The red line
+            LineChartBarData(
+                spots: recordsShortProfitSpots,
+                isCurved: true,
+                barWidth: 3,
+                color: Colors.green),
+            // The orange line
+            LineChartBarData(
+                spots: recordsLongProfitSpots,
+                isCurved: true,
+                barWidth: 3,
+                color: Colors.blue),
+            // The blue line
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _buttonChangeGraph extends StatefulWidget {
+  const _buttonChangeGraph({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<_buttonChangeGraph> createState() => _buttonChangeGraphState();
+}
+
+class _buttonChangeGraphState extends State<_buttonChangeGraph> {
+  @override
+  Widget build(BuildContext context) {
+    final showGraph2dProfitProvider =
+        Provider.of<ShowGraph2dProfitProvider>(context);
+
+    return IconButton(
+        onPressed: () {
+          print(Preferences.showProfitGraph);
+          setState(() {
+            Preferences.showProfitGraph = !Preferences.showProfitGraph;
+            showGraph2dProfitProvider.value(Preferences.showProfitGraph);
+          });
+        },
+        icon: Preferences.showProfitGraph
+            ? Icon(
+                CupertinoIcons.graph_circle,
+                color: Colors.blue,
+                size: 16,
+              )
+            : Icon(
+                CupertinoIcons.graph_circle_fill,
+                color: Colors.blue,
+                size: 16,
+              ));
   }
 }
 
@@ -380,20 +514,3 @@ class ColumnTitlesTransactionsRecordsWidget extends StatelessWidget {
     );
   }
 }
-
-// order "buy",
-// operation "long",
-// qty_open 7.5,
-// qty_close 7.5,
-// price_open 132.7,
-// price_closed 132.7,
-// base_cost 1000.0,
-// close_cost 999.8,
-// amount_open 999.8,
-// amount_close 999.8,
-// spread 0.1675,
-// create_at "2022-04-05T08:39:12.632000Z",
-// updated_at "2022-04-05T08:39:12.632000Z",
-// is_winner false,
-// profit -0.16,
-// profit_percentage -0.016,

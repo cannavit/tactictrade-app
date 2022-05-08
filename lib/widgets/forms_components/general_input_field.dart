@@ -44,7 +44,6 @@ class GeneralInputField extends StatelessWidget {
           maxLines: maxLine,
           controller: textController,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          // autovalidateMode: AutovalidateMode.always,
           autocorrect: false,
           keyboardType: textInputType,
           decoration: InputDecoration(

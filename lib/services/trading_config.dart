@@ -22,8 +22,11 @@ class TradingConfig extends ChangeNotifier {
 
 //   // int strategyId
   Future create(dynamic data) async {
+
     final url = Uri.http(Environment.baseUrl, '/trading/tradingvalues');
+    
     final _storage = new FlutterSecureStorage();
+    
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
@@ -189,17 +192,14 @@ class TradingConfig extends ChangeNotifier {
       return '';
     }
 
-
     final url =
         Uri.http(Environment.baseUrl, '/trading/openlong/${tradingConfigId}');
 
-    final response = await http.post(url,
-        headers: {
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-          'Authorization': 'Bearer ' + token
-        });
-
+    final response = await http.post(url, headers: {
+      'Content-Type': 'application/json',
+      'accept': 'application/json',
+      'Authorization': 'Bearer ' + token
+    });
 
     // final body = json.encode(data);
   }

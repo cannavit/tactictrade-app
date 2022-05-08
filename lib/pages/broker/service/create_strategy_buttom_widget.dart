@@ -7,12 +7,11 @@ import '../../../share_preferences/preferences.dart';
 import 'broker_service.dart';
 
 class ButtonCreateBroker extends StatelessWidget {
-  
   const ButtonCreateBroker({
     Key? key,
     required this.bodyRequest,
     required this.btnEnabled,
-    this.buttomText = 'Create Strategy',
+    this.buttomText = 'Connect Strategy',
   }) : super(key: key);
 
   final dynamic bodyRequest;
@@ -59,6 +58,7 @@ class ButtonCreateBroker extends StatelessWidget {
 
                 if (isMandatory) {
                   NotificationsService.showSnackbar(
+                      context,
                       'It has fields that are mandatory empty');
                   return null;
                 }
@@ -85,7 +85,7 @@ class ButtonCreateBroker extends StatelessWidget {
                 if (responseBroker.statusCode != 201) {
                   var message = jsonDecode(responseBroker.body);
 
-                  NotificationsService.showSnackbar(message["message"]);
+                  NotificationsService.showSnackbar(context,message["message"]);
                   return null;
                 }
 

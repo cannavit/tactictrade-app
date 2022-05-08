@@ -52,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                       if (result == null) {
                         Navigator.pushReplacementNamed(context, 'loading');
                       } else {
-                        NotificationsService.showSnackbar(result);
+                        NotificationsService.showSnackbar(context,result);
                       }
                       // SignInDemo();
                     }),
@@ -208,7 +208,7 @@ class ButtonLogin extends StatelessWidget {
             if (errorMessage == null) {
               Navigator.pushReplacementNamed(context, 'loading');
             } else {
-              NotificationsService.showSnackbar(errorMessage);
+              NotificationsService.showSnackbar(context,errorMessage);
             }
 
             // Navigator.Push

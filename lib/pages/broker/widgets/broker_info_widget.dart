@@ -6,10 +6,12 @@ class BrokerInfo extends StatelessWidget {
     Key? key,
     required this.tagBroker,
     required this.broker,
+    this.simpleView = false,
   }) : super(key: key);
 
   final String tagBroker;
   final String broker;
+  final bool simpleView;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class BrokerInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Visibility(
-                visible: tagBroker == '' ? false : true,
+                visible: simpleView ? false : (tagBroker == '' ? false : true),
                 child: Container(
                   // margin: EdgeInsets.symmetric(vertical: 10),
                   margin: EdgeInsets.only(top: 10, left: 10),
@@ -36,8 +38,8 @@ class BrokerInfo extends StatelessWidget {
                           fontWeight: FontWeight.w300)),
                 )),
             Container(
-              height: 110,
-              width: 110,
+              height: simpleView ? 80 : 110,
+              width: simpleView ? 80 : 110,
               margin: EdgeInsets.all(10),
               child: Image(
                   image: AssetImage(broker == 'alpaca'

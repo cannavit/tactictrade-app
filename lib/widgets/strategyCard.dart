@@ -12,32 +12,34 @@ import '../pages/broker/service/broker_service.dart';
 import '../screens/createFollowerTrade.dart';
 import '../screens/transactions_records_screen.dart';
 import '../services/strategies_services.dart';
+import '../services/transactions_record_service.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    Key? key,
-    required this.urlUser,
-    required this.strategyName,
-    required this.urlSymbol,
-    required this.timeTrade,
-    required this.mantainerName,
-    required this.urlPusher,
-    this.descriptionText = '',
-    this.isActive = false,
-    this.isVerify = false,
-    this.imageNetwork = null,
-    required this.historicalData,
-    required this.profitable,
-    required this.maxDrawdown,
-    required this.netProfit,
-    required this.isStarred,
-    required this.isFavorite,
-    required this.likesNumber,
-    required this.idStrategy,
-    required this.isOwner,
-    required this.isFollower,
-    required this.symbolName,
-  }) : super(key: key);
+  const ProductCard(
+      {Key? key,
+      required this.urlUser,
+      required this.strategyName,
+      required this.urlSymbol,
+      required this.timeTrade,
+      required this.mantainerName,
+      required this.urlPusher,
+      this.descriptionText = '',
+      this.isActive = false,
+      this.isVerify = false,
+      this.imageNetwork = null,
+      required this.historicalData,
+      required this.profitable,
+      required this.maxDrawdown,
+      required this.netProfit,
+      required this.isStarred,
+      required this.isFavorite,
+      required this.likesNumber,
+      required this.idStrategy,
+      required this.isOwner,
+      required this.isFollower,
+      required this.symbolName,
+      this.titleLevelOne = 'Mantainer'})
+      : super(key: key);
 
   final String urlUser;
   final String strategyName;
@@ -61,6 +63,7 @@ class ProductCard extends StatelessWidget {
   final bool isOwner;
   final bool isFollower;
   final String symbolName;
+  final String titleLevelOne;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +80,9 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 10),
 
             MantainerCardStrategyWidget(
-                mantainerName: mantainerName, urlUser: urlUser),
+                mantainerName: mantainerName,
+                urlUser: urlUser,
+                titleLevelOne: titleLevelOne),
 
             const Divider(height: 10, color: Color(0xff797979)),
 
@@ -194,14 +199,16 @@ class ProductCard extends StatelessWidget {
 }
 
 class MantainerCardStrategyWidget extends StatelessWidget {
-  const MantainerCardStrategyWidget({
-    Key? key,
-    required this.mantainerName,
-    required this.urlUser,
-  }) : super(key: key);
+  const MantainerCardStrategyWidget(
+      {Key? key,
+      required this.mantainerName,
+      required this.urlUser,
+      this.titleLevelOne = 'Mantainer'})
+      : super(key: key);
 
   final String mantainerName;
   final String urlUser;
+  final String titleLevelOne;
 
   @override
   Widget build(BuildContext context) {
@@ -210,30 +217,32 @@ class MantainerCardStrategyWidget extends StatelessWidget {
       child: _headCardWidget(
         mantainerName: mantainerName,
         urlUser: urlUser,
+        titleLevelOne: titleLevelOne,
       ),
     );
   }
 }
 
 class _likeIcons extends StatelessWidget {
-  const _likeIcons({
-    Key? key,
-    required this.isStarred,
-    required this.isFavorite,
-    required this.likesNumber,
-    required this.strategyId,
-    required this.isOwner,
-    required this.isFollower,
-    required this.urlSymbol,
-    required this.urlPusher,
-    required this.timeTrade,
-    required this.strategyName,
-    required this.isActive,
-    required this.isVerify,
-    required this.symbolName,
-    required this.mantainerName,
-    required this.urlUser,
-  }) : super(key: key);
+  const _likeIcons(
+      {Key? key,
+      required this.isStarred,
+      required this.isFavorite,
+      required this.likesNumber,
+      required this.strategyId,
+      required this.isOwner,
+      required this.isFollower,
+      required this.urlSymbol,
+      required this.urlPusher,
+      required this.timeTrade,
+      required this.strategyName,
+      required this.isActive,
+      required this.isVerify,
+      required this.symbolName,
+      required this.mantainerName,
+      required this.urlUser,
+      this.titleLevelOne = 'Mantainer'})
+      : super(key: key);
 
   final bool isStarred;
   final bool isFavorite;
@@ -252,6 +261,7 @@ class _likeIcons extends StatelessWidget {
 
   final String mantainerName;
   final String urlUser;
+  final String titleLevelOne;
 
   get onPressed => null;
 
@@ -259,6 +269,8 @@ class _likeIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     final strategySocial = Provider.of<StrategySocial>(context);
     final brokerServices = Provider.of<BrokerServices>(context);
+    final transactionServiceData =
+        Provider.of<TransactionRecordsServices>(context);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -323,6 +335,9 @@ class _likeIcons extends StatelessWidget {
                   print('Open Transactions Records');
                   print(strategyId);
 
+                  // transactionServiceData
+                  //     .getTransactionRecord(strategyId, {"private": false});
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -338,9 +353,13 @@ class _likeIcons extends StatelessWidget {
                                 urlPusher: urlPusher,
                                 mantainerName: mantainerName,
                                 urlUser: urlUser,
+                                titleLevelOne: titleLevelOne,
+                                recordsProvider: transactionServiceData,
+                                isPrivate: false,
                               )));
                 },
               ),
+
               const Text('History',
                   style: TextStyle(
                       color: Colors.white,
@@ -567,14 +586,19 @@ class labelTwoStockAndPusher extends StatelessWidget {
             children: [
               Icon(
                   isActive
-                      ? Icons.check_circle
-                      : Icons.check_circle_outline_outlined,
-                  color: Color(0xff08BEFB)),
+                      ? Icons.check
+                      : Icons.check,
+                  color: Color(0xff08BEFB),
+                  size: 18
+                  
+                  ),
               Icon(
                   isVerify
-                      ? Icons.check_circle
-                      : Icons.check_circle_outline_outlined,
-                  color: Color(0xff08BEFB)),
+                      ? Icons.check
+                      : Icons.check,
+                  color: Color(0xff08BEFB),
+                  size: 18
+                  ),
             ],
           ),
 
@@ -586,21 +610,26 @@ class labelTwoStockAndPusher extends StatelessWidget {
 }
 
 class _headCardWidget extends StatelessWidget {
-  const _headCardWidget({
-    Key? key,
-    required this.urlUser,
-    required this.mantainerName,
-  }) : super(key: key);
+  const _headCardWidget(
+      {Key? key,
+      required this.urlUser,
+      required this.mantainerName,
+      this.titleLevelOne = 'Mantainer'})
+      : super(key: key);
 
   final String urlUser;
   final String mantainerName;
+  final String titleLevelOne;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CircleImage(urlImage: urlUser, radius: 50, size: 50),
-        _mantainerName(mantainerName: mantainerName, followers: 200),
+        _mantainerName(
+            mantainerName: mantainerName,
+            followers: 200,
+            titleLevelOne: titleLevelOne),
         Expanded(child: Container()),
         const Text('+Follow',
             style: TextStyle(
@@ -667,16 +696,18 @@ class LikeButton extends StatelessWidget {
 }
 
 class _cardTextPorcentaje extends StatelessWidget {
-  const _cardTextPorcentaje({
-    Key? key,
-    required this.variable,
-    required this.value,
-    this.forceColor = null,
-  }) : super(key: key);
+  const _cardTextPorcentaje(
+      {Key? key,
+      required this.variable,
+      required this.value,
+      this.forceColor = null,
+      this.titleLevelOne = 'Mantainer'})
+      : super(key: key);
 
   final String variable;
   final double value;
   final Color? forceColor;
+  final String titleLevelOne;
 
   @override
   Widget build(BuildContext context) {
@@ -709,12 +740,14 @@ class _cardTextPorcentaje extends StatelessWidget {
 class _mantainerName extends StatelessWidget {
   final String mantainerName;
   final int followers;
+  final String titleLevelOne;
 
-  const _mantainerName({
-    Key? key,
-    required this.mantainerName,
-    required this.followers,
-  }) : super(key: key);
+  const _mantainerName(
+      {Key? key,
+      required this.mantainerName,
+      required this.followers,
+      this.titleLevelOne = 'Mantainer'})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -724,7 +757,7 @@ class _mantainerName extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Mantainer',
+          Text('${titleLevelOne}',
               style: TextStyle(
                   color: Preferences.isDarkmode
                       ? Colors.black45
@@ -773,8 +806,20 @@ class CircleImage extends StatelessWidget {
           color: Colors.white, borderRadius: BorderRadius.circular(radius)),
 
       child: CircleAvatar(
-        backgroundImage: NetworkImage(urlImage),
+        backgroundImage: urlImage.startsWith('http')
+            ? NetworkImage(urlImage)
+            : Image.asset(urlImage).image,
       ),
+
+      // child: CircleAvatar(
+      //     backgroundImage: urlImage.startsWith('http') ? NetworkImage(urlImage) : AssetImage(urlImage) ,
+      //   ),
+
+      // child: CircleAvatar(
+      //   backgroundImage: urlImage.startsWith('http')
+      //       ? NetworkImage(urlImage)
+      //       : AssetImage(urlImage),
+      // ),
 
       // decoration:
     );

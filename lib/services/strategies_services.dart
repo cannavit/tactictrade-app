@@ -163,7 +163,6 @@ class StrategyLoadServices extends ChangeNotifier {
     Preferences.updateTheStrategies = false;
     strategyPage++;
 
-
     // final jsonData =
     // await _getJsonData('/strategy/v1/all', strategyPage, category);
 
@@ -171,19 +170,10 @@ class StrategyLoadServices extends ChangeNotifier {
 
     final strategyList = StrategyModel.fromJson(jsonData);
 
-    // strategyResults = [
-    //   ...strategyResults,
-    //   ...strategyList.results,
-    // ];
-
     strategyResults = categoriesStrategy[category] == null
         ? strategyResults
         : categoriesStrategy[category];
 
-    // strategyResults = [
-    //   ...strategyResults,
-    //   ...strategyList.results,
-    // ];
 
     categoriesStrategy[category] = [
       ...strategyResults,
