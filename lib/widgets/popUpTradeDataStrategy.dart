@@ -193,65 +193,65 @@ class _FormCardState extends State<_FormCard> {
             ),
 
             // Input quantity, stoploss, isActive, takeProfit, isDynamicStopLoss
-            GeneralInputField(
-                enabled: false,
-                textInputType: TextInputType.number,
-                textController: widget.longQtyCtrl,
-                labelText: 'Quantity USD',
-                hintText: 'example: 435',
-                validatorType: 'porcentaje',
-                icon: const Icon(
-                  Icons.attach_money_outlined,
-                  color: Colors.grey,
-                )),
+            // GeneralInputField(
+            //     enabled: false,
+            //     textInputType: TextInputType.number,
+            //     textController: widget.longQtyCtrl,
+            //     labelText: 'Quantity USD',
+            //     hintText: 'example: 435',
+            //     validatorType: 'porcentaje',
+            //     icon: const Icon(
+            //       Icons.attach_money_outlined,
+            //       color: Colors.grey,
+            //     )),
 
             const SizedBox(
               height: 20,
             ),
 
-            GeneralInputField(
-                enabled: Preferences.brokerNewUseTradingLong,
-                textInputType: TextInputType.number,
-                textController: widget.longStopLossCtrl,
-                labelText: 'Stop Loss %',
-                hintText: 'example: -5',
-                validatorType: 'porcentaje',
-                icon: const Icon(
-                  Icons.stop_outlined,
-                  color: Colors.grey,
-                )),
+            // GeneralInputField(
+            //     enabled: Preferences.brokerNewUseTradingLong,
+            //     textInputType: TextInputType.number,
+            //     textController: widget.longStopLossCtrl,
+            //     labelText: 'Stop Loss %',
+            //     hintText: 'example: -5',
+            //     validatorType: 'porcentaje',
+            //     icon: const Icon(
+            //       Icons.stop_outlined,
+            //       color: Colors.grey,
+            //     )),
 
             const SizedBox(
               height: 20,
             ),
 
-            GeneralInputField(
-                enabled: Preferences.brokerNewUseTradingLong,
-                textInputType: TextInputType.number,
-                textController: widget.longTakeProfitCtrl,
-                labelText: 'Take Profit %',
-                hintText: 'example: 10',
-                validatorType: 'porcentaje',
-                icon: const Icon(
-                  Icons.waving_hand_outlined,
-                  color: Colors.grey,
-                )),
+            // GeneralInputField(
+            //     enabled: Preferences.brokerNewUseTradingLong,
+            //     textInputType: TextInputType.number,
+            //     textController: widget.longTakeProfitCtrl,
+            //     labelText: 'Take Profit %',
+            //     hintText: 'example: 10',
+            //     validatorType: 'porcentaje',
+            //     icon: const Icon(
+            //       Icons.waving_hand_outlined,
+            //       color: Colors.grey,
+            //     )),
 
             const SizedBox(
               height: 20,
             ),
 
-            GeneralInputField(
-                enabled: Preferences.brokerNewUseTradingLong,
-                textInputType: TextInputType.number,
-                textController: widget.consecutiveLossessAllowedLong,
-                labelText: 'Consecutive Losses Allowed',
-                hintText: 'example: 3',
-                validatorType: 'porcentaje',
-                icon: const Icon(
-                  Icons.cut,
-                  color: Colors.grey,
-                )),
+            // GeneralInputField(
+            //     enabled: Preferences.brokerNewUseTradingLong,
+            //     textInputType: TextInputType.number,
+            //     textController: widget.consecutiveLossessAllowedLong,
+            //     labelText: 'Consecutive Losses Allowed',
+            //     hintText: 'example: 3',
+            //     validatorType: 'porcentaje',
+            //     icon: const Icon(
+            //       Icons.cut,
+            //       color: Colors.grey,
+            //     )),
 
             const SizedBox(
               height: 20,
@@ -285,65 +285,65 @@ class _FormCardState extends State<_FormCard> {
             ),
 
             // Input quantity, stoploss, isActive, takeProfit, isDynamicStopLoss
-            GeneralInputField(
-                enabled: Preferences.brokerNewUseTradingShort,
-                textInputType: TextInputType.number,
-                textController: widget.shortQtyCtrl,
-                labelText: 'Quantity USD',
-                hintText: 'example: 435',
-                validatorType: 'porcentaje',
-                icon: const Icon(
-                  Icons.attach_money_outlined,
-                  color: Colors.grey,
-                )),
+            // GeneralInputField(
+            //     enabled: Preferences.brokerNewUseTradingShort,
+            //     textInputType: TextInputType.number,
+            //     textController: widget.shortQtyCtrl,
+            //     labelText: 'Quantity USD',
+            //     hintText: 'example: 435',
+            //     validatorType: 'porcentaje',
+            //     icon: const Icon(
+            //       Icons.attach_money_outlined,
+            //       color: Colors.grey,
+            //     )),
 
             const SizedBox(
               height: 20,
             ),
 
-            GeneralInputField(
-                enabled: Preferences.brokerNewUseTradingShort,
-                textInputType: TextInputType.number,
-                textController: widget.shortStopLossCtrl,
-                labelText: 'Stop Loss %',
-                hintText: 'example: -5',
-                validatorType: 'porcentaje',
-                icon: const Icon(
-                  Icons.stop_outlined,
-                  color: Colors.grey,
-                )),
+            // GeneralInputField(
+            //     enabled: Preferences.brokerNewUseTradingShort,
+            //     textInputType: TextInputType.number,
+            //     textController: widget.shortStopLossCtrl,
+            //     labelText: 'Stop Loss %',
+            //     hintText: 'example: -5',
+            //     validatorType: 'porcentaje',
+            //     icon: const Icon(
+            //       Icons.stop_outlined,
+            //       color: Colors.grey,
+            //     )),
 
             const SizedBox(
               height: 20,
             ),
 
-            GeneralInputField(
-                enabled: Preferences.brokerNewUseTradingShort,
-                textInputType: TextInputType.number,
-                textController: widget.shortTakeProfitCtrl,
-                labelText: 'Take Profit %',
-                hintText: 'example: 10',
-                validatorType: 'porcentaje',
-                icon: const Icon(
-                  Icons.waving_hand_outlined,
-                  color: Colors.grey,
-                )),
+            // GeneralInputField(
+            //     enabled: Preferences.brokerNewUseTradingShort,
+            //     textInputType: TextInputType.number,
+            //     textController: widget.shortTakeProfitCtrl,
+            //     labelText: 'Take Profit %',
+            //     hintText: 'example: 10',
+            //     validatorType: 'porcentaje',
+            //     icon: const Icon(
+            //       Icons.waving_hand_outlined,
+            //       color: Colors.grey,
+            //     )),
 
             const SizedBox(
               height: 20,
             ),
 
-            GeneralInputField(
-                enabled: Preferences.brokerNewUseTradingShort,
-                textInputType: TextInputType.number,
-                textController: widget.consecutiveLossessAllowedShort,
-                labelText: 'Consecutive Losses Allowed',
-                hintText: 'example: 3',
-                validatorType: 'porcentaje',
-                icon: const Icon(
-                  Icons.cut,
-                  color: Colors.grey,
-                )),
+            // GeneralInputField(
+            //     enabled: Preferences.brokerNewUseTradingShort,
+            //     textInputType: TextInputType.number,
+            //     textController: widget.consecutiveLossessAllowedShort,
+            //     labelText: 'Consecutive Losses Allowed',
+            //     hintText: 'example: 3',
+            //     validatorType: 'porcentaje',
+            //     icon: const Icon(
+            //       Icons.cut,
+            //       color: Colors.grey,
+            //     )),
 
             const Text(
               '',

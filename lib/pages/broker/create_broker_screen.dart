@@ -67,46 +67,47 @@ class NewBrokerScreen extends StatelessWidget {
                               image: AssetImage(
                                   'lib/pages/broker/assets/AlpacaRowDart.png'))),
                       const SizedBox(height: 50),
-                      Container(
-                        // width: MediaQuery.of(context).size.width * 0.4,
-                        child: GeneralInputField(
-                            textController: brokerNameCtrl,
-                            labelText: 'Broker Name',
-                            hintText: 'Add Broker Name',
-                            validatorType: 'writeMandatory',
-                            icon: const Icon(
-                              Icons.broken_image_sharp,
-                              color: Colors.grey,
-                            )),
-                      ),
+                      // Container(
+                      //   // width: MediaQuery.of(context).size.width * 0.4,
+                      //   child: GeneralInputField(
+                      //       textController: brokerNameCtrl,
+                      //       labelText: 'Broker Name',
+                      //       hintText: 'Add Broker Name',
+                      //       validatorType: 'writeMandatory',
+                      //       icon: const Icon(
+                      //         Icons.broken_image_sharp,
+                      //         color: Colors.grey,
+                      //       )),
+                      // ),
                       const SizedBox(height: 40),
-                      Container(
-                        // width: MediaQuery.of(context).size.width * 0.4,
-                        child: GeneralInputField(
-                            textController: ApiKeyCtrl,
-                            labelText: 'Api Key ',
-                            hintText: 'Add Broker Name',
-                            textInputType: TextInputType.number,
-                            validatorType: 'writeMandatory',
-                            icon: const Icon(
-                              Icons.flip_to_back_rounded,
-                              color: Colors.grey,
-                            )),
-                      ),
+                      // Container(
+                      //   // width: MediaQuery.of(context).size.width * 0.4,
+                      //   child: GeneralInputField(
+                      //       textController: ApiKeyCtrl,
+                      //       labelText: 'Api Key ',
+                      //       hintText: 'Add Broker Name',
+                      //       textInputType: TextInputType.number,
+                      //       validatorType: 'writeMandatory',
+                      //       icon: const Icon(
+                      //         Icons.flip_to_back_rounded,
+                      //         color: Colors.grey,
+                      //       )),
+                      // ),
                       const SizedBox(height: 40),
-                      Container(
-                        // width: MediaQuery.of(context).size.width * 0.4,
-                        child: GeneralInputField(
-                            textController: SecretKeyCtrl,
-                            labelText: 'Secret Key ',
-                            hintText: 'Add Secret Key',
-                            textInputType: TextInputType.number,
-                            validatorType: 'writeMandatory',
-                            icon: const Icon(
-                              Icons.electrical_services_outlined,
-                              color: Colors.grey,
-                            )),
-                      ),
+
+                      // Container(
+                      //   // width: MediaQuery.of(context).size.width * 0.4,
+                      //   child: GeneralInputField(
+                      //       textController: SecretKeyCtrl,
+                      //       labelText: 'Secret Key ',
+                      //       hintText: 'Add Secret Key',
+                      //       textInputType: TextInputType.number,
+                      //       validatorType: 'writeMandatory',
+                      //       icon: const Icon(
+                      //         Icons.electrical_services_outlined,
+                      //         color: Colors.grey,
+                      //       )),
+                      // ),
 
                       Expanded(child: Container()),
                       

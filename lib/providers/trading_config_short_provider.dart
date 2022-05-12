@@ -11,8 +11,6 @@ class TradingConfigProvider with ChangeNotifier {
   bool showButton = true;
   // Map<String, List<Article>> categoryArticles = {};
 
-  
-
 
   short_value(bool value) {
     this.isActiveShort = value;

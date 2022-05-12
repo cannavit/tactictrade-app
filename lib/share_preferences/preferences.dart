@@ -67,6 +67,8 @@ class Preferences {
 
   static int _brokerSelectedPreferences = 0;
 
+  static String configTradeBrokerSelectPreferences = '';
+
 
   // Define geters -------------------------------------------------------
 
@@ -221,6 +223,10 @@ class Preferences {
     return _prefs.getInt('brokerSelectedPreferences') ?? _brokerSelectedPreferences;
   }
 
+  static String get configTradeBrokerSelect {
+    return _prefs.getString('configTradeBrokerSelect') ??
+        configTradeBrokerSelectPreferences;
+  }
 
   // Define seters -------------------------------------------------------
 
@@ -383,6 +389,12 @@ class Preferences {
   static set brokerSelectedPreferences(int value) {
     _brokerSelectedPreferences = value;
     _prefs.setInt('brokerSelectedPreferences', value);
+  }  
+
+
+  static set (String value) {
+    configTradeBrokerSelectPreferences = value;
+    _prefs.setString('configTradeBrokerSelect', value);
   }  
 
 }

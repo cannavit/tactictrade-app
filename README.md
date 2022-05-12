@@ -42,7 +42,7 @@ samples, guidance on mobile development, and a full API reference.
 
 base64 -i ~/.android/debug.keystore -o <outfile>
 
-# flutter build appbundle --build-name=1.0.63 --build-number=63
+# flutter build appbundle --no-tree-shake-icons --build-name=1.0.64 --build-number=64
 
 # keytool -list -v \ -alias androiddebugkey -keystore ~/.android/debug.keystore
 

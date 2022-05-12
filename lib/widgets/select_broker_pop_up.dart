@@ -64,9 +64,13 @@ class _SelectBrokerPopUpState extends State<SelectBrokerPopUp> {
                             ),
                           ),
                           onTap: () async {
+
                             final brokerServicesObj =
                                 brokerServices.brokerList[index];
+                                
                             final brokerId = brokerServicesObj['id'];
+
+                            Preferences.configTradeBrokerSelectPreferences = brokerServicesObj['broker'];
 
                             selectBrokerTradingConfig.write(index, brokerId);
 

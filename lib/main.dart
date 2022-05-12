@@ -21,10 +21,12 @@ import 'package:tactictrade/screens/transactions_records_screen.dart';
 import 'package:tactictrade/services/broker_service.dart';
 import 'package:tactictrade/services/push_notification_service.dart';
 import 'package:tactictrade/services/settings_services.dart';
+import 'package:tactictrade/services/trading_config_view.dart';
 import 'package:tactictrade/services/transactions_record_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/forms_components/dropdown_custom.dart';
 import 'package:tactictrade/widgets/social_login/google_login_widget.dart';
+import 'models/trading_config_view.dart';
 import 'providers/select_broker_trading_config_provider.dart';
 import 'services/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -80,6 +82,9 @@ void main() async {
       ChangeNotifierProvider(create: (_) => TradingConfigProvider()),
       ChangeNotifierProvider(create: (_) => SelectBrokerTradingConfig()),
       ChangeNotifierProvider(create: (_) => TradingConfigInputLongProvider()),
+      ChangeNotifierProvider(create: (_) => TradingConfigInputLongProvider()),
+      ChangeNotifierProvider(create: (_) => TradingConfigViewService(),lazy: false),
+
 
 
 
