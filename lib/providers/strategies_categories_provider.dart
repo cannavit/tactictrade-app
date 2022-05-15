@@ -21,7 +21,6 @@ class CategoryStrategiesSelected with ChangeNotifier {
   CategoryStrategiesSelected() {
     //Todo call to
 
-    print("@Note-01 ---- 732559669 -----");
   }
   // Default selected categorie
 

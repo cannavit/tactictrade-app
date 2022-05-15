@@ -72,7 +72,6 @@ class _UploadImageState extends State<_UploadImage> {
             child: GestureDetector(
               child: buildEditImageIcon(themeColors.primaryColor, widget.icon),
               onTap: () async {
-                print('TAP BOTTOM 2 Take Picture');
 
                 final picker = await ImagePicker();
 
@@ -81,7 +80,6 @@ class _UploadImageState extends State<_UploadImage> {
 
                 if (pickedFile == null) return;
 
-                print('The user selected one image: ${pickedFile.path}');
                 Preferences.tempStrategyImage = pickedFile.path;
 
                 setState(() {});

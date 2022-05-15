@@ -26,12 +26,10 @@ class _DropDownSelectBrokerState extends State<DropDownSelectBroker> {
     // Preferences.selectedBrokerInFollowStrategy = 'Select your broker';
 
     final dataItem = widget.brokerList[0]['broker'];
-    print(dataItem);
 
     var itemsData = [];
 
     for (var data in widget.brokerList) {
-      print(data);
 
       itemsData.add({
         'id': data['id'].toString(),

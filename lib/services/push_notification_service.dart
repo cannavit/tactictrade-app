@@ -19,20 +19,17 @@ class PushNotificationService {
       _messageStreamController.stream;
 
   static Future _backgroundHandler(RemoteMessage message) async {
-    print(' On Background Handler ${message.messageId}');
 
     // _messageStreamController.add(message.notification?.title ?? 'Not title');
     _messageStreamController.add(message.data['product'] ?? 'No Data');
   }
 
   static Future _onMessageHandler(RemoteMessage message) async {
-    print(' onMessage  Handler ${message.messageId}');
     // _messageStreamController.add(message.notification?.title ?? 'Not title');
     _messageStreamController.add(message.data['product'] ?? 'No Data');
   }
 
   static Future _onMessageOpenApp(RemoteMessage message) async {
-    print(' background Handler ${message.data}');
 
     _messageStreamController.add(message.data['product'] ?? 'No Data');
   }
@@ -42,15 +39,13 @@ class PushNotificationService {
     await Firebase.initializeApp();
     final token_device = await FirebaseMessaging.instance.getToken();
 
-    print("@Note-01 ---- 873035972 -----");
-    print("TOKEN: ${token_device}");
+
     final baseUrl =  Environment.baseUrl;
     final url = Uri.http(baseUrl, '/notifications/v1/register');
     final _storage = new FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
-    print(token);
 
     if (token == '') {
       return '';

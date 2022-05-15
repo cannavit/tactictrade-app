@@ -70,7 +70,7 @@ class TransactionPageScreen extends StatelessWidget {
     // final recordsProvider =
     //     Provider.of<TransactionRecordsServices>(context, listen: true);
 
-    if (recordsProvider.isLoading) return LoadingStrategies();
+    if (recordsProvider.isLoading) return LoadingView();
 
     // Build the data for Graph
 
@@ -78,7 +78,7 @@ class TransactionPageScreen extends StatelessWidget {
         future: recordsProvider
             .getTransactionRecord(strategyId, {"private": isPrivate}),
         builder: (_, AsyncSnapshot<List<Record>> snapshot) {
-          if (!snapshot.hasData) return const LoadingStrategies();
+          if (!snapshot.hasData) return const LoadingView();
 
           final List<double> recordsShortProfit = [];
           final List<double> recordsLongProfit = [];

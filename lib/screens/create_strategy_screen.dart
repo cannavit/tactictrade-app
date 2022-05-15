@@ -176,8 +176,6 @@ class _FormState extends State<_Form> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
-        
         Row(
           children: [
             Container(
@@ -194,7 +192,6 @@ class _FormState extends State<_Form> {
             ),
           ],
         ),
-
 
         const Divider(
           color: Colors.white30,
@@ -325,7 +322,6 @@ class _FormState extends State<_Form> {
             icon: Icons.play_arrow,
             color: Colors.white54),
 
-
         const SizedBox(height: 40),
 
         Container(
@@ -369,67 +365,60 @@ class _DropDownState extends State<DropDown> {
         // width: MediaQuery.of(context).size.width * 0.3,
         height: 47,
         child: Container(
-            child: DropdownButton2(
-              hint: Row(
-                children: [
-
-                  const SizedBox(width: 6),
-                  
-                  Icon(
-                    Icons.calendar_view_month_sharp,
-                    color: Colors.white60,
-                  ),
-                  
-                  Text(
-                    'Select Time',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Theme.of(context).hintColor,
-                    ),
-                  ),
-                
-                ],
-              ),
-              items: widget.descriptionCtrl
-                  .map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Row(
-                          children: [
-
-                            const SizedBox(width: 6),
-
-                            Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 17,
-                              ),
-                            ),
-
-                          ],
-                        ),
-                      ))
-                  .toList(),
-              value: Preferences.selectedTimeNewStrategy,
-              onChanged: (value) {
-                if (value is String) {
-                  Preferences.selectedTimeNewStrategy = value;
-                } else {
-                  Preferences.selectedTimeNewStrategy = '';
-                }
-                setState(() {});
-              },
-              buttonHeight: 40,
-              buttonWidth: 140,
-              itemHeight: 40,
-              buttonDecoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(
-                  color: Colors.white,
+          child: DropdownButton2(
+            hint: Row(
+              children: [
+                const SizedBox(width: 6),
+                Icon(
+                  Icons.calendar_view_month_sharp,
+                  color: Colors.white60,
                 ),
-                color: Colors.transparent,
+                Text(
+                  'Select Time',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Theme.of(context).hintColor,
+                  ),
+                ),
+              ],
+            ),
+            items: widget.descriptionCtrl
+                .map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 6),
+                          Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 17,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))
+                .toList(),
+            value: Preferences.selectedTimeNewStrategy,
+            onChanged: (value) {
+              if (value is String) {
+                Preferences.selectedTimeNewStrategy = value;
+              } else {
+                Preferences.selectedTimeNewStrategy = '';
+              }
+              setState(() {});
+            },
+            buttonHeight: 40,
+            buttonWidth: 140,
+            itemHeight: 40,
+            buttonDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: Colors.white,
               ),
+              color: Colors.transparent,
             ),
-            ),
+          ),
+        ),
       ),
     );
   }
@@ -503,12 +492,12 @@ class ButtonNext extends StatelessWidget {
     Key? key,
     required this.bodyRequest,
     required this.btnEnabled,
-    this.buttomText = 'Connect Strategy',
+    this.buttonText = 'Connect Strategy',
   }) : super(key: key);
 
   final dynamic bodyRequest;
   final bool btnEnabled;
-  final String buttomText;
+  final String buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -524,7 +513,7 @@ class ButtonNext extends StatelessWidget {
           width: double.infinity,
           height: 55,
           child: Center(
-            child: Text(buttomText,
+            child: Text(buttonText,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -536,7 +525,7 @@ class ButtonNext extends StatelessWidget {
                 // Validate form. ----------------------------------------------------
 
                 var isMandatory = false;
-                
+
                 bodyRequest.forEach((k, v) {
                   var bd = bodyRequest[k];
                   try {
@@ -575,22 +564,21 @@ class ButtonNext extends StatelessWidget {
 
                 if (response['statusCode'] != 200) {
                   NotificationsService.showSnackbar(context, body['message']);
-                
+
                   Provider.of<StrategyServices>(context, listen: false)
                       .loadStrategy();
                 } else {
-                  
                   strategyPreferences.selectedMessage =
                       body["tradingview"]["message"];
 
                   strategyPreferences.selectedWebhook =
                       body["tradingview"]["webhook"];
 
-                  Preferences.newFollowStrategyId = body["data"]["strategyNewsId"];
+                  Preferences.newFollowStrategyId =
+                      body["data"]["strategyNewsId"];
                   Preferences.brokerNewUseTradingLong = false;
                   Preferences.brokerNewUseTradingShort = false;
                   Preferences.selectedBrokerInFollowStrategy = "{}";
-
 
                   showDialog(
                     context: context,
@@ -598,8 +586,6 @@ class ButtonNext extends StatelessWidget {
                         PopUpCreateStrategy(context),
                   );
                 }
-
-          
               }
             : null);
   }

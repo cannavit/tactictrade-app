@@ -8,8 +8,6 @@ class LoginFormProvider extends ChangeNotifier {
 
   // bool isLoading;
   bool isValidForm() {
-    print('this is the provider');
-    // print(formKey.currentState?.validate());
     return formKey.currentState?.validate() ?? false;
   }
 }

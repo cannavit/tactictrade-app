@@ -22,11 +22,10 @@ class TradingConfig extends ChangeNotifier {
 
 //   // int strategyId
   Future create(dynamic data) async {
-
     final url = Uri.http(Environment.baseUrl, '/trading/tradingvalues');
-    
+
     final _storage = new FlutterSecureStorage();
-    
+
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
@@ -71,6 +70,12 @@ class TradingConfig extends ChangeNotifier {
         'Authorization': 'Bearer ' + token
       },
     );
+
+    if (jsonDecode(response.body)['code'] == 'user_not_found') {
+      final GlobalKey<NavigatorState> navigatorKey =
+          GlobalKey<NavigatorState>();
+      navigatorKey.currentState?.pushNamed('login');
+    }
 
     final tradingConfigData = TradingConfigModel.fromJson(response.body);
 
@@ -148,7 +153,6 @@ class TradingConfig extends ChangeNotifier {
 
     final data = json.decode(response.body)['results'];
 
-    print(data);
 
     this.tradingConfigList = data;
 
@@ -222,7 +226,6 @@ class TradingConfig extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     });
 
-    // print(response);
 
     // final message = json.decode(response.body)['message'];
 

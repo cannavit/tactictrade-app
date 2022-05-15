@@ -18,7 +18,7 @@ class BotsScreen extends StatelessWidget {
     RefreshController _refreshController =
         RefreshController(initialRefresh: false);
 
-    if (positions.isLoading) return LoadingStrategies();
+    if (positions.isLoading) return LoadingView();
 
     return ChangeNotifierProvider(
       create: (_) => new NavigationModel(),

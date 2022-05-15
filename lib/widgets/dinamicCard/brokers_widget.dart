@@ -225,7 +225,6 @@ class _ControlButtoms extends StatelessWidget {
                     )),
                 onChanged: (value) {
                   Preferences.updateStrategyOwnerSelected = true;
-                  print(value);
                 }),
           ),
           Expanded(child: Container()),

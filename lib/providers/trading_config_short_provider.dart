@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tactictrade/models/menu_home_categories.dart';
@@ -9,32 +11,30 @@ class TradingConfigProvider with ChangeNotifier {
   bool isActiveShort = Preferences.brokerNewUseTradingShort;
   bool isActiveLong = Preferences.brokerNewUseTradingLong;
   bool showButton = true;
-  // Map<String, List<Article>> categoryArticles = {};
 
-
-  short_value(bool value) {
+  shortValue(bool value) {
     this.isActiveShort = value;
-    Preferences.brokerNewUseTradingShort = this.isActiveShort;
+    Preferences.brokerNewUseTradingShort = isActiveShort;
     notifyListeners();
   }
 
-  short_read() {
-    final result = this.isActiveShort;
+  shortRead() {
+    final result = isActiveShort;
     return result;
   }
 
-  long_value(bool value) {
+  longValue(bool value) {
     this.isActiveLong = value;
-    Preferences.brokerNewUseTradingLong = this.isActiveLong;
+    Preferences.brokerNewUseTradingLong = isActiveLong;
     notifyListeners();
   }
 
-  long_read() {
-    final result = this.isActiveLong;
+  longRead() {
+    final result = isActiveLong;
     return result;
   }
 
-  show_buttom() {
+  showButtom() {
     if (this.isActiveLong || this.isActiveShort) {
       this.showButton = true;
     } else {

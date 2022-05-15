@@ -1,4 +1,4 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -59,31 +59,31 @@ void main() async {
       ChangeNotifierProvider(create: (_) => NewStrategyProvider()),
       ChangeNotifierProvider(create: (_) => StrategyServices()),
       ChangeNotifierProvider(
-        create: (_) => StrategyLoadServices(),
-        lazy: false,
+        create: (_) => StrategyLoadServices()
       ),
       ChangeNotifierProvider(
         create: (_) => StrategySocial(),
-        lazy: false,
       ),
       ChangeNotifierProvider(
         create: (_) => BrokerServices(),
-        lazy: false,
+        
       ),
       ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
-      ChangeNotifierProvider(create: (_) => TradingConfig(), lazy: false),
+      ChangeNotifierProvider(create: (_) => TradingConfig()),
       ChangeNotifierProvider(create: (_) => BrokerConfig()),
       ChangeNotifierProvider(create: (_) => PositionServices()),
       ChangeNotifierProvider(create: (_) => FiltersStrategiesSelected()),
       ChangeNotifierProvider(create: (_) => TransactionRecordsServices()),
-      ChangeNotifierProvider(create: (_) => SettingServices(), lazy: false),
+      ChangeNotifierProvider(create: (_) => SettingServices()),
+      // ChangeNotifierProvider(create: (_) => SettingServices(), lazy: false),
+
       ChangeNotifierProvider(create: (_) => CategoryTimerSelected()),
       ChangeNotifierProvider(create: (_) => ShowGraph2dProfitProvider()),
       ChangeNotifierProvider(create: (_) => TradingConfigProvider()),
       ChangeNotifierProvider(create: (_) => SelectBrokerTradingConfig()),
       ChangeNotifierProvider(create: (_) => TradingConfigInputLongProvider()),
       ChangeNotifierProvider(create: (_) => TradingConfigInputLongProvider()),
-      ChangeNotifierProvider(create: (_) => TradingConfigViewService(),lazy: false),
+      ChangeNotifierProvider(create: (_) => TradingConfigViewService()),
 
 
 

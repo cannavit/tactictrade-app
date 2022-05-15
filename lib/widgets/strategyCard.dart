@@ -12,6 +12,7 @@ import '../pages/broker/service/broker_service.dart';
 import '../screens/createFollowerTrade.dart';
 import '../screens/transactions_records_screen.dart';
 import '../services/strategies_services.dart';
+import '../services/trading_config_view.dart';
 import '../services/transactions_record_service.dart';
 
 class ProductCard extends StatelessWidget {
@@ -332,8 +333,6 @@ class _likeIcons extends StatelessWidget {
                 icon: Icon(Icons.history),
                 onPressed: () {
                   final isPrivateRecord = false;
-                  print('Open Transactions Records');
-                  print(strategyId);
 
                   // transactionServiceData
                   //     .getTransactionRecord(strategyId, {"private": false});
@@ -391,6 +390,9 @@ class _FollowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final tradingConfigViewService = Provider.of<TradingConfigViewService>(context);
+
     return Column(
       children: [
         IconButton(
@@ -421,8 +423,12 @@ class _FollowButton extends StatelessWidget {
                   actions: <Widget>[
                     FlatButton(
                         color: Colors.green,
-                        onPressed: () {
-                          // Navigator.of(context).pop(true);
+                        onPressed: ()  {
+                          print(brokerServices);
+                          print(strategyId);
+
+                           tradingConfigViewService.read("", strategyId);
+
                           Navigator.pushReplacementNamed(
                               context, 'create_follow_trade');
                         },
@@ -584,21 +590,10 @@ class labelTwoStockAndPusher extends StatelessWidget {
 
           Row(
             children: [
-              Icon(
-                  isActive
-                      ? Icons.check
-                      : Icons.check,
-                  color: Color(0xff08BEFB),
-                  size: 18
-                  
-                  ),
-              Icon(
-                  isVerify
-                      ? Icons.check
-                      : Icons.check,
-                  color: Color(0xff08BEFB),
-                  size: 18
-                  ),
+              Icon(isActive ? Icons.check : Icons.check,
+                  color: Color(0xff08BEFB), size: 18),
+              Icon(isVerify ? Icons.check : Icons.check,
+                  color: Color(0xff08BEFB), size: 18),
             ],
           ),
 
@@ -810,16 +805,6 @@ class CircleImage extends StatelessWidget {
             ? NetworkImage(urlImage)
             : Image.asset(urlImage).image,
       ),
-
-      // child: CircleAvatar(
-      //     backgroundImage: urlImage.startsWith('http') ? NetworkImage(urlImage) : AssetImage(urlImage) ,
-      //   ),
-
-      // child: CircleAvatar(
-      //   backgroundImage: urlImage.startsWith('http')
-      //       ? NetworkImage(urlImage)
-      //       : AssetImage(urlImage),
-      // ),
 
       // decoration:
     );

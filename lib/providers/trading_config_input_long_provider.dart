@@ -7,8 +7,8 @@ import '../share_preferences/preferences.dart';
 class TradingConfigInputLongProvider with ChangeNotifier {
   late TextEditingController inputController;
 
-  dynamic buttomValues = {};
-  dynamic buttomText = {};
+  dynamic buttonValues = {};
+  dynamic buttonText = {};
   dynamic data = {};
 
   double investValue = 0.0;
@@ -78,50 +78,66 @@ class TradingConfigInputLongProvider with ChangeNotifier {
   String hintTextLossesAllowedShort = 'stop losses > 3';
   final controllerLossesAllowedShort = TextEditingController();
 
-  buttomTextWrite(String variable, newValue) {
-    buttomText[variable] = newValue;
+  buttonTextWrite(String variable, newValue) {
+    buttonText[variable] = newValue;
 
-    notifyListeners();
+    try {
+      notifyListeners();
+    }  catch (e) {}
 
-    return buttomText;
+    return buttonText;
   }
 
-  buttomTextRead(String variable) {
-    return buttomText[variable];
+  buttonTextRead(String variable) {
+    return buttonText[variable];
   }
 
-  buttomValuesWrite(String variable, newValue) {
-    buttomValues[variable] = newValue;
+  buttonValuesWrite(String variable, newValue) {
+    buttonValues[variable] = newValue;
 
-    notifyListeners();
-
-    return buttomValues;
-  }
-
-  buttomValuesRead(String variable) {
-    return buttomValues[variable];
-  }
-
-  selectorData(dynamic variable) {
-    final buttomValuesOne = buttomValues[variable.dbFieldOne];
-    final buttomTextOne = buttomText[variable.dbFieldOne];
-
-    if (data[variable.dbFieldOne] == null) {
-      data[variable.dbFieldOne] = {};
+    try {
+      notifyListeners();
+    } catch (e) {
+      print("@Note-01 ---- 1710912487 -----");
     }
 
-    if (variable.buttonOneText == buttomTextOne) {
-      data[variable.dbFieldOne]['buttonText'] = variable.buttonOneText;
-      data[variable.dbFieldOne]['dbField'] = variable.dbFieldOne;
-      data[variable.dbFieldOne]['hintText'] = variable.hintTextOne;
-      data[variable.dbFieldOne]['labelText'] = variable.labelTextOne;
-      data[variable.dbFieldOne]['isPercent'] = variable.isPercentOne;
+    return buttonValues;
+  }
+
+  buttonValuesRead(String variable) {
+    return buttonValues[variable];
+  }
+
+  selectorData(dynamic variable, String operation) {
+    final buttonValuesOne = buttonValues[variable.dbFieldOne + "_$operation"];
+    final buttonTextOne = buttonText[variable.dbFieldOne + "_$operation"];
+
+    if (data[variable.dbFieldOne + "_$operation"] == null) {
+      data[variable.dbFieldOne + "_$operation"] = {};
+    }
+
+    if (variable.buttonOneText == buttonTextOne) {
+      data[variable.dbFieldOne + "_$operation"]['buttonText'] =
+          variable.buttonOneText;
+      data[variable.dbFieldOne + "_$operation"]['dbField'] =
+          variable.dbFieldOne;
+      data[variable.dbFieldOne + "_$operation"]['hintText'] =
+          variable.hintTextOne;
+      data[variable.dbFieldOne + "_$operation"]['labelText'] =
+          variable.labelTextOne;
+      data[variable.dbFieldOne + "_$operation"]['isPercent'] =
+          variable.isPercentOne;
     } else {
-      data[variable.dbFieldOne]['buttonText'] = variable.buttonTwoText;
-      data[variable.dbFieldOne]['dbField'] = variable.dbFieldTwo;
-      data[variable.dbFieldOne]['hintText'] = variable.hintTextTwo;
-      data[variable.dbFieldOne]['labelText'] = variable.labelTextTwo;
-      data[variable.dbFieldOne]['isPercent'] = variable.isPercentTwo;
+      data[variable.dbFieldOne + "_$operation"]['buttonText'] =
+          variable.buttonTwoText;
+      data[variable.dbFieldOne + "_$operation"]['dbField'] =
+          variable.dbFieldTwo;
+      data[variable.dbFieldOne + "_$operation"]['hintText'] =
+          variable.hintTextTwo;
+      data[variable.dbFieldOne + "_$operation"]['labelText'] =
+          variable.labelTextTwo;
+      data[variable.dbFieldOne + "_$operation"]['isPercent'] =
+          variable.isPercentTwo;
     }
 
     return data;
@@ -211,7 +227,6 @@ class TradingConfigInputLongProvider with ChangeNotifier {
 
       customTradingConfigView.textEditingController.text = newValue.toString();
     } else {
-      
       var newValue =
           double.parse(customTradingConfigView.textEditingController.text) + 1;
 
@@ -222,7 +237,6 @@ class TradingConfigInputLongProvider with ChangeNotifier {
   }
 
   subtractOne(dynamic customTradingConfigView) {
-
     if (customTradingConfigView.textEditingController.text == "") {
       if (customTradingConfigView.isInt) {
         customTradingConfigView.textEditingController.text = "0";
@@ -237,7 +251,6 @@ class TradingConfigInputLongProvider with ChangeNotifier {
 
       customTradingConfigView.textEditingController.text = newValue.toString();
     } else {
-      
       var newValue =
           double.parse(customTradingConfigView.textEditingController.text) - 1;
 
@@ -355,89 +368,6 @@ class TradingConfigInputLongProvider with ChangeNotifier {
     return controllerDataShort;
   }
 
-  // Level 2
-  addOnePercentageShort() {
-    if (controllerDataPercentageShort.text == "") {
-      controllerDataPercentageShort.text = "0.0";
-    }
-
-    final newValue = double.parse(controllerDataPercentageShort.text) + 1;
-    controllerDataPercentageShort.text = newValue.toString();
-
-    notifyListeners();
-  }
-
-  subtractOnePercentageShort() {
-    if (controllerDataPercentageShort.text == "") {
-      controllerDataPercentageShort.text = "0.0";
-    }
-
-    final newValue = double.parse(controllerDataPercentageShort.text) - 1;
-    controllerDataPercentageShort.text = newValue.toString();
-
-    notifyListeners();
-  }
-
-  controllerPorcentageShort() {
-    return controllerDataPercentageShort;
-  }
-
-  // Level 3
-
-  addOneTakeprofitShort() {
-    if (controllerDataTakeprofitShort.text == "") {
-      controllerDataTakeprofitShort.text = "0.0";
-    }
-
-    final newValue = double.parse(controllerDataTakeprofitShort.text) + 1;
-    controllerDataTakeprofitShort.text = newValue.toString();
-
-    notifyListeners();
-  }
-
-  subtractOneTakeprofitShort() {
-    if (controllerDataTakeprofitShort.text == "") {
-      controllerDataTakeprofitShort.text = "0.0";
-    }
-
-    final newValue = double.parse(controllerDataTakeprofitShort.text) - 1;
-    controllerDataTakeprofitShort.text = newValue.toString();
-
-    notifyListeners();
-  }
-
-  controllerTakeprofitShort() {
-    return controllerDataTakeprofitShort;
-  }
-
-  // Level 4
-
-  addOneLossesAllowedShort() {
-    if (controllerLossesAllowedShort.text == "") {
-      controllerLossesAllowedShort.text = "0";
-    }
-
-    final newValue = double.parse(controllerLossesAllowedShort.text) + 1;
-    controllerLossesAllowedShort.text = newValue.toString();
-
-    notifyListeners();
-  }
-
-  subtractOneLossesAllowedShort() {
-    if (controllerLossesAllowedShort.text == "") {
-      controllerLossesAllowedShort.text = "0";
-    }
-
-    final newValue = double.parse(controllerLossesAllowedShort.text) - 1;
-    controllerLossesAllowedShort.text = newValue.toString();
-
-    notifyListeners();
-  }
-
-  controller_LossesAllowedShort() {
-    return controllerLossesAllowedShort;
-  }
-
   //! --------------------------------------------------------------------------
   //! --------------------------------------------------------------------------
   //! PRE-PROCESS DATA -----------------------------------------------------
@@ -448,64 +378,34 @@ class TradingConfigInputLongProvider with ChangeNotifier {
     final tradingConfigBody = [];
     final tradingConfigBodyValue = [];
 
-    //? Active LONG ------------------------------------------------------------
-    if (useQty) {
-      // Level 1 (Quantity Data)
-      if (buttomSelectorChangeText == 'USD') {
-        tradingConfigBody.add('quantityUSDLong');
-      } else {
-        tradingConfigBody.add('quantityUSDLong');
-      }
+    final isActiveShort = Preferences.brokerNewUseTradingShort;
+    final isActiveLong = Preferences.brokerNewUseTradingLong;
 
-      tradingConfigBodyValue.add(controllerData.text);
+    print(buttonValues);
+    print(buttonText);
+    print(data);
 
-      // Level 2 (Stop Loss %)
-      if (controllerDataPercentage.text != '') {
-        if (buttomSelectorChangeTextPercentage == '%') {
-          tradingConfigBody.add('stopLossLong');
-        } else {
-          tradingConfigBody.add('stopLossLongUsd');
-        }
-        tradingConfigBodyValue.add(controllerDataPercentage.text);
-      }
+    final variableList = [];
 
-      // Level 3 (Take Profit)
-      if (controllerDataTakeprofit.text != '') {
-        if (buttomSelectorChangeTextTakeProfit == '%') {
-          tradingConfigBody.add('takeProfitLong');
-        } else {
-          tradingConfigBody.add('takeProfitLongUsd');
-        }
-        tradingConfigBodyValue.add(controllerDataTakeprofit.text);
+    for (String key in buttonText.keys) {
+      if (key.contains('_dbField')) {
+        variableList.add(buttonText[key]);
       }
-
-      // Level 4 (Consecutive Losses Allowed)
-      if (controllerLossesAllowed.text != '') {
-        tradingConfigBody.add('consecutiveLossesLong');
-        tradingConfigBodyValue.add(controllerLossesAllowed.text);
-      }
-    } else {
-      errorMessage = 'Is mandatory add the quantity';
-      notifyListeners();
     }
 
-    //? Active SHORT ------------------------------------------------------------
+    for (String dbField in variableList) {
+      tradingConfigBody.add(dbField);
 
-    print("@Note-01 ---- 1437231374 -----");
-    print(tradingConfigBody);
-    print(tradingConfigBodyValue);
+      for (String key in buttonText.keys) {
+        if (key.contains(dbField) && key.contains('_value')) {
+          tradingConfigBodyValue.add(buttonText[key]);
+        }
+      }
+    }
 
-    // 'broker',
-    // 'strategyNews',
-    // 'quantityUSDLong',
-    // 'stopLossLong',
-    // 'takeProfitLong',
-    // 'quantityUSDShort',
-    // 'stopLossShort',
-    // 'takeProfitShort',
-    // 'consecutiveLossesShort',
-    // 'consecutiveLossesLong',
-    // 'useLong',
-    // 'useShort'
+    return {
+      'tradingConfigBody': tradingConfigBody,
+      'tradingConfigBodyValue': tradingConfigBodyValue
+    };
   }
 }

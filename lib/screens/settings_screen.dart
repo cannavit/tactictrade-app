@@ -10,14 +10,18 @@ import '../services/settings_services.dart';
 import 'loading_strategy.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
 
-  // final icon = CupertinoIcons.;
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     final icon = CupertinoIcons.moon_circle;
     final themeColors = Theme.of(context);
+
+    final settingServices = Provider.of<SettingServices>(context);
+
+    if (settingServices.isLoading) return LoadingView();
 
     return Scaffold(
         appBar: AppBar(
@@ -69,7 +73,7 @@ class _DarkModeSettingState extends State<_DarkModeSetting> {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     final settingsService = Provider.of<SettingServices>(context, listen: true);
 
-    if (settingsService.isLoading) return LoadingStrategies();
+    if (settingsService.isLoading) return LoadingView();
 
     return Container(
       width: double.infinity,
@@ -136,18 +140,17 @@ class _settingSwitchState extends State<_settingSwitch> {
                   child: SwitchListTile.adaptive(
                       activeColor: Colors.blue,
                       secondary: Icon(
-                          // IconData(
-                          //     int.parse(widget
-                          //         .settingsService
-                          //         .settingList[
-                          //             '${widget.settingsService.settingFamily[widget.index]}']
-                          //             [index2]
-                          //         .icon
-                          //         ),
-                          //     fontFamily: 'MaterialIcons'),
+                          IconData(
+                              int.parse(widget
+                                  .settingsService
+                                  .settingList[
+                                      '${widget.settingsService.settingFamily[widget.index]}']
+                                      [index2]
+                                  .icon
+                                  ),
+                              fontFamily: 'MaterialIcons'),
 
-                          Icons.notifications_active_outlined,
-
+                          // Icons.notifications_active_outlined,
                           size: 20,
                           color: widget.themeColors.primaryColor),
                       value: widget

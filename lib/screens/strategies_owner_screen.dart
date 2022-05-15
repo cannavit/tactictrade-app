@@ -14,8 +14,6 @@ class StrategiesOwnerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    
     final tradingConfig = Provider.of<TradingConfig>(context, listen: true);
 
     final filterList =
@@ -23,7 +21,7 @@ class StrategiesOwnerScreen extends StatelessWidget {
 
     if (tradingConfig.isLoading) {
       // tradingConfig.read();
-      LoadingStrategies();
+      LoadingView();
     }
 
     RefreshController _refreshController =

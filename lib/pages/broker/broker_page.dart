@@ -20,7 +20,7 @@ class BrokersPages extends StatelessWidget {
 
     if (brokerServices.isLoading) {
       // brokerServices.loadBroker();
-      LoadingStrategies();
+      LoadingView();
     }
     ;
 

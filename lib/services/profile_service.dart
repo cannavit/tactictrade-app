@@ -47,10 +47,6 @@ class ProfileService extends ChangeNotifier {
 
     final response = await imageUploadRequest.send();
 
-    print('--- 111 ---- --- @@@ @@@ @@@ @@@@ @@@ --------------');
-    print(response);
-    // print('--- 222 ---- --- @@@ @@@ @@@ @@@@ @@@ --------------');
-
     return '';
   }
 }

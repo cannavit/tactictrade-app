@@ -12,37 +12,57 @@ import 'package:tactictrade/share_preferences/preferences.dart';
 
 class TradingConfigViewService extends ChangeNotifier {
   dynamic tradingConfigView = {};
+  dynamic response;
+  dynamic tradingConfigViewData;
 
-  TradingConfigViewService() {
-    this.read('paperTrade');
-  }
+  dynamic tradingConfigViewCache = {};
 
-  Future read(String brokerSelect) async {
-    notifyListeners();
+  // TradingConfigViewService() {
+  //   this.read('paperTrade');
+  // }
 
-    final url = Uri.http(Environment.baseUrl, '/trading/view_flutter');
-    final _storage = new FlutterSecureStorage();
-    final token = await _storage.read(key: 'token_access') ?? '';
+  Future read(String brokerSelect, int strategyId) async {
 
-    if (token == '') {
-      return '';
+    if (tradingConfigViewCache[strategyId] == null) {
+
+      if (response == null) {
+
+        final url =
+            Uri.http(Environment.baseUrl, '/trading/view_flutter/$strategyId');
+        
+        final _storage = new FlutterSecureStorage();
+        
+        final token = await _storage.read(key: 'token_access') ?? '';
+
+        if (token == '') {
+          return '';
+        }
+
+        response = await http.get(
+          url,
+          headers: {
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+        );
+
+        if (jsonDecode(response.body)['code'] == 'user_not_found') {
+          final GlobalKey<NavigatorState> navigatorKey =
+              GlobalKey<NavigatorState>();
+          navigatorKey.currentState?.pushNamed('login');
+        }
+
+        tradingConfigViewData =
+            await TradingConfigViewModel.fromJson(response.body);
+
+        tradingConfigViewCache[strategyId] = tradingConfigViewData;
+      }
+    } else {
+      tradingConfigViewData = tradingConfigViewCache[strategyId];
     }
 
-    final response = await http.get(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-    );
-
-    print(response);
-
-    final tradingConfigViewData =
-        await TradingConfigViewModel.fromJson(response.body);
-
-    if (brokerSelect == 'paperTrade') {
+    if (brokerSelect == 'paperTrade' || brokerSelect == "") {
       tradingConfigView = tradingConfigViewData.paperTrade;
     } else if (brokerSelect == 'alpaca') {
       tradingConfigView = tradingConfigViewData.alpaca;

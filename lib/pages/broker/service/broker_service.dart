@@ -23,7 +23,6 @@ class BrokerServices extends ChangeNotifier {
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
-    print(token);
 
     if (token == '') {
       return '';
@@ -34,11 +33,7 @@ class BrokerServices extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     });
 
-    print(response);
-
     final data = json.decode(response.body)['results'];
-
-    print(data);
 
     this.brokerList = data;
 
@@ -55,7 +50,6 @@ class BrokerServices extends ChangeNotifier {
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
-    print(token);
 
     if (token == '') {
       return '';
@@ -66,11 +60,9 @@ class BrokerServices extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     });
 
-    print(response);
 
     final data = json.decode(response.body)['results'];
 
-    print(data);
 
     this.brokerList = data;
     notifyListeners();
@@ -89,7 +81,6 @@ class BrokerServices extends ChangeNotifier {
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
-    print(token);
 
     if (token == '') {
       return '';

@@ -49,7 +49,7 @@ class _StrategyScreenState extends State<StrategyScreen> {
     if (strategies.strategyList.length == 0) {
       if (strategies.isLoading) {
         // strategies.loadStrategy();
-        LoadingStrategies();
+        LoadingView();
       }
     }
 

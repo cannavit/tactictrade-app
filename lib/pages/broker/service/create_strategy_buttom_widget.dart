@@ -11,12 +11,12 @@ class ButtonCreateBroker extends StatelessWidget {
     Key? key,
     required this.bodyRequest,
     required this.btnEnabled,
-    this.buttomText = 'Connect Strategy',
+    this.buttonText = 'Connect Strategy',
   }) : super(key: key);
 
   final dynamic bodyRequest;
   final bool btnEnabled;
-  final String buttomText;
+  final String buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ButtonCreateBroker extends StatelessWidget {
           width: double.infinity,
           height: 55,
           child: Center(
-            child: Text(buttomText,
+            child: Text(buttonText,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -58,8 +58,7 @@ class ButtonCreateBroker extends StatelessWidget {
 
                 if (isMandatory) {
                   NotificationsService.showSnackbar(
-                      context,
-                      'It has fields that are mandatory empty');
+                      context, 'It has fields that are mandatory empty');
                   return null;
                 }
 
@@ -85,7 +84,8 @@ class ButtonCreateBroker extends StatelessWidget {
                 if (responseBroker.statusCode != 201) {
                   var message = jsonDecode(responseBroker.body);
 
-                  NotificationsService.showSnackbar(context,message["message"]);
+                  NotificationsService.showSnackbar(
+                      context, message["message"]);
                   return null;
                 }
 

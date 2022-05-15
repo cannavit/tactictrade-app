@@ -7,6 +7,7 @@ import 'package:tactictrade/providers/new_strategy_provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 import '../providers/select_broker_trading_config_provider.dart';
+import '../services/trading_config_view.dart';
 import 'editfield_custom.dart';
 
 class SelectBrokerPopUp extends StatefulWidget {
@@ -22,6 +23,8 @@ class _SelectBrokerPopUpState extends State<SelectBrokerPopUp> {
     final brokerServices = Provider.of<BrokerServices>(context);
     final selectBrokerTradingConfig =
         Provider.of<SelectBrokerTradingConfig>(context);
+
+    final tradingConfigViewService = Provider.of<TradingConfigViewService>(context);
 
     return Container(
       child: SingleChildScrollView(
@@ -71,7 +74,9 @@ class _SelectBrokerPopUpState extends State<SelectBrokerPopUp> {
                             final brokerId = brokerServicesObj['id'];
 
                             Preferences.configTradeBrokerSelectPreferences = brokerServicesObj['broker'];
-
+                            
+                            // tradingConfigViewService.read(brokerServicesObj['broker']);
+                            
                             selectBrokerTradingConfig.write(index, brokerId);
 
                             setState(() {});

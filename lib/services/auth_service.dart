@@ -21,15 +21,12 @@ class AuthService extends ChangeNotifier {
       'username': username
     };
 
-    print(url);
 
     // final resp = await http.post(url, body: json.encode(authData));
 
     final resp = await http.post(url,
         body: {'email': email, 'password': password, 'username': username});
 
-    print('Test');
-    print(json.encode(authData));
   }
 
   Future login(String email, String password) async {
@@ -40,7 +37,6 @@ class AuthService extends ChangeNotifier {
       'password': password
     };
 
-    print(url);
 
     // final resp = await http.post(url, body: json.encode(authData));
 
@@ -51,7 +47,6 @@ class AuthService extends ChangeNotifier {
 
     // User Valid
     if (decodedResp.containsKey('token_access')) {
-      print(decodedResp['token_access']);
 
       await storage.write(
           key: 'token_access', value: decodedResp['token_access']);
@@ -98,7 +93,6 @@ class AuthService extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     });
 
-    print(response);
 
     final body = json.decode(response.body);
 

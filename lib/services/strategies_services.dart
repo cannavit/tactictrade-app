@@ -46,7 +46,6 @@ class StrategyServices extends ChangeNotifier {
 
     final String strategyImage = Preferences.tempStrategyImage;
     if (strategyImage != '') {
-      print(strategyImage);
 
       final profile_image =
           await http.MultipartFile.fromPath('post_image', strategyImage);
@@ -91,7 +90,6 @@ class StrategyServices extends ChangeNotifier {
 }
 
 class StrategyLoadServices extends ChangeNotifier {
-  
   bool isLoading = true;
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -112,20 +110,16 @@ class StrategyLoadServices extends ChangeNotifier {
 
   Future<String> _getJsonData(String endpoint,
       [int page = 1, String category = 'all']) async {
-
     final url = Uri.http(Environment.baseUrl, endpoint,
         {'page': '$page', 'category': '$category'});
-
 
     final _storage = new FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
-        navigatorKey.currentState?.pushNamed('login');
+      navigatorKey.currentState?.pushNamed('login');
     }
-
-
 
     final response = await http.get(url, headers: {
       'Content-Type': 'applicaction/json',
@@ -136,7 +130,6 @@ class StrategyLoadServices extends ChangeNotifier {
   }
 
   Future loadStrategy() async {
-
     isLoading = true;
     notifyListeners();
 
@@ -173,7 +166,6 @@ class StrategyLoadServices extends ChangeNotifier {
     strategyResults = categoriesStrategy[category] == null
         ? strategyResults
         : categoriesStrategy[category];
-
 
     categoriesStrategy[category] = [
       ...strategyResults,

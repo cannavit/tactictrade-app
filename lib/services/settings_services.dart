@@ -40,6 +40,12 @@ class SettingServices extends ChangeNotifier {
       },
     );
 
+    if (jsonDecode(response.body)['code'] == 'user_not_found') {
+      final GlobalKey<NavigatorState> navigatorKey =
+          GlobalKey<NavigatorState>();
+      navigatorKey.currentState?.pushNamed('login');
+    }
+
     final dataModel = SettingsModel.fromJson(response.body);
 
     final family_list = {};

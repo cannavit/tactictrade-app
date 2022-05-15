@@ -58,7 +58,6 @@ class PopUpDeleteTradingConfigSecure extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w700)),
                 onPressed: () {
-                  print('-------- Cancel');
                   Navigator.of(context).pop();
                   return;
                 },

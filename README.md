@@ -42,12 +42,7 @@ samples, guidance on mobile development, and a full API reference.
 
 base64 -i ~/.android/debug.keystore -o <outfile>
 
-# flutter build appbundle --no-tree-shake-icons --build-name=1.0.64 --build-number=64
 
-# keytool -list -v \ -alias androiddebugkey -keystore ~/.android/debug.keystore
+# Create Build 
 
-# $ java -jar pepk.jar --keystore=foo.keystore --alias=foo --output=output.zip --include-cert --encryptionkey=
-# docker run --rm -it -v $(pwd):$(pwd) -w $(pwd) yongjhih/pepk --keystore=/Users/ceciliocannavaciuolo/.android/debug.keystore  --alias=foo --output=output.zip --encryptionkey=eb10fe8f7c7c9df715022017b00c6471f8ba8170b13049a11e6c09ffe3056a104a3bbe4ac5a955f4ba4fe93fc8cef27558a3eb9d2a529a2092761fb833b656cd48b9de6a --include-cert
-
-
-# java -jar pepk.jar --keystore=/Users/ceciliocannavaciuolo/.android/debug.keystore  --alias=androiddebugkey --output=output.zip --include-cert --encryptionkey=eb10fe8f7c7c9df715022017b00c6471f8ba8170b13049a11e6c09ffe3056a104a3bbe4ac5a955f4ba4fe93fc8cef27558a3eb9d2a529a2092761fb833b656cd48b9de6a
+flutter build appbundle --no-tree-shake-icons --build-name=1.0.68 --build-number=68

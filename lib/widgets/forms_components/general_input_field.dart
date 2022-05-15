@@ -126,6 +126,7 @@ class GeneralInputFieldV2 extends StatelessWidget {
   final bool btnEnabled;
   final bool enabled;
   final dynamic customTradingConfigView;
+  final String operation;
 
   const GeneralInputFieldV2({
     Key? key,
@@ -140,6 +141,7 @@ class GeneralInputFieldV2 extends StatelessWidget {
     this.btnEnabled = false,
     this.enabled = true,
     required this.customTradingConfigView,
+    this.operation = 'long',
   }) : super(key: key);
 
   @override
@@ -147,8 +149,8 @@ class GeneralInputFieldV2 extends StatelessWidget {
     final tradingConfigInputLongProvider =
         Provider.of<TradingConfigInputLongProvider>(context);
 
-    final data =
-        tradingConfigInputLongProvider.selectorData(customTradingConfigView);
+    final data = tradingConfigInputLongProvider.selectorData(
+        customTradingConfigView, operation);
 
     return Container(
       child: TextFormField(
@@ -159,8 +161,11 @@ class GeneralInputFieldV2 extends StatelessWidget {
           autocorrect: false,
           keyboardType: textInputType,
           decoration: InputDecoration(
-              hintText: data[customTradingConfigView.dbFieldOne]['hintText'],
-              labelText: data[customTradingConfigView.dbFieldOne]['labelText'],
+              hintText: data[customTradingConfigView.dbFieldOne + "_$operation"]
+                  ['hintText'],
+              labelText:
+                  data[customTradingConfigView.dbFieldOne + "_$operation"]
+                      ['labelText'],
               contentPadding: new EdgeInsets.fromLTRB(10, 10, 10, 10),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: colorBorder),
@@ -192,7 +197,7 @@ class GeneralInputFieldV2 extends StatelessWidget {
                 return 'This field is mandatory';
               }
             }
-          
+
             if (customTradingConfigView.isInt) {
               try {
                 final interger = int.parse(value!);
@@ -201,7 +206,8 @@ class GeneralInputFieldV2 extends StatelessWidget {
               }
             }
 
-            if (data[customTradingConfigView.dbFieldOne]['isPercent']) {
+            if (data[customTradingConfigView.dbFieldOne + "_$operation"]
+                ['isPercent']) {
               try {
                 final number = double.parse(value!);
               } catch (error) {
@@ -214,6 +220,17 @@ class GeneralInputFieldV2 extends StatelessWidget {
             } else {
               Preferences.createNewStrategy = false;
             }
+
+            //! -------------------------------------------
+
+            tradingConfigInputLongProvider.buttonTextWrite(
+                customTradingConfigView.dbFieldOne + "_$operation" + "_value",
+                value);
+
+            tradingConfigInputLongProvider.buttonTextWrite(
+                customTradingConfigView.dbFieldOne + "_$operation" + "_dbField",
+                data[customTradingConfigView.dbFieldOne + "_$operation"]
+                    ['dbField']);
           }),
     );
   }
