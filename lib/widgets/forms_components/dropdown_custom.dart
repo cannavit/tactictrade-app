@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../share_preferences/preferences.dart';
-import '../strategyCard.dart';
 
 class DropDownSelectBroker extends StatefulWidget {
   const DropDownSelectBroker({Key? key, required this.brokerList})
@@ -30,7 +29,6 @@ class _DropDownSelectBrokerState extends State<DropDownSelectBroker> {
     var itemsData = [];
 
     for (var data in widget.brokerList) {
-
       itemsData.add({
         'id': data['id'].toString(),
         'name': data['brokerName'],
@@ -99,7 +97,6 @@ class _DropDownSelectBrokerState extends State<DropDownSelectBroker> {
                 .toList(),
             value: selectedValue,
             onChanged: (value) {
-
               Preferences.selectedBrokerInFollowStrategy = json.encode(value);
 
               setState(() {

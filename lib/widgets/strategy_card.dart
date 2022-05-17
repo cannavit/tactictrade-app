@@ -1,71 +1,35 @@
 import 'dart:math';
 
-import 'package:expandable_text/expandable_text.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
-import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
+import 'package:tactictrade/models/strategy_models.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
-import 'package:tactictrade/widgets/popUpTradeDataStrategy.dart';
 
 import '../pages/broker/service/broker_service.dart';
 import '../providers/trading_config_short_provider.dart';
-import '../screens/createFollowerTrade.dart';
 import '../screens/transactions_records_screen.dart';
 import '../services/strategies_services.dart';
 import '../services/trading_config_view.dart';
 import '../services/transactions_record_service.dart';
+import 'mantainer_data_widget.dart';
+import 'strategy_symbol_widget.dart';
+import 'text_expandable_widget.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard(
       {Key? key,
-      required this.urlUser,
-      required this.strategyName,
-      required this.urlSymbol,
-      required this.timeTrade,
-      required this.mantainerName,
-      required this.urlPusher,
-      this.descriptionText = '',
-      this.isActive = false,
-      this.isVerify = false,
-      this.imageNetwork = null,
       required this.historicalData,
-      required this.profitable,
-      required this.maxDrawdown,
-      required this.netProfit,
-      required this.isStarred,
-      required this.isFavorite,
-      required this.likesNumber,
-      required this.idStrategy,
-      required this.isOwner,
-      required this.isFollower,
-      required this.symbolName,
-      this.titleLevelOne = 'Mantainer'})
+      this.titleLevelOne = 'Mantainer', 
+      required this.strategyData
+      })
       : super(key: key);
 
-  final String urlUser;
-  final String strategyName;
-  final String urlSymbol;
-  final String timeTrade;
-  final String mantainerName;
-  final String urlPusher;
-  final String descriptionText;
-  final bool isActive;
-  final bool isVerify;
-  final String? imageNetwork;
   final dynamic historicalData;
-  final double profitable;
-  final double maxDrawdown;
-  final double netProfit;
 
-  final bool isStarred;
-  final bool isFavorite;
-  final int likesNumber;
-  final int idStrategy;
-  final bool isOwner;
-  final bool isFollower;
-  final String symbolName;
   final String titleLevelOne;
+
+  final Strategy strategyData;
 
   @override
   Widget build(BuildContext context) {
@@ -83,34 +47,25 @@ class ProductCard extends StatelessWidget {
             // Header Cards ........
             const SizedBox(height: 10),
 
-            MantainerCardStrategyWidget(
-                mantainerName: mantainerName,
-                urlUser: urlUser,
+            MantainerDataWidget(
+                mantainerName: strategyData.owner.username,
+                urlUser: strategyData.owner.profileImage,
                 titleLevelOne: titleLevelOne),
 
             const Divider(height: 10, color: Color(0xff797979)),
 
-            labelTwoStockAndPusher(
-              isActive: isActive,
-              isVerify: isVerify,
-              strategyName: strategyName,
-              urlSymbol: urlSymbol,
-              timeTrade: timeTrade,
-              urlPusher: urlPusher,
-              symbolName: symbolName,
+            StrategySymbolWidget(
+              isActive: strategyData.isActive,
+              isVerify: strategyData.isVerified,
+              strategyName: strategyData.strategyNews,
+              urlSymbol: strategyData.symbolUrl,
+              timeTrade: strategyData.timeTrade,
+              urlPusher: strategyData.pusher,
+              symbolName: strategyData.symbolName,
             ),
 
             // Add Description
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: ExpandableText(
-                descriptionText,
-                expandText: 'show more',
-                collapseText: 'show less',
-                maxLines: 2,
-                linkColor: Colors.blue,
-              ),
-            ),
+            TextExpandableWidget(descriptionText: strategyData.description),
 
             const SizedBox(height: 5),
 
@@ -118,51 +73,51 @@ class ProductCard extends StatelessWidget {
             Stack(
               children: [
                 Visibility(
-                  visible: imageNetwork == "" ? false : true,
+                  visible: strategyData.postImage == "" ? false : true,
                   maintainSize: false,
                   child: Container(
-                    child: imageNetwork == null
+                    child: strategyData.postImage == null
                         ? null
                         : FadeInImage(
                             placeholder: Preferences.isDarkmode
                                 ? AssetImage('assets/giphy.gif')
                                 : AssetImage('assets/giphyDarkLoading.gif'),
-                            image: NetworkImage(imageNetwork!)),
+                            image: NetworkImage(strategyData.postImage!)),
                   ),
                 ),
                 _IconsFavoriteLinke(
-                    isFavorite: isFavorite,
+                    isFavorite: strategyData.isLiked,
                     strategySocial: strategySocial,
-                    idStrategy: idStrategy,
-                    likesNumber: likesNumber,
-                    isStarred: isStarred),
+                    idStrategy: strategyData.id,
+                    likesNumber: strategyData.likesNumber,
+                    isStarred: strategyData.isFavorite),
               ],
             ),
 
             const Divider(height: 10, color: Color(0xff797979)),
 
             _statisticsValues(
-              profitable: profitable,
-              maxDrawdown: maxDrawdown,
-              netProfit: netProfit,
+              profitable: strategyData.percentageProfitable,
+              maxDrawdown: strategyData.maxDrawdown,
+              netProfit: strategyData.netProfit,
             ),
 
             _likeIcons(
-                isOwner: isOwner,
-                isFollower: isFollower,
-                isFavorite: isFavorite,
-                isStarred: isStarred,
-                likesNumber: likesNumber,
-                strategyId: idStrategy,
-                isActive: isActive,
-                isVerify: isVerify,
-                strategyName: strategyName,
-                symbolName: symbolName,
-                timeTrade: timeTrade,
-                urlPusher: urlPusher,
-                urlSymbol: urlSymbol,
-                mantainerName: mantainerName,
-                urlUser: urlUser)
+                isOwner: strategyData.isOwner,
+                isFollower: strategyData.isFollower,
+                isFavorite: strategyData.isLiked,
+                isStarred: strategyData.isFavorite,
+                likesNumber: strategyData.likesNumber,
+                strategyId: strategyData.id,
+                isActive: strategyData.isActive,
+                isVerify: strategyData.isVerified,
+                strategyName: strategyData.strategyNews,
+                symbolName: strategyData.symbolName,
+                timeTrade: strategyData.timeTrade,
+                urlPusher: strategyData.pusher,
+                urlSymbol: strategyData.symbolUrl,
+                mantainerName: strategyData.owner.username,
+                urlUser:  strategyData.owner.profileImage,)
           ],
         ),
       ),
@@ -237,7 +192,7 @@ class _IconsFavoriteLinkeState extends State<_IconsFavoriteLinke> {
         children: [
           // Like Icon
 
-        Container(
+          Container(
             // Star Favorite
             child: Row(
               children: [
@@ -257,17 +212,14 @@ class _IconsFavoriteLinkeState extends State<_IconsFavoriteLinke> {
             ),
           ),
 
-              const SizedBox(width: 10),
-
+          const SizedBox(width: 10),
 
           Row(
             children: [
-
               FavoriteButton(
                 iconSize: 30,
                 isFavorite: widget.isFavorite,
                 iconDisabledColor: Color.fromARGB(161, 178, 178, 178),
-
                 valueChanged: (_isFavorite) {
                   print('Is Favorite $_isFavorite)');
 
@@ -279,9 +231,7 @@ class _IconsFavoriteLinkeState extends State<_IconsFavoriteLinke> {
                   setState(() {});
                 },
               ),
-
               const SizedBox(width: 10),
-
               Text('${widget.likesNumber}',
                   style: const TextStyle(
                       color: Colors.white,
@@ -291,38 +241,12 @@ class _IconsFavoriteLinkeState extends State<_IconsFavoriteLinke> {
           ),
 
           Expanded(child: Container()),
-
-    
         ],
       ),
     );
   }
 }
 
-class MantainerCardStrategyWidget extends StatelessWidget {
-  const MantainerCardStrategyWidget(
-      {Key? key,
-      required this.mantainerName,
-      required this.urlUser,
-      this.titleLevelOne = 'Mantainer'})
-      : super(key: key);
-
-  final String mantainerName;
-  final String urlUser;
-  final String titleLevelOne;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 70,
-      child: _headCardWidget(
-        mantainerName: mantainerName,
-        urlUser: urlUser,
-        titleLevelOne: titleLevelOne,
-      ),
-    );
-  }
-}
 
 class _likeIcons extends StatelessWidget {
   const _likeIcons(
@@ -610,139 +534,6 @@ class _statisticsValues extends StatelessWidget {
   }
 }
 
-class labelTwoStockAndPusher extends StatelessWidget {
-  //
-  const labelTwoStockAndPusher(
-      {Key? key,
-      required this.urlSymbol,
-      required this.urlPusher,
-      required this.timeTrade,
-      required this.strategyName,
-      required this.isActive,
-      required this.isVerify,
-      required this.symbolName, 
-       this.hideFlags = false})
-      : super(key: key);
-
-  final String urlSymbol;
-  final String urlPusher;
-  final String timeTrade;
-  final String strategyName;
-  final bool isActive;
-  final bool isVerify;
-  final String symbolName;
-  final bool hideFlags;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.red,
-      margin: EdgeInsets.symmetric(horizontal: 2, vertical: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleImage(
-                size: 40,
-                urlImage: urlSymbol,
-              ),
-              CircleImage(
-                size: 40,
-                urlImage: urlPusher,
-              ),
-            ],
-          ),
-
-          const SizedBox(width: 5),
-          //
-          // Description of the Strategy text
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Strategy name',
-                  style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300)),
-              Text(strategyName,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold)),
-              Row(
-                children: [
-                  Text(timeTrade,
-                      style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300)),
-                  const SizedBox(width: 5),
-                  Icon(Icons.timer_rounded, color: Colors.white70, size: 14),
-                  const SizedBox(width: 5),
-                  Text(symbolName,
-                      style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w300))
-                ],
-              ),
-            ],
-          ),
-
-          Expanded(child: Container()),
-
-          Visibility(
-            visible: !hideFlags,
-            child: Row(
-              children: [
-                Icon(isActive ? Icons.check : Icons.check,
-                    color: Color(0xff08BEFB), size: 18),
-                Icon(isVerify ? Icons.check : Icons.check,
-                    color: Color(0xff08BEFB), size: 18),
-              ],
-            ),
-          ),
-
-          const SizedBox(width: 5),
-        ],
-      ),
-    );
-  }
-}
-
-class _headCardWidget extends StatelessWidget {
-  const _headCardWidget(
-      {Key? key,
-      required this.urlUser,
-      required this.mantainerName,
-      this.titleLevelOne = 'Mantainer'})
-      : super(key: key);
-
-  final String urlUser;
-  final String mantainerName;
-  final String titleLevelOne;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CircleImage(urlImage: urlUser, radius: 50, size: 50),
-        _mantainerName(
-            mantainerName: mantainerName,
-            followers: 200,
-            titleLevelOne: titleLevelOne),
-        Expanded(child: Container()),
-        const Text('+Follow',
-            style: TextStyle(
-                color: Color(0xff08BEFB),
-                fontSize: 15,
-                fontWeight: FontWeight.w300)),
-        const SizedBox(width: 20),
-      ],
-    );
-  }
-}
 
 class _groupOfLikeButtons extends StatelessWidget {
   final String numberLikes;
@@ -839,81 +630,3 @@ class _cardTextPorcentaje extends StatelessWidget {
   }
 }
 
-class _mantainerName extends StatelessWidget {
-  final String mantainerName;
-  final int followers;
-  final String titleLevelOne;
-
-  const _mantainerName(
-      {Key? key,
-      required this.mantainerName,
-      required this.followers,
-      this.titleLevelOne = 'Mantainer'})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('${titleLevelOne}',
-              style: TextStyle(
-                  color: Preferences.isDarkmode
-                      ? Colors.black45
-                      : Color(0xffCECECE),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w300)),
-          Text(mantainerName,
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600)),
-          const SizedBox(height: 3),
-          Text('Followers: ${followers}',
-              style: const TextStyle(
-                  color: Color(0xff08BEFB),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400)),
-        ],
-      ),
-    );
-  }
-}
-
-class CircleImage extends StatelessWidget {
-  final double radius;
-  final double size;
-  final String urlImage;
-
-  const CircleImage({
-    Key? key,
-    this.radius = 30.0,
-    this.size = 60,
-    required this.urlImage,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 10),
-      padding: EdgeInsets.all(1),
-
-      width: size,
-      height: size,
-
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(radius)),
-
-      child: CircleAvatar(
-        backgroundImage: urlImage.startsWith('http')
-            ? NetworkImage(urlImage)
-            : Image.asset(urlImage).image,
-      ),
-
-      // decoration:
-    );
-  }
-}

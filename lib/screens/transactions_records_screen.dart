@@ -14,7 +14,8 @@ import '../providers/show_graph2d_profit_provider.dart';
 import '../providers/timer_categories_provider.dart';
 import '../services/transactions_record_service.dart';
 import '../share_preferences/preferences.dart';
-import '../widgets/strategyCard.dart';
+import '../widgets/mantainer_data_widget.dart';
+import '../widgets/strategy_symbol_widget.dart';
 import '../widgets/transaction_record_row_widget.dart';
 import 'loading_strategy.dart';
 
@@ -167,12 +168,12 @@ class TransactionPageScreen extends StatelessWidget {
               ),
               body: Column(
                 children: [
-                  MantainerCardStrategyWidget(
+                  MantainerDataWidget(
                       mantainerName: mantainerName,
                       urlUser: urlUser,
                       titleLevelOne: titleLevelOne),
 
-                  labelTwoStockAndPusher(
+                  StrategySymbolWidget(
                     isActive: isActive,
                     isVerify: isVerify,
                     strategyName: strategyName,

@@ -5,11 +5,11 @@ import 'package:tactictrade/models/strategy_models.dart';
 import 'package:tactictrade/screens/loading_strategy.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
 import 'package:tactictrade/services/strategies_services.dart';
-import 'package:tactictrade/widgets/strategyCard.dart';
 
 import '../providers/strategies_categories_provider.dart';
 import '../share_preferences/preferences.dart';
 import '../widgets/carousel_list_home.dart';
+import '../widgets/strategy_card.dart';
 
 class StrategyScreen extends StatefulWidget {
   StrategyScreen(
@@ -91,43 +91,9 @@ class _StrategyScreenState extends State<StrategyScreen> {
                       itemCount: strategies.strategyList.length,
                       itemBuilder: (BuildContext context, int index) =>
                           ProductCard(
-                              isOwner: strategies.strategyList[index].isOwner,
-                              isFollower:
-                                  strategies.strategyList[index].isFollower,
-                              isFavorite:
-                                  strategies.strategyList[index].isLiked,
-                              isStarred:
-                                  strategies.strategyList[index].isFavorite,
-                              urlUser: strategies
-                                  .strategyList[index].owner.profileImage,
-                              strategyName:
-                                  strategies.strategyList[index].strategyNews,
-                              urlSymbol:
-                                  strategies.strategyList[index].symbolUrl,
-                              timeTrade:
-                                  strategies.strategyList[index].timeTrade,
-                              mantainerName:
-                                  strategies.strategyList[index].owner.username,
-                              urlPusher: strategies.strategyList[index].pusher,
-                              descriptionText:
-                                  strategies.strategyList[index].description,
-                              isActive: strategies.strategyList[index].isActive,
-                              isVerify:
-                                  strategies.strategyList[index].isVerified,
-                              imageNetwork:
-                                  strategies.strategyList[index].postImage,
-                              historicalData: [],
-                              profitable: strategies
-                                  .strategyList[index].percentageProfitable,
-                              maxDrawdown:
-                                  strategies.strategyList[index].maxDrawdown,
-                              netProfit:
-                                  strategies.strategyList[index].netProfit,
-                              likesNumber:
-                                  strategies.strategyList[index].likesNumber,
-                              idStrategy: strategies.strategyList[index].id,
-                              symbolName:
-                                  strategies.strategyList[index].symbolName)),
+                            strategyData: strategies.strategyList[index],
+                            historicalData: [],
+                          )),
                 ),
               ),
             ],

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tactictrade/screens/position_screens.dart';
+import 'package:tactictrade/widgets/circle_image_widget.dart';
 
 import '../services/positions_service.dart';
-import '../widgets/strategyCard.dart';
 import 'loading_strategy.dart';
 import 'navigation_screen.dart';
 

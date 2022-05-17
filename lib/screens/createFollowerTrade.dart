@@ -16,6 +16,7 @@ import 'package:tactictrade/providers/trading_config_input_long_provider.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
 import 'package:tactictrade/services/yahoo_finance_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
+import 'package:tactictrade/widgets/strategy_symbol_widget.dart';
 import 'package:yahoofin/yahoofin.dart';
 
 import '../models/trading_config_view.dart';
@@ -28,7 +29,6 @@ import '../services/trading_config_view.dart';
 import '../widgets/asset_price_widget.dart';
 import '../widgets/forms_components/dropdown_custom.dart';
 import '../widgets/forms_components/general_input_field.dart';
-import '../widgets/strategyCard.dart';
 import 'loading_strategy.dart';
 
 class PopUpMovement extends StatelessWidget {
@@ -351,7 +351,7 @@ class _widgetTradingConfigForm extends StatelessWidget {
 
             Container(
               width: 220,
-              child: labelTwoStockAndPusher(
+              child: StrategySymbolWidget(
                   isActive: widget.isActive,
                   isVerify: widget.isVerify,
                   strategyName: widget.strategyName,
