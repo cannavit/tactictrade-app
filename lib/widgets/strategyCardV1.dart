@@ -49,7 +49,7 @@ class ProductCard extends StatelessWidget {
                             )),
                             Container(
                               height: 40,
-                              child: _groupOfLikeButtons(
+                              child: GroupLikeButtons(
                                 numberLikes: '200',
                               ),
                             ),
@@ -168,10 +168,10 @@ class _headCardWidget extends StatelessWidget {
   }
 }
 
-class _groupOfLikeButtons extends StatelessWidget {
+class GroupLikeButtons extends StatelessWidget {
   final String numberLikes;
 
-  const _groupOfLikeButtons({
+  const GroupLikeButtons({
     Key? key,
     required this.numberLikes,
   }) : super(key: key);
@@ -312,9 +312,8 @@ class _strategyName extends StatelessWidget {
         children: [
           Text('Strategy name',
               style: TextStyle(
-                  color: Preferences.isDarkmode
-                      ? Colors.black45
-                      : Colors.white60,
+                  color:
+                      Preferences.isDarkmode ? Colors.black45 : Colors.white60,
                   fontSize: 15,
                   fontWeight: FontWeight.w300)),
           Text(strategyName,
