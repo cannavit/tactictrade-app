@@ -1,4 +1,7 @@
 import 'dart:convert';
+// import 'dart:js';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +14,9 @@ import 'package:tactictrade/providers/providers.dart';
 import 'package:tactictrade/providers/strategies_categories_provider.dart';
 import 'package:tactictrade/providers/trading_config_input_long_provider.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
+import 'package:tactictrade/services/yahoo_finance_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
+import 'package:yahoofin/yahoofin.dart';
 
 import '../models/trading_config_view.dart';
 import '../providers/select_broker_trading_config_provider.dart';
@@ -20,6 +25,7 @@ import '../services/broker_service.dart';
 import '../services/notifications_service.dart';
 import '../services/trading_config.dart';
 import '../services/trading_config_view.dart';
+import '../widgets/asset_price_widget.dart';
 import '../widgets/forms_components/dropdown_custom.dart';
 import '../widgets/forms_components/general_input_field.dart';
 import '../widgets/strategyCard.dart';
@@ -88,10 +94,14 @@ class PopUpMovement extends StatelessWidget {
 }
 
 class CreateFollowTrade extends StatelessWidget {
-  CreateFollowTrade({Key? key}) : super(key: key);
+  CreateFollowTrade({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final dynamic args = ModalRoute.of(context)?.settings.arguments;
+
     // Recive arguments.
     final strategyObj = ModalRoute.of(context)?.settings.arguments;
     final categoriesList = Provider.of<CategoryStrategiesSelected>(context);
@@ -120,6 +130,9 @@ class CreateFollowTrade extends StatelessWidget {
     final consecutiveLossessAllowedShort = TextEditingController();
 
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+
+    // final tradingConfigViewService =
+    // Provider.of<TradingConfigViewService>(context);
 
     return ChangeNotifierProvider(
       create: (_) => new NavigationModel(),
@@ -173,6 +186,13 @@ class CreateFollowTrade extends StatelessWidget {
                 shortTakeProfitCtrl: shortTakeProfitCtrl,
                 strategyId: Preferences.newFollowStrategyId,
                 themeProvider: themeProvider,
+                isActive: false,
+                isVerify: false,
+                strategyName: args['strategyName'],
+                symbolName: args['symbolName'],
+                timeTrade: args['timeTrade'],
+                urlPusher: args['urlPusher'],
+                urlSymbol: args['urlSymbol'],
               ),
 
               const SizedBox(height: 50),
@@ -200,6 +220,13 @@ class _Form extends StatefulWidget {
     required this.consecutiveLossessAllowedShort,
     required this.consecutiveLossessAllowedLong,
     required this.strategyId,
+    required this.urlSymbol,
+    required this.urlPusher,
+    required this.timeTrade,
+    required this.strategyName,
+    required this.isActive,
+    required this.isVerify,
+    required this.symbolName,
   }) : super(key: key);
 
   final ThemeData themeColors;
@@ -214,6 +241,14 @@ class _Form extends StatefulWidget {
   final TextEditingController consecutiveLossessAllowedLong;
   final int strategyId;
 
+  final String urlSymbol;
+  final String urlPusher;
+  final String timeTrade;
+  final String strategyName;
+  final bool isActive;
+  final bool isVerify;
+  final String symbolName;
+
   @override
   State<_Form> createState() => _FormState();
 }
@@ -224,8 +259,8 @@ class _FormState extends State<_Form> {
   final timeTradeCtrl = TextEditingController();
   final strategyUrlCtrl = TextEditingController();
 
-  final isPublic = TextEditingController();
-  final isActive = TextEditingController();
+  // final isPublic = TextEditingController();
+  // final isActive = TextEditingController();
 
   final netProfit = TextEditingController();
   final porcentajeProfitable = TextEditingController();
@@ -243,8 +278,16 @@ class _FormState extends State<_Form> {
     'weeks',
   ];
 
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  // };
+
   @override
   Widget build(BuildContext context) {
+    // final ticketData = yahooFinance.getPrice(widget.symbolName);
+
     final tradingConfig = Provider.of<TradingConfig>(context);
     final brokerServices = Provider.of<BrokerServices>(context);
     final brokerConfig = Provider.of<BrokerConfig>(context);
@@ -261,23 +304,87 @@ class _FormState extends State<_Form> {
     final selectBrokerTradingConfig =
         Provider.of<SelectBrokerTradingConfig>(context);
 
-    if (brokerConfig.isLoading) return LoadingView();
-
     var _btnEnabled = false;
-    //
+
+    if (brokerConfig.isLoading) return const LoadingView();
+
+    return Container(
+      child: _widgetTradingConfigForm(
+          widget: widget,
+          brokerServices: brokerServices,
+          selectBrokerTradingConfig: selectBrokerTradingConfig,
+          tradingConfigViewService: tradingConfigViewService,
+          tradingConfigInputLongProvider: tradingConfigInputLongProvider,
+          tradingConfig: tradingConfig),
+    );
+  }
+}
+
+class _widgetTradingConfigForm extends StatelessWidget {
+  const _widgetTradingConfigForm({
+    Key? key,
+    required this.widget,
+    required this.brokerServices,
+    required this.selectBrokerTradingConfig,
+    required this.tradingConfigViewService,
+    required this.tradingConfigInputLongProvider,
+    required this.tradingConfig,
+  }) : super(key: key);
+
+  final _Form widget;
+  final BrokerServices brokerServices;
+  final SelectBrokerTradingConfig selectBrokerTradingConfig;
+  final TradingConfigViewService tradingConfigViewService;
+  final TradingConfigInputLongProvider tradingConfigInputLongProvider;
+  final TradingConfig tradingConfig;
+
+  @override
+  Widget build(BuildContext context) {
+
+
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('Add trading parameters',
-            style: GoogleFonts.openSans(
-              textStyle: const TextStyle(
-                color: Colors.white,
-                letterSpacing: .4,
-                fontSize: 14,
-                height: 1,
-              ),
-            )),
+        Row(
+          children: [
+
+            Container(
+              width: 220,
+              child: labelTwoStockAndPusher(
+                  isActive: widget.isActive,
+                  isVerify: widget.isVerify,
+                  strategyName: widget.strategyName,
+                  urlSymbol: widget.urlSymbol,
+                  timeTrade: widget.timeTrade,
+                  urlPusher: widget.urlPusher,
+                  symbolName: widget.symbolName,
+                  hideFlags: true),
+            ),
+
+            Expanded(child: Container()),
+
+            AssetPriceWidget(
+                  symbolName: widget.symbolName,
+                  ),
+          ],
+        ),
+
+        const SizedBox(height: 10),
+
+        Container(
+          alignment: AlignmentDirectional.centerStart,
+          margin: EdgeInsets.only(left: 12),
+          child: Text('Add trading parameters',
+              style: GoogleFonts.openSans(
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  letterSpacing: .4,
+                  fontSize: 14,
+                  height: 1,
+                ),
+              )),
+        ),
 
         const SizedBox(
           height: 20,
@@ -344,12 +451,15 @@ class _FormState extends State<_Form> {
           height: 20,
         ),
 
-        _SwiftListShort(
-          themeColors: widget.themeColors,
-          themeProvider: widget.themeProvider,
-          iconColor: Colors.red,
-          iconSwift: Icons.arrow_circle_down_rounded,
-          textSwift: 'Trading Short',
+        Visibility(
+          visible: tradingConfigViewService.tradingConfigView.short.length > 0,
+          child: _SwiftListShort(
+            themeColors: widget.themeColors,
+            themeProvider: widget.themeProvider,
+            iconColor: Colors.red,
+            iconSwift: Icons.arrow_circle_down_rounded,
+            textSwift: 'Trading Short',
+          ),
         ),
 
         AnimatedOpacity(
@@ -457,6 +567,7 @@ class _FormState extends State<_Form> {
   }
 }
 
+
 class _TradingLongForm extends StatelessWidget {
   const _TradingLongForm({
     Key? key,
@@ -535,12 +646,14 @@ class _TradingConfigQuantityState extends State<_TradingConfigQuantity> {
     return Container(
       child: Row(
         children: [
+          // Button 'USD' or 'UNIT';
           Visibility(
             visible: customTradingConfigView.showButtonUnit,
             child: _ButtonTradingConfig(
                 operation: widget.operation,
                 customTradingConfigView: customTradingConfigView),
           ),
+
           Visibility(
               visible: customTradingConfigView.showButtonUnit,
               child: const SizedBox(width: 10)),
@@ -633,6 +746,12 @@ class _ButtonTradingConfigState extends State<_ButtonTradingConfig> {
             tradingConfigInputLongProvider.buttonValuesWrite(
                 widget.customTradingConfigView.dbFieldOne, !buttonValue);
 
+            final test = tradingConfigInputLongProvider.buttonValues[
+                widget.customTradingConfigView.dbFieldOne +
+                    "_${widget.operation}"];
+
+            print(test);
+
             if (tradingConfigInputLongProvider.buttonValues[
                 widget.customTradingConfigView.dbFieldOne +
                     "_${widget.operation}"]) {
@@ -647,7 +766,13 @@ class _ButtonTradingConfigState extends State<_ButtonTradingConfig> {
                   widget.customTradingConfigView.buttonOneText);
             }
 
-            // setState(() async {});
+            // Control button USD/UNIT dynamic using json.
+            tradingConfigInputLongProvider.buttonValues[
+                    widget.customTradingConfigView.dbFieldOne +
+                        "_${widget.operation}"] =
+                !tradingConfigInputLongProvider.buttonValues[
+                    widget.customTradingConfigView.dbFieldOne +
+                        "_${widget.operation}"];
           }),
     );
   }
@@ -685,8 +810,6 @@ class _AddOrSubstractState extends State<_AddOrSubstract> {
                   onPressed: () {
                     tradingConfigInputLongProvider
                         .addOne(widget.customTradingConfigView);
-
-                    setState(() {});
                   },
                   icon: const Icon(
                     CupertinoIcons.arrowtriangle_up_fill,
@@ -701,8 +824,6 @@ class _AddOrSubstractState extends State<_AddOrSubstract> {
                 onPressed: () {
                   tradingConfigInputLongProvider
                       .subtractOne(widget.customTradingConfigView);
-
-                  setState(() {});
                 },
                 icon: const Icon(
                   CupertinoIcons.arrowtriangle_down_fill,
@@ -750,7 +871,6 @@ class _SwiftListLongState extends State<_SwiftListLong> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
           onChanged: (value) {
             configTradeProvider.longValue(value);
-            setState(() {});
           }),
     );
   }
@@ -790,7 +910,6 @@ class _SwiftListShortState extends State<_SwiftListShort> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
           onChanged: (value) {
             configTradeProvider.shortValue(value);
-            setState(() {});
           }),
     );
   }

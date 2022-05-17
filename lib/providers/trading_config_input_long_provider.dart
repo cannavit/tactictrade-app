@@ -79,11 +79,10 @@ class TradingConfigInputLongProvider with ChangeNotifier {
   final controllerLossesAllowedShort = TextEditingController();
 
   buttonTextWrite(String variable, newValue) {
+    
     buttonText[variable] = newValue;
 
-    try {
-      notifyListeners();
-    }  catch (e) {}
+    notifyListeners();
 
     return buttonText;
   }

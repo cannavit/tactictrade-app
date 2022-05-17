@@ -24,7 +24,8 @@ class _SelectBrokerPopUpState extends State<SelectBrokerPopUp> {
     final selectBrokerTradingConfig =
         Provider.of<SelectBrokerTradingConfig>(context);
 
-    final tradingConfigViewService = Provider.of<TradingConfigViewService>(context);
+    final tradingConfigViewService =
+        Provider.of<TradingConfigViewService>(context);
 
     return Container(
       child: SingleChildScrollView(
@@ -67,17 +68,22 @@ class _SelectBrokerPopUpState extends State<SelectBrokerPopUp> {
                             ),
                           ),
                           onTap: () async {
-
                             final brokerServicesObj =
                                 brokerServices.brokerList[index];
-                                
+
                             final brokerId = brokerServicesObj['id'];
 
-                            Preferences.configTradeBrokerSelectPreferences = brokerServicesObj['broker'];
-                            
+                            Preferences.configTradeBrokerSelectPreferences =
+                                brokerServicesObj['broker'];
+
                             // tradingConfigViewService.read(brokerServicesObj['broker']);
-                            
+
                             selectBrokerTradingConfig.write(index, brokerId);
+
+                            // Read the new dynamic tradingConfigView
+                            tradingConfigViewService.read(
+                                brokerServicesObj['broker'],
+                                tradingConfigViewService.strategyIdSelected);
 
                             setState(() {});
 

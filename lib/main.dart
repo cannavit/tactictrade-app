@@ -23,6 +23,7 @@ import 'package:tactictrade/services/push_notification_service.dart';
 import 'package:tactictrade/services/settings_services.dart';
 import 'package:tactictrade/services/trading_config_view.dart';
 import 'package:tactictrade/services/transactions_record_service.dart';
+import 'package:tactictrade/services/yahoo_finance_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/forms_components/dropdown_custom.dart';
 import 'package:tactictrade/widgets/social_login/google_login_widget.dart';
@@ -58,15 +59,12 @@ void main() async {
       ChangeNotifierProvider(create: (_) => CategoryStrategiesSelected()),
       ChangeNotifierProvider(create: (_) => NewStrategyProvider()),
       ChangeNotifierProvider(create: (_) => StrategyServices()),
-      ChangeNotifierProvider(
-        create: (_) => StrategyLoadServices()
-      ),
+      ChangeNotifierProvider(create: (_) => StrategyLoadServices()),
       ChangeNotifierProvider(
         create: (_) => StrategySocial(),
       ),
       ChangeNotifierProvider(
         create: (_) => BrokerServices(),
-        
       ),
       ChangeNotifierProvider(create: (_) => GoogleSignInProvider()),
       ChangeNotifierProvider(create: (_) => TradingConfig()),
@@ -85,7 +83,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => TradingConfigInputLongProvider()),
       ChangeNotifierProvider(create: (_) => TradingConfigViewService()),
 
-
+      ChangeNotifierProvider(create: (_) => YahooFinance()),
 
 
       // ChangeNotifierProvider(create: (_) => )
@@ -116,6 +114,7 @@ class _MyAppState extends State<MyApp> {
       // Show snackbar.
       final snackBar = SnackBar(content: Text(message));
       messengerKey.currentState?.showSnackBar(snackBar);
+
       // Navigation of specific screen
       navigatorKey.currentState?.pushNamed('settings', arguments: message);
     });

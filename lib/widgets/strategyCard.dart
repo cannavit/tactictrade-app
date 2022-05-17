@@ -9,6 +9,7 @@ import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/popUpTradeDataStrategy.dart';
 
 import '../pages/broker/service/broker_service.dart';
+import '../providers/trading_config_short_provider.dart';
 import '../screens/createFollowerTrade.dart';
 import '../screens/transactions_records_screen.dart';
 import '../services/strategies_services.dart';
@@ -68,6 +69,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strategySocial = Provider.of<StrategySocial>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Container(
@@ -111,19 +114,31 @@ class ProductCard extends StatelessWidget {
 
             const SizedBox(height: 5),
 
-            Visibility(
-              visible: imageNetwork == "" ? false : true,
-              maintainSize: false,
-              child: Container(
-                child: imageNetwork == null
-                    ? null
-                    : FadeInImage(
-                        placeholder: Preferences.isDarkmode
-                            ? AssetImage('assets/giphy.gif')
-                            : AssetImage('assets/giphyDarkLoading.gif'),
-                        image: NetworkImage(imageNetwork!)),
-              ),
+            // Image Strategy
+            Stack(
+              children: [
+                Visibility(
+                  visible: imageNetwork == "" ? false : true,
+                  maintainSize: false,
+                  child: Container(
+                    child: imageNetwork == null
+                        ? null
+                        : FadeInImage(
+                            placeholder: Preferences.isDarkmode
+                                ? AssetImage('assets/giphy.gif')
+                                : AssetImage('assets/giphyDarkLoading.gif'),
+                            image: NetworkImage(imageNetwork!)),
+                  ),
+                ),
+                _IconsFavoriteLinke(
+                    isFavorite: isFavorite,
+                    strategySocial: strategySocial,
+                    idStrategy: idStrategy,
+                    likesNumber: likesNumber,
+                    isStarred: isStarred),
+              ],
             ),
+
             const Divider(height: 10, color: Color(0xff797979)),
 
             _statisticsValues(
@@ -131,14 +146,6 @@ class ProductCard extends StatelessWidget {
               maxDrawdown: maxDrawdown,
               netProfit: netProfit,
             ),
-
-            // Add Image
-
-            const SizedBox(width: 10),
-
-            // _graph2d(data: historicalData),
-
-            // ,
 
             _likeIcons(
                 isOwner: isOwner,
@@ -197,6 +204,99 @@ class ProductCard extends StatelessWidget {
             BoxShadow(
                 color: Colors.black26, offset: Offset(0, 0), blurRadius: 10)
           ]);
+}
+
+class _IconsFavoriteLinke extends StatefulWidget {
+  const _IconsFavoriteLinke({
+    Key? key,
+    required this.isFavorite,
+    required this.strategySocial,
+    required this.idStrategy,
+    required this.likesNumber,
+    required this.isStarred,
+  }) : super(key: key);
+
+  final bool isFavorite;
+  final StrategySocial strategySocial;
+  final int idStrategy;
+  final int likesNumber;
+  final bool isStarred;
+
+  @override
+  State<_IconsFavoriteLinke> createState() => _IconsFavoriteLinkeState();
+}
+
+class _IconsFavoriteLinkeState extends State<_IconsFavoriteLinke> {
+  @override
+  Widget build(BuildContext context) {
+    final strategySocial = Provider.of<StrategySocial>(context);
+
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Row(
+        children: [
+          // Like Icon
+
+        Container(
+            // Star Favorite
+            child: Row(
+              children: [
+                StarButton(
+                  iconColor: Colors.yellow.shade900,
+                  iconDisabledColor: Color.fromARGB(161, 178, 178, 178),
+                  iconSize: 40,
+                  isStarred: widget.isStarred,
+                  valueChanged: (_isFavorite) {
+                    Preferences.updateTheStrategies = true;
+                    print('Is Favorite $_isFavorite)');
+                    widget.strategySocial
+                        .put(widget.idStrategy, {"favorite": _isFavorite});
+                  },
+                ),
+              ],
+            ),
+          ),
+
+              const SizedBox(width: 10),
+
+
+          Row(
+            children: [
+
+              FavoriteButton(
+                iconSize: 30,
+                isFavorite: widget.isFavorite,
+                iconDisabledColor: Color.fromARGB(161, 178, 178, 178),
+
+                valueChanged: (_isFavorite) {
+                  print('Is Favorite $_isFavorite)');
+
+                  Preferences.updateTheStrategies = true;
+
+                  widget.strategySocial
+                      .put(widget.idStrategy, {"likes": _isFavorite});
+
+                  setState(() {});
+                },
+              ),
+
+              const SizedBox(width: 10),
+
+              Text('${widget.likesNumber}',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w300)),
+            ],
+          ),
+
+          Expanded(child: Container()),
+
+    
+        ],
+      ),
+    );
+  }
 }
 
 class MantainerCardStrategyWidget extends StatelessWidget {
@@ -274,58 +374,12 @@ class _likeIcons extends StatelessWidget {
         Provider.of<TransactionRecordsServices>(context);
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Column(
-            children: [
-              FavoriteButton(
-                iconSize: 40,
-                isFavorite: isFavorite,
-                valueChanged: (_isFavorite) {
-                  print('Is Favorite $_isFavorite)');
-                  Preferences.updateTheStrategies = true;
-
-                  strategySocial.put(strategyId, {"likes": _isFavorite});
-
-                  // if (_isFavorite) {
-                  //   likesNumber = likesNumber + 1;
-                  // }
-
-                  // if (_isFavorite == false) {
-                  //   likesNumber = likesNumber + 1;
-                  // }
-                },
-              ),
-              Text('$likesNumber',
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300)),
-            ],
-          ),
-          Column(
-            children: [
-              StarButton(
-                iconColor: Colors.yellow.shade900,
-                iconSize: 40,
-                isStarred: isStarred,
-                valueChanged: (_isFavorite) {
-                  Preferences.updateTheStrategies = true;
-                  print('Is Favorite $_isFavorite)');
-                  strategySocial.put(strategyId, {"favorite": _isFavorite});
-                },
-              ),
-              const Text('Favorite',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300)),
-            ],
-          ),
-          Column(
+          Row(
             children: [
               // Icon(Icons.history),
               IconButton(
@@ -369,7 +423,17 @@ class _likeIcons extends StatelessWidget {
           _FollowButton(
               isFollower: isFollower,
               brokerServices: brokerServices,
-              strategyId: strategyId),
+              strategyId: strategyId,
+              mantainerName: mantainerName,
+              titleLevelOne: titleLevelOne,
+              urlUser: urlUser,
+              isActive: false,
+              isVerify: false,
+              strategyName: strategyName,
+              symbolName: symbolName,
+              timeTrade: timeTrade,
+              urlPusher: urlPusher,
+              urlSymbol: urlSymbol),
         ],
       ),
     );
@@ -382,18 +446,44 @@ class _FollowButton extends StatelessWidget {
     required this.isFollower,
     required this.brokerServices,
     required this.strategyId,
+    required this.urlUser,
+    required this.titleLevelOne,
+    required this.mantainerName,
+    required this.urlSymbol,
+    required this.urlPusher,
+    required this.timeTrade,
+    required this.strategyName,
+    required this.isActive,
+    required this.isVerify,
+    required this.symbolName,
   }) : super(key: key);
 
   final bool isFollower;
   final BrokerServices brokerServices;
   final int strategyId;
 
+  final String urlUser;
+  final String titleLevelOne;
+  final String mantainerName;
+
+  final String urlSymbol;
+  final String urlPusher;
+  final String timeTrade;
+  final String strategyName;
+  final bool isActive;
+  final bool isVerify;
+  final String symbolName;
+
   @override
   Widget build(BuildContext context) {
+    final tradingConfigViewService =
+        Provider.of<TradingConfigViewService>(context);
 
-    final tradingConfigViewService = Provider.of<TradingConfigViewService>(context);
+    final configTradeProvider = Provider.of<TradingConfigProvider>(context);
 
-    return Column(
+    final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+    return Row(
       children: [
         IconButton(
           splashColor: Colors.amber,
@@ -423,14 +513,26 @@ class _FollowButton extends StatelessWidget {
                   actions: <Widget>[
                     FlatButton(
                         color: Colors.green,
-                        onPressed: ()  {
-                          print(brokerServices);
-                          print(strategyId);
+                        onPressed: () {
+                          // Reset las configuration open
+                          configTradeProvider.reset();
 
-                           tradingConfigViewService.read("", strategyId);
+                          tradingConfigViewService.read("", strategyId);
 
                           Navigator.pushReplacementNamed(
-                              context, 'create_follow_trade');
+                              context, 'create_follow_trade',
+                              arguments: {
+                                "urlSymbol": urlSymbol,
+                                "urlPusher": urlPusher,
+                                "timeTrade": timeTrade,
+                                "strategyName": strategyName,
+                                "isActive": isActive,
+                                "isVerify": isVerify,
+                                "symbolName": symbolName,
+                              });
+
+                          tradingConfigViewService.strategyIdSelected =
+                              strategyId;
                         },
                         child: const Text("USE FOR TRADE")),
                     // const SizedBox(width:30 ),
@@ -518,7 +620,8 @@ class labelTwoStockAndPusher extends StatelessWidget {
       required this.strategyName,
       required this.isActive,
       required this.isVerify,
-      required this.symbolName})
+      required this.symbolName, 
+       this.hideFlags = false})
       : super(key: key);
 
   final String urlSymbol;
@@ -528,6 +631,7 @@ class labelTwoStockAndPusher extends StatelessWidget {
   final bool isActive;
   final bool isVerify;
   final String symbolName;
+  final bool hideFlags;
 
   @override
   Widget build(BuildContext context) {
@@ -588,13 +692,16 @@ class labelTwoStockAndPusher extends StatelessWidget {
 
           Expanded(child: Container()),
 
-          Row(
-            children: [
-              Icon(isActive ? Icons.check : Icons.check,
-                  color: Color(0xff08BEFB), size: 18),
-              Icon(isVerify ? Icons.check : Icons.check,
-                  color: Color(0xff08BEFB), size: 18),
-            ],
+          Visibility(
+            visible: !hideFlags,
+            child: Row(
+              children: [
+                Icon(isActive ? Icons.check : Icons.check,
+                    color: Color(0xff08BEFB), size: 18),
+                Icon(isVerify ? Icons.check : Icons.check,
+                    color: Color(0xff08BEFB), size: 18),
+              ],
+            ),
           ),
 
           const SizedBox(width: 5),
@@ -655,9 +762,9 @@ class _groupOfLikeButtons extends StatelessWidget {
           Expanded(
               child: Row(
             children: [
-              const SizedBox(width: 10),
+              // const SizedBox(width: 10),
               FavoriteButton(
-                iconSize: 40,
+                iconSize: 30,
                 valueChanged: (_isFavorite) {
                   print('Is Favorite $_isFavorite)');
                 },

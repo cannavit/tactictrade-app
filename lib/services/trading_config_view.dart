@@ -17,21 +17,26 @@ class TradingConfigViewService extends ChangeNotifier {
 
   dynamic tradingConfigViewCache = {};
 
+  late int strategyIdSelected;
+
   // TradingConfigViewService() {
   //   this.read('paperTrade');
   // }
 
+
+
   Future read(String brokerSelect, int strategyId) async {
+    if (brokerSelect == "") {
+      brokerSelect = Preferences.configTradeBrokerSelectPreferences;
+    }
 
     if (tradingConfigViewCache[strategyId] == null) {
-
       if (response == null) {
-
         final url =
             Uri.http(Environment.baseUrl, '/trading/view_flutter/$strategyId');
-        
+
         final _storage = new FlutterSecureStorage();
-        
+
         final token = await _storage.read(key: 'token_access') ?? '';
 
         if (token == '') {

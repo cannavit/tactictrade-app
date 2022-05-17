@@ -23,6 +23,13 @@ class TradingConfigProvider with ChangeNotifier {
     return result;
   }
 
+  reset() {
+    Preferences.brokerNewUseTradingShort = false;
+    Preferences.brokerNewUseTradingLong = false;
+    isActiveShort = false;
+    isActiveLong = false;
+  }
+
   longValue(bool value) {
     this.isActiveLong = value;
     Preferences.brokerNewUseTradingLong = isActiveLong;

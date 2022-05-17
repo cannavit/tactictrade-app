@@ -46,7 +46,6 @@ class StrategyServices extends ChangeNotifier {
 
     final String strategyImage = Preferences.tempStrategyImage;
     if (strategyImage != '') {
-
       final profile_image =
           await http.MultipartFile.fromPath('post_image', strategyImage);
 
@@ -194,6 +193,22 @@ class StrategyLoadServices extends ChangeNotifier {
 class StrategySocial extends ChangeNotifier {
   bool isLoading = true;
   List strategyList = [];
+
+  dynamic readLikes = {};
+
+  read(int likeNumbers) {
+    print("@Note-01 ---- -1499031061 -----");
+
+    // if (readLikes[strategyId] == null) {
+    //   readLikes[strategyId] = 0;
+    // }
+
+    // final result = readLikes[strategyId];
+
+    // // notifyListeners();
+    // return result;
+  }
+
 //   // int strategyId
   Future put(int strategyId, dynamic social) async {
     final url =
@@ -216,6 +231,12 @@ class StrategySocial extends ChangeNotifier {
         body: dataSocial);
 
     final data = json.decode(response.body)['results'];
+
+    final responseJson = jsonDecode(response.body);
+
+    // readLikes[strategyId] = likesNumber;
+
+    notifyListeners();
 
     return data;
   }

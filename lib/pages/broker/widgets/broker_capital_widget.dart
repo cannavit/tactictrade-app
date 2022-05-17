@@ -38,7 +38,7 @@ class BrokerCapitalWidget extends StatelessWidget {
             Text(
               brokerName,
               style: GoogleFonts.roboto(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   letterSpacing: .5,
                   fontSize: 12,
                   height: 1.5,

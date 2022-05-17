@@ -16,7 +16,6 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 
-
 ## Deploy in Play Store using GitHub
 
     https://danielllewellyn.medium.com/flutter-github-actions-for-a-signed-apk-fcdf9878f660
@@ -34,10 +33,6 @@ samples, guidance on mobile development, and a full API reference.
 
     heroku config -s -a django-backend-steging > .env.staging
 
-
-    
-
-
 ## Encode file upload-keystore.jks
 
 base64 -i ~/.android/debug.keystore -o <outfile>
@@ -45,4 +40,4 @@ base64 -i ~/.android/debug.keystore -o <outfile>
 
 # Create Build 
 
-flutter build appbundle --no-tree-shake-icons --build-name=1.0.68 --build-number=68
+flutter build appbundle --no-tree-shake-icons --build-name=1.0.76 --build-number=76
