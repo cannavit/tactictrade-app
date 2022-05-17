@@ -8,6 +8,8 @@ import 'package:tactictrade/pages/broker/widgets/broker_info_widget.dart';
 import 'package:tactictrade/screens/loading_strategy.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
 
+import '../../widgets/circle_navigation_button_widget.dart';
+
 class BrokersPages extends StatelessWidget {
   BrokersPages({Key? key}) : super(key: key);
 
@@ -27,13 +29,7 @@ class BrokersPages extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => new NavigationModel(),
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.blue,
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, 'create_broker');
-          },
-        ),
+        floatingActionButton: CircleNavigationButtonWidget(navigationTo: 'create_broker'),
         body: SmartRefresher(
           controller: _refreshController,
           child: _listViewBrokers(brokerServices),

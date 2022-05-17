@@ -9,6 +9,7 @@ import 'package:tactictrade/services/strategies_services.dart';
 import '../providers/strategies_categories_provider.dart';
 import '../share_preferences/preferences.dart';
 import '../widgets/carousel_list_home.dart';
+import '../widgets/circle_navigation_button_widget.dart';
 import '../widgets/strategy_card.dart';
 
 class StrategyScreen extends StatefulWidget {
@@ -98,13 +99,8 @@ class _StrategyScreenState extends State<StrategyScreen> {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.blue,
-            child: Icon(Icons.add),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, 'create_strategy');
-            },
-          ),
+          floatingActionButton: const CircleNavigationButtonWidget(),
         ));
   }
 }
+

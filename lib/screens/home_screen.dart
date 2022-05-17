@@ -59,7 +59,7 @@ class HomeScreen extends StatelessWidget {
               CarouselListHome(categoriesList: categoriesList),
               Container(),
               Divider(color: themeColors.dividerColor),
-              Container(
+              SizedBox(
                 // color: Colors.black,
                 height: 250,
                 width: double.infinity,
@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                             fontWeight: FontWeight.w300)),
                     const SizedBox(height: 25),
                     pieChartTradingAbstract(),
-                    DoughnutChart()
+                    const DoughnutChart()
                   ],
                 ),
               ),
