@@ -115,7 +115,6 @@ class GeneralInputField extends StatelessWidget {
 
 class GeneralInputFieldV2 extends StatelessWidget {
   //
-  final String? validatorType;
   final Color colorBorder;
   final Color colorBorderSelected;
   final bool isRequired;
@@ -131,7 +130,6 @@ class GeneralInputFieldV2 extends StatelessWidget {
   const GeneralInputFieldV2({
     Key? key,
     this.valueType = '',
-    this.validatorType = null,
     this.colorBorder = Colors.white,
     this.colorBorderSelected = Colors.blue,
     this.isRequired = false,

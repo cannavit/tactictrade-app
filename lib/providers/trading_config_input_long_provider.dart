@@ -82,7 +82,6 @@ class TradingConfigInputLongProvider with ChangeNotifier {
     
     buttonText[variable] = newValue;
 
-    notifyListeners();
 
     return buttonText;
   }
@@ -94,11 +93,6 @@ class TradingConfigInputLongProvider with ChangeNotifier {
   buttonValuesWrite(String variable, newValue) {
     buttonValues[variable] = newValue;
 
-    try {
-      notifyListeners();
-    } catch (e) {
-      print("@Note-01 ---- 1710912487 -----");
-    }
 
     return buttonValues;
   }
