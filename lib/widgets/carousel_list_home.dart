@@ -6,22 +6,33 @@ import 'package:tactictrade/services/strategies_services.dart';
 import 'package:tactictrade/services/trading_config.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
+import '../services/market_data_service.dart';
+
 class CarouselListHome extends StatelessWidget {
   final dynamic categoriesList;
 
-  const CarouselListHome({
-    Key? key,
-    required this.categoriesList,
-    this.pageCarausel = '',
-  }) : super(key: key);
+  const CarouselListHome(
+      {Key? key,
+      required this.categoriesList,
+      this.pageCarausel = '',
+      this.dynamicCarousel = false})
+      : super(key: key);
 
   final String pageCarausel;
+  final bool dynamicCarousel;
 
   @override
   Widget build(BuildContext context) {
     // final categoriesList = Provider.of<CategorySelected>(context);
 
     final themeColors = Theme.of(context);
+    // Provider for Graph Candle
+    final marketDataService = Provider.of<MarketDataService>(context);
+
+    // var categoryData = [];
+    // if (!dynamicCarousel) {
+    //   categoryData = categoriesList.categories;
+    // }
     
 
     return Container(
@@ -48,32 +59,27 @@ class CarouselListHome extends StatelessWidget {
                     '${categoriesList.categories[index].parameterFilter}';
 
                 final strategies =
-                  Provider.of<StrategyLoadServices>(context, listen: false);
+                    Provider.of<StrategyLoadServices>(context, listen: false);
 
                 strategies.loadStrategy();
               }
 
               if (pageCarausel == 'ownerStrategies') {
-
                 Preferences.categoryStrategyOwnerSelected =
                     '${categoriesList.categories[index].parameterFilter}';
 
-                final tradingConfig = Provider.of<TradingConfig>(context, listen: false);    
-             
+                final tradingConfig =
+                    Provider.of<TradingConfig>(context, listen: false);
+
                 tradingConfig.readv2();
               }
 
-              
+              if (pageCarausel == 'carousel_graph_candle') {
+                // Preferences.
 
-              // print("@Note-01 ---- 804689847 -----");
-              // print(Preferences.categoryStrategySelected);
-
-              // if (categoriesList.categories[index].navigationPage) {
-
-              // Navigator.pushReplacementNamed(context,
-              // '${categoriesList.categories[index].navigationPage}');
-
-              // };
+                marketDataService
+                    .read('${categoriesList.categories[index].parameterFilter}');
+              }
             },
             child: Padding(
               padding: EdgeInsets.all(1),

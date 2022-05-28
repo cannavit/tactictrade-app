@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:tactictrade/models/environments_models.dart';
 import 'package:tactictrade/pages/broker/broker_page.dart';
 import 'package:tactictrade/pages/broker/service/broker_service.dart';
 import 'package:tactictrade/pages/broker/create_broker_screen.dart';
@@ -14,20 +13,19 @@ import 'package:tactictrade/providers/strtegy_categories_filter_provider.dart';
 import 'package:tactictrade/providers/timer_categories_provider.dart';
 import 'package:tactictrade/providers/trading_config_input_long_provider.dart';
 import 'package:tactictrade/providers/trading_config_short_provider.dart';
+import 'package:tactictrade/screens/candle_graph_sceen.dart';
+import 'package:tactictrade/screens/candle_graph_screen_v2.dart';
 import 'package:tactictrade/screens/createFollowerTrade.dart';
 import 'package:tactictrade/screens/screens.dart';
-import 'package:tactictrade/screens/strategy_historial_screen.dart';
-import 'package:tactictrade/screens/transactions_records_screen.dart';
 import 'package:tactictrade/services/broker_service.dart';
+import 'package:tactictrade/services/market_data_service.dart';
 import 'package:tactictrade/services/push_notification_service.dart';
 import 'package:tactictrade/services/settings_services.dart';
 import 'package:tactictrade/services/trading_config_view.dart';
 import 'package:tactictrade/services/transactions_record_service.dart';
 import 'package:tactictrade/services/yahoo_finance_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
-import 'package:tactictrade/widgets/forms_components/dropdown_custom.dart';
 import 'package:tactictrade/widgets/social_login/google_login_widget.dart';
-import 'models/trading_config_view.dart';
 import 'providers/select_broker_trading_config_provider.dart';
 import 'services/services.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -82,9 +80,11 @@ void main() async {
       ChangeNotifierProvider(create: (_) => TradingConfigInputLongProvider()),
       ChangeNotifierProvider(create: (_) => TradingConfigInputLongProvider()),
       ChangeNotifierProvider(create: (_) => TradingConfigViewService()),
-
+      ChangeNotifierProvider(create: (_) => MarketDataService()),
       ChangeNotifierProvider(create: (_) => YahooFinance()),
+      ChangeNotifierProvider(create: (_) => TimeFilterSelected()),
 
+      
 
       // ChangeNotifierProvider(create: (_) => )
     ],
@@ -129,6 +129,8 @@ class _MyAppState extends State<MyApp> {
 
       title: 'Material App',
       initialRoute: 'loading',
+      // initialRoute: 'test_custom_paint',
+
       navigatorKey: navigatorKey,
       routes: {
         // 'test': (_) => DropDownSelectBroker(),
@@ -149,8 +151,9 @@ class _MyAppState extends State<MyApp> {
         'brokers': (_) => BrokersPages(),
         'create_broker': (_) => const NewBrokerScreen(),
         'create_follow_trade': (_) => CreateFollowTrade(),
+        'test_candle': (_) => CandleGraphScreen(),
+        'test_custom_paint': (_) => CustomPaintGraphScreen()
         // 'test_screen': (_) => ScreenTest(),
-
         // 'transactions_records': (_) =>TransactionPageScreen(),
       },
       theme: Provider.of<ThemeProvider>(context).currentTheme,

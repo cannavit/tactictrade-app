@@ -6,22 +6,14 @@ import 'package:tactictrade/models/environments_models.dart';
 
 class Preferences {
   static late SharedPreferences _prefs;
-
-  // Declarate Preferences Inputs. -----------------------------------------
-
   //           Generic preferences.
   static String _name = '';
   static bool _isPaperTrading = true;
   static int _gender = 1;
   static bool _isDarkmode = false;
-  // static bool _isDarkmode = false;
-
-  //           Profine Information
   static String _username = '';
   static String _about = '';
   static String _profileImage = '';
-
-  //           Controls Information
   static String _pathGalleryImage = '';
   static String _tempProfileImage = '';
   static String _selectedAppBarName = '';
@@ -31,33 +23,20 @@ class Preferences {
   static String _selectedTimeNewStrategy = 'minute';
   static bool _createNewStrategy = false;
   static int _formValidatorCounter = 0;
-
   static int _navigationCurrentPage = 0;
-
   static bool _brokerNewUseTradingLong = false;
   static bool _brokerNewUseTradingShort = false;
-
   static int _newFollowStrategyId = -1;
-
   static String _selectedBrokerInFollowStrategy = 'Select your Broker';
-
   static String _transactionRecordsServicesData = '';
-
   static String _categoryStrategySelected = 'all';
-
   static bool _updateTheStrategies = false;
-
   static String _categoryStrategyOwnerSelected = 'all';
-
   static bool _updateStrategyOwnerSelected = false;
-
   static bool _rememberMeLoginData = false;
-
   static String _passwordLoginSaved = '';
   static String _emailLoginSaved = '';
-
   static bool _showProfitGraph = true;
-
   static String _selectedOptionStrategiesSettings = '';
 
   // Init Preferences
@@ -69,9 +48,7 @@ class Preferences {
 
   static String configTradeBrokerSelectPreferences = '';
 
-  static  String _assetSelectedInTradingConfig = '';
-
-
+  static String _assetSelectedInTradingConfig = '';
 
   // Define geters -------------------------------------------------------
 
@@ -217,13 +194,13 @@ class Preferences {
         _selectedOptionStrategiesSettings;
   }
 
-
   static bool get showProfitGraph {
     return _prefs.getBool('showProfitGraph') ?? _showProfitGraph;
   }
 
   static int get brokerSelectedPreferences {
-    return _prefs.getInt('brokerSelectedPreferences') ?? _brokerSelectedPreferences;
+    return _prefs.getInt('brokerSelectedPreferences') ??
+        _brokerSelectedPreferences;
   }
 
   static String get configTradeBrokerSelect {
@@ -235,7 +212,6 @@ class Preferences {
     return _prefs.getString('assetSelectedInTradingConfig') ??
         assetSelectedInTradingConfig;
   }
-
 
   // Define seters -------------------------------------------------------
 
@@ -389,8 +365,7 @@ class Preferences {
     _prefs.setString('selectedOptionStrategiesSettings', value);
   }
 
-
-    static set showProfitGraph(bool value) {
+  static set showProfitGraph(bool value) {
     _showProfitGraph = value;
     _prefs.setBool('showProfitGraph', value);
   }
@@ -398,17 +373,15 @@ class Preferences {
   static set brokerSelectedPreferences(int value) {
     _brokerSelectedPreferences = value;
     _prefs.setInt('brokerSelectedPreferences', value);
-  }  
+  }
 
-
-  static set (String value) {
+  static set(String value) {
     configTradeBrokerSelectPreferences = value;
     _prefs.setString('configTradeBrokerSelect', value);
-  }  
+  }
 
   static set assetSelectedInTradingConfig(String value) {
     _assetSelectedInTradingConfig = value;
     _prefs.setString('assetSelectedInTradingConfig', value);
-  }  
-
+  }
 }

@@ -40,4 +40,4 @@ base64 -i ~/.android/debug.keystore -o <outfile>
 
 # Create Build 
 
-flutter build appbundle --no-tree-shake-icons --build-name=1.0.76 --build-number=76
+flutter build appbundle --no-tree-shake-icons --build-name=1.0.77 --build-number=77

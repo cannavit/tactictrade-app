@@ -54,74 +54,72 @@ class NewBrokerScreen extends StatelessWidget {
           actions: [],
           elevation: 0,
         ),
-        body: Container(
-          child: Center(
-            child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          height: 70,
-                          child: Image(
-                              image: AssetImage(
-                                  'lib/pages/broker/assets/AlpacaRowDart.png'))),
-                      const SizedBox(height: 50),
-                      Container(
-                        //   // width: MediaQuery.of(context).size.width * 0.4,
-                        child: GeneralInputField(
-                            textController: brokerNameCtrl,
-                            labelText: 'Broker Name',
-                            hintText: 'Add Broker Name',
-                            validatorType: 'writeMandatory',
-                            icon: const Icon(
-                              Icons.broken_image_sharp,
-                              color: Colors.grey,
-                            )),
-                      ),
-                      const SizedBox(height: 40),
-                      Container(
-                        // width: MediaQuery.of(context).size.width * 0.4,
-                        child: GeneralInputField(
-                            textController: ApiKeyCtrl,
-                            labelText: 'Api Key ',
-                            hintText: 'Add Broker Name',
-                            textInputType: TextInputType.number,
-                            validatorType: 'writeMandatory',
-                            icon: const Icon(
-                              Icons.flip_to_back_rounded,
-                              color: Colors.grey,
-                            )),
-                      ),
-                      const SizedBox(height: 40),
-                      Container(
-                        // width: MediaQuery.of(context).size.width * 0.4,
-                        child: GeneralInputField(
-                            textController: SecretKeyCtrl,
-                            labelText: 'Secret Key ',
-                            hintText: 'Add Secret Key',
-                            textInputType: TextInputType.number,
-                            validatorType: 'writeMandatory',
-                            icon: const Icon(
-                              Icons.electrical_services_outlined,
-                              color: Colors.grey,
-                            )),
-                      ),
-                      Expanded(child: Container()),
-                      Container(
-                          height: 50,
-                          child: ButtonCreateBroker(
-                            buttonText: 'Create Broker',
-                            bodyRequest: {
-                              'brokerName': brokerNameCtrl,
-                              'ApiKey': ApiKeyCtrl,
-                              'SecretKey': SecretKeyCtrl,
-                            },
-                            btnEnabled: _btnEnabled,
+        body: Center(
+          child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                        height: 70,
+                        child: Image(
+                            image: AssetImage(
+                                'lib/pages/broker/assets/AlpacaRowDart.png'))),
+                    const SizedBox(height: 50),
+                    Container(
+                      //   // width: MediaQuery.of(context).size.width * 0.4,
+                      child: GeneralInputField(
+                          textController: brokerNameCtrl,
+                          labelText: 'Broker Name',
+                          hintText: 'Add Broker Name',
+                          validatorType: 'writeMandatory',
+                          icon: const Icon(
+                            Icons.broken_image_sharp,
+                            color: Colors.grey,
                           )),
-                      const SizedBox(height: 100),
-                    ])),
-          ),
+                    ),
+                    const SizedBox(height: 40),
+                    Container(
+                      // width: MediaQuery.of(context).size.width * 0.4,
+                      child: GeneralInputField(
+                          textController: ApiKeyCtrl,
+                          labelText: 'Api Key ',
+                          hintText: 'Add Broker Name',
+                          textInputType: TextInputType.number,
+                          validatorType: 'writeMandatory',
+                          icon: const Icon(
+                            Icons.flip_to_back_rounded,
+                            color: Colors.grey,
+                          )),
+                    ),
+                    const SizedBox(height: 40),
+                    Container(
+                      // width: MediaQuery.of(context).size.width * 0.4,
+                      child: GeneralInputField(
+                          textController: SecretKeyCtrl,
+                          labelText: 'Secret Key ',
+                          hintText: 'Add Secret Key',
+                          textInputType: TextInputType.number,
+                          validatorType: 'writeMandatory',
+                          icon: const Icon(
+                            Icons.electrical_services_outlined,
+                            color: Colors.grey,
+                          )),
+                    ),
+                    Expanded(child: Container()),
+                    Container(
+                        height: 50,
+                        child: ButtonCreateBroker(
+                          buttonText: 'Create Broker',
+                          bodyRequest: {
+                            'brokerName': brokerNameCtrl,
+                            'ApiKey': ApiKeyCtrl,
+                            'SecretKey': SecretKeyCtrl,
+                          },
+                          btnEnabled: _btnEnabled,
+                        )),
+                    const SizedBox(height: 100),
+                  ])),
         ));
   }
 }
