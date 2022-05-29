@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
-import '../providers/strtegy_categories_filter_provider.dart';
+import '../providers/strategy_categories_filter_provider.dart';
 import '../services/trading_config.dart';
 import '../widgets/carousel_list_home.dart';
 import '../widgets/dinamicCard/strategy_card_widget.dart';
@@ -21,18 +21,18 @@ class StrategiesOwnerScreen extends StatelessWidget {
 
     if (tradingConfig.isLoading) {
       // tradingConfig.read();
-      LoadingView();
+      const LoadingView();
     }
 
     RefreshController _refreshController =
         RefreshController(initialRefresh: false);
 
     return ChangeNotifierProvider(
-      create: (_) => new NavigationModel(),
+      create: (_) => NavigationModel(),
       child: Scaffold(
           body: Column(
         children: [
-          Container(
+          SizedBox(
             height: 30,
             width: double.infinity,
             child: CarouselListHome(
@@ -62,8 +62,8 @@ class StrategiesOwnerScreen extends StatelessWidget {
 
   ListView _ListViewStrategies(TradingConfig tradingConfig) {
     return ListView.separated(
-      separatorBuilder: (BuildContext context, int index) => Divider(),
-      physics: BouncingScrollPhysics(),
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
+      physics: const BouncingScrollPhysics(),
       itemCount: tradingConfig.tradingConfigList.length,
       itemBuilder: (BuildContext context, int index) => StrategyCard(
           totalOfTrades: tradingConfig.tradingConfigList[index].totalOfTrades,

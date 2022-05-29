@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/grap_candle_stock_volume_painter.dart';
 
 import '../providers/show_graph2d_profit_provider.dart';
-import '../providers/strtegy_categories_filter_provider.dart';
 import '../providers/timer_categories_provider.dart';
 import '../services/market_data_service.dart';
 import '../widgets/carousel_list_home.dart';
@@ -23,15 +21,14 @@ class CustomPaintGraphScreen extends StatelessWidget {
 
     final marketDataService = Provider.of<MarketDataService>(context);
 
-    if (marketDataService.isLoading) return LoadingView();
+    if (marketDataService.isLoading) return const LoadingView();
 
     final filterList = Provider.of<TimeFilterSelected>(context, listen: true);
 
-    filterList.categories = filterList.dynamicCategoryCarousel('30m');
+    filterList.categories =
+        filterList.dynamicCategoryCarousel(filterList.period);
 
     final marketDataList = marketDataService.MarketDataList;
-
-    print(marketDataService);
 
     return Scaffold(
         body: Column(
@@ -39,7 +36,7 @@ class CustomPaintGraphScreen extends StatelessWidget {
         const SizedBox(height: 100),
 
         // Candle Graph
-        Container(
+        SizedBox(
             height: 195,
             // color: Colors.green,
             child: CustomPaint(
@@ -50,7 +47,7 @@ class CustomPaintGraphScreen extends StatelessWidget {
         const SizedBox(height: 5),
 
         // Volume Graph
-        Container(
+        SizedBox(
             height: 30,
             // color: Colors.green,
             child: CustomPaint(
@@ -62,21 +59,21 @@ class CustomPaintGraphScreen extends StatelessWidget {
 
         // Control Dates
 
-        Container(
+        SizedBox(
           height: 25,
           width: double.infinity,
           child: Row(
-            children: [
+            children: const [
               // Container(
               //   height: 30,
               //   width: 30,
               //   child: _buttonChangeGraph(),
               // ),
-              Expanded(
-                child: CarouselListHome(
-                    categoriesList: filterList,
-                    pageCarausel: 'carousel_graph_candle'),
-              ),
+              // Expanded(
+              //   child: CarouselListHome(
+              //       categoriesList: filterList,
+              //       pageCarausel: 'carousel_graph_candle'),
+              // ),
             ],
           ),
         ),
@@ -209,12 +206,12 @@ class _buttonChangeGraphState extends State<_buttonChangeGraph> {
           });
         },
         icon: Preferences.showProfitGraph
-            ? Icon(
+            ? const Icon(
                 CupertinoIcons.add_circled,
                 color: Colors.blue,
                 size: 16,
               )
-            : Icon(
+            : const Icon(
                 CupertinoIcons.graph_circle_fill,
                 color: Colors.blue,
                 size: 16,

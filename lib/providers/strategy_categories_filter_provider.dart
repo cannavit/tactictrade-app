@@ -13,9 +13,7 @@ class FiltersStrategiesSelected with ChangeNotifier {
     Category(null, 'Losses Strategies', null,'losses'),
   ];
 
-  FiltersStrategiesSelected() {
-
-  }
+  FiltersStrategiesSelected();
   
   String _selectedCategory = 'All';
   String get selectedCategory => _selectedCategory;

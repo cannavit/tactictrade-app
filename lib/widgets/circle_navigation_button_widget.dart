@@ -9,14 +9,14 @@ class CircleNavigationButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50,
       width: 50,
       child: FloatingActionButton(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         elevation: 3,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.pushReplacementNamed(context, navigationTo);
         },

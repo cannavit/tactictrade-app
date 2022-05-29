@@ -39,6 +39,10 @@ class Preferences {
   static bool _showProfitGraph = true;
   static String _selectedOptionStrategiesSettings = '';
 
+  // static String _strategyCandleGraphCarousel 
+
+
+
   // Init Preferences
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
@@ -82,7 +86,7 @@ class Preferences {
 
     final String baseUrl = Environment.baseWebUrl;
 
-    var urlProfit;
+    String urlProfit;
 
     if (urlProfilImage.contains('http')) {
       urlProfit = urlProfilImage;

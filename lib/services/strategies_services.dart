@@ -17,7 +17,7 @@ class StrategyServices extends ChangeNotifier {
   Future postStrategy(StrategyData body) async {
     final urlProfile = Uri.http(Environment.baseUrl, '/strategy/v1/add');
 
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -30,7 +30,7 @@ class StrategyServices extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     };
 
-    final imageUploadRequest = await http.MultipartRequest('POST', urlProfile);
+    final imageUploadRequest = http.MultipartRequest('POST', urlProfile);
 
     imageUploadRequest.headers.addAll(headers);
 
@@ -46,10 +46,10 @@ class StrategyServices extends ChangeNotifier {
 
     final String strategyImage = Preferences.tempStrategyImage;
     if (strategyImage != '') {
-      final profile_image =
+      final profileImage =
           await http.MultipartFile.fromPath('post_image', strategyImage);
 
-      imageUploadRequest.files.add(profile_image);
+      imageUploadRequest.files.add(profileImage);
 
       Preferences.tempStrategyImage = '';
     }
@@ -66,7 +66,7 @@ class StrategyServices extends ChangeNotifier {
     notifyListeners();
     final url = Uri.http(Environment.baseUrl, '/strategy/v1/all');
 
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -110,9 +110,9 @@ class StrategyLoadServices extends ChangeNotifier {
   Future<String> _getJsonData(String endpoint,
       [int page = 1, String category = 'all']) async {
     final url = Uri.http(Environment.baseUrl, endpoint,
-        {'page': '$page', 'category': '$category'});
+        {'page': '$page', 'category': category});
 
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -134,9 +134,7 @@ class StrategyLoadServices extends ChangeNotifier {
 
     final category = Preferences.categoryStrategySelected;
 
-    strategyPageCategory[category] = strategyPageCategory[category] == null
-        ? 1
-        : strategyPageCategory[category];
+    strategyPageCategory[category] = strategyPageCategory[category] ?? 1;
 
     final page = strategyPageCategory[category];
 
@@ -162,9 +160,7 @@ class StrategyLoadServices extends ChangeNotifier {
 
     final strategyList = StrategyModel.fromJson(jsonData);
 
-    strategyResults = categoriesStrategy[category] == null
-        ? strategyResults
-        : categoriesStrategy[category];
+    strategyResults = categoriesStrategy[category] ?? strategyResults;
 
     categoriesStrategy[category] = [
       ...strategyResults,
@@ -212,8 +208,8 @@ class StrategySocial extends ChangeNotifier {
 //   // int strategyId
   Future put(int strategyId, dynamic social) async {
     final url =
-        Uri.http(Environment.baseUrl, '/strategy/v1/social/${strategyId}');
-    final _storage = new FlutterSecureStorage();
+        Uri.http(Environment.baseUrl, '/strategy/v1/social/$strategyId');
+    const _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {

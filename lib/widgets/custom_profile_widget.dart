@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:tactictrade/share_preferences/preferences.dart';
 
 class CustomProfilImage extends StatelessWidget {
   final String imagePath;

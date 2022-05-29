@@ -1,10 +1,7 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class TransactionRecordRowWidget extends StatelessWidget {
 
@@ -51,7 +48,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
 
 
       child: Row(children: [
@@ -61,7 +58,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
 
         Column(children: [
 
-          Text('${operation}'.toUpperCase(),
+          Text(operation.toUpperCase(),
             style: GoogleFonts.openSans( textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 10,
@@ -104,7 +101,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
 
         Column(children: [
 
-          Text('${create_at}'.substring(0,create_at.length -4),
+          Text(create_at.substring(0,create_at.length -4),
             style: GoogleFonts.openSans( textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
@@ -112,7 +109,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
                 ),
           const SizedBox(height: 8),
 
-          Text('${updated_at}'.substring(0,create_at.length -4),
+          Text(updated_at.substring(0,create_at.length -4),
             style: GoogleFonts.openSans( textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
@@ -125,7 +122,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
 
         Column(children: [
 
-          Text('${qty_open}',
+          Text('$qty_open',
             style: GoogleFonts.openSans( textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
@@ -133,7 +130,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
                 ),
           const SizedBox(height: 8),
 
-          Text('${qty_close}',
+          Text('$qty_close',
             style: GoogleFonts.openSans( textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
@@ -146,7 +143,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
 
         Column(children: [
 
-          Text('${price_open}',
+          Text('$price_open',
             style: GoogleFonts.openSans( textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
@@ -154,7 +151,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
                 ),
           const SizedBox(height: 8),
 
-          Text('${price_closed}',
+          Text('$price_closed',
             style: GoogleFonts.openSans( textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 11,
@@ -168,8 +165,8 @@ class TransactionRecordRowWidget extends StatelessWidget {
 
         Column(children: [
 
-          Text('${base_cost}',
-            style: GoogleFonts.openSans( textStyle:  TextStyle(
+          Text('$base_cost',
+            style: GoogleFonts.openSans( textStyle:  const TextStyle(
                 color: Colors.blue,
                 fontSize: 14,
                 fontWeight: FontWeight.w600))
@@ -177,7 +174,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
           const SizedBox(height: 6),
           
           Text('USD',
-            style: GoogleFonts.openSans( textStyle:  TextStyle(
+            style: GoogleFonts.openSans( textStyle:  const TextStyle(
                 color: Colors.blue,
                 fontSize: 12,
                 fontWeight: FontWeight.w600))
@@ -188,7 +185,7 @@ class TransactionRecordRowWidget extends StatelessWidget {
         
         Column(children: [
 
-          Text('${profit_percentage}',
+          Text('$profit_percentage',
             style: GoogleFonts.openSans( textStyle:  TextStyle(
                 color: is_winner ? Colors.green : Colors.red,
                 fontSize: 14,

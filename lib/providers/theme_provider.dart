@@ -24,23 +24,21 @@ class MyThemes {
   static final darkTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: const Color(0xffF2F4F7),
     // colorScheme: ColorScheme.light(),
-    dividerColor: Color(0xff898989),
+    dividerColor: const Color(0xff898989),
     primaryColor: const Color(0xff008CED),
     secondaryHeaderColor: Colors.black87,
-    accentColor: const Color(0xff008CED),
-    textSelectionColor: Color(0xff142A32),
+    textSelectionColor: const Color(0xff142A32), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xff008CED)),
 
     
   );
 
-  static final lightTheme = new ThemeData.dark().copyWith(
+  static final lightTheme = ThemeData.dark().copyWith(
     // scaffoldBackgroundColor: const Color(0xff142A32),
     scaffoldBackgroundColor: const Color(0xff181B25),
 
     textSelectionColor: Colors.white,
     secondaryHeaderColor: Colors.white,
-    primaryColor: const Color(0xff08BEFB),
-    accentColor: const Color(0xff008CED),
+    primaryColor: const Color(0xff08BEFB), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xff008CED)),
   );
 }
 

@@ -8,3 +8,8 @@ export 'package:tactictrade/screens/navigation_screen.dart';
 export 'package:tactictrade/screens/profile_screen.dart';
 export 'package:tactictrade/screens/settings_screen.dart';
 export 'package:tactictrade/screens/strategy_screen.dart';
+export 'package:tactictrade/screens/candle_graph_screen.dart';
+export 'package:tactictrade/screens/candle_graph_screen_v2.dart';
+export 'package:tactictrade/screens/createFollowerTrade.dart';
+export 'package:tactictrade/screens/broker_screen.dart';
+export 'package:tactictrade/screens/create_broker_screen.dart';

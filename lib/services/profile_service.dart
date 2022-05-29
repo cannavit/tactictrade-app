@@ -14,7 +14,7 @@ class ProfileService extends ChangeNotifier {
   ) async {
     final urlProfile = Uri.http(Environment.baseUrl, '/account/profile/');
 
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -27,7 +27,7 @@ class ProfileService extends ChangeNotifier {
       'Authorization': 'Bearer ' + token
     };
 
-    final imageUploadRequest = await http.MultipartRequest('PUT', urlProfile);
+    final imageUploadRequest = http.MultipartRequest('PUT', urlProfile);
 
     imageUploadRequest.headers.addAll(headers);
     imageUploadRequest.fields['username'] = username;
@@ -38,12 +38,11 @@ class ProfileService extends ChangeNotifier {
     // if pathGalleryImage.contains('http')
 
     if (!pathGalleryImage.contains('http')) {
-      final profile_image =
+      final profileImage =
           await http.MultipartFile.fromPath('profile_image', pathGalleryImage);
 
-      imageUploadRequest.files.add(profile_image);
+      imageUploadRequest.files.add(profileImage);
     }
-    ;
 
     final response = await imageUploadRequest.send();
 

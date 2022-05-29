@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tactictrade/share_preferences/preferences.dart';
 
 class BrokerInfo extends StatelessWidget {
   const BrokerInfo({
@@ -15,7 +14,7 @@ class BrokerInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         // color: Preferences.isDarkmode ? Color(0xffA6B4B9) : Colors.black,
         height: 160,
         child: Column(
@@ -25,14 +24,14 @@ class BrokerInfo extends StatelessWidget {
                 visible: simpleView ? false : (tagBroker == '' ? false : true),
                 child: Container(
                   // margin: EdgeInsets.symmetric(vertical: 10),
-                  margin: EdgeInsets.only(top: 10, left: 10),
+                  margin: const EdgeInsets.only(top: 10, left: 10),
                   decoration: BoxDecoration(
                       // color: PositionData.isActive ? Colors.green[300] : Colors.red,
-                      color: Color(0xff37E74F),
+                      color: const Color(0xff37E74F),
                       borderRadius: BorderRadius.circular(100)),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(tagBroker,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                           fontWeight: FontWeight.w300)),
@@ -40,11 +39,11 @@ class BrokerInfo extends StatelessWidget {
             Container(
               height: simpleView ? 80 : 110,
               width: simpleView ? 80 : 110,
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               child: Image(
                   image: AssetImage(broker == 'alpaca'
-                      ? 'lib/pages/broker/assets/BrokerAlpacaDark.png'
-                      : 'lib/pages/broker/assets/TacticTradeBroker.png')),
+                      ? 'assets/BrokerAlpacaDark.png'
+                      : 'assets/TacticTradeBroker.png')),
             )
           ],
         ));

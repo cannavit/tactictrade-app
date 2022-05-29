@@ -23,23 +23,22 @@ class CarouselListHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final categoriesList = Provider.of<CategorySelected>(context);
-
+    final categoriesList = Provider.of<CategorySelected>(context);
     final themeColors = Theme.of(context);
-    // Provider for Graph Candle
     final marketDataService = Provider.of<MarketDataService>(context);
 
-    // var categoryData = [];
-    // if (!dynamicCarousel) {
-    //   categoryData = categoriesList.categories;
-    // }
+    var categoryData = [];
+    if (!dynamicCarousel) {
+      categoryData = categoriesList.categories;
+    }
+    const period = '1m';
     
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 35,
       child: ListView.builder(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemCount: categoriesList.categories.length,
@@ -47,16 +46,16 @@ class CarouselListHome extends StatelessWidget {
           final cName = categoriesList.categories[index].name;
           return GestureDetector(
             onTap: () {
-              print('${categoriesList.categories[index].name}');
+              print(categoriesList.categories[index].name);
 
               categoriesList.selectedCategory =
                   categoriesList.categories[index].name;
 
-              print('${categoriesList.categories[index].parameterFilter}');
+              print(categoriesList.categories[index].parameterFilter);
 
               if (pageCarausel == '') {
                 Preferences.categoryStrategySelected =
-                    '${categoriesList.categories[index].parameterFilter}';
+                    categoriesList.categories[index].parameterFilter;
 
                 final strategies =
                     Provider.of<StrategyLoadServices>(context, listen: false);
@@ -66,7 +65,7 @@ class CarouselListHome extends StatelessWidget {
 
               if (pageCarausel == 'ownerStrategies') {
                 Preferences.categoryStrategyOwnerSelected =
-                    '${categoriesList.categories[index].parameterFilter}';
+                    categoriesList.categories[index].parameterFilter;
 
                 final tradingConfig =
                     Provider.of<TradingConfig>(context, listen: false);
@@ -78,17 +77,19 @@ class CarouselListHome extends StatelessWidget {
                 // Preferences.
 
                 marketDataService
-                    .read('${categoriesList.categories[index].parameterFilter}');
+                    .read(
+                      period,
+                      categoriesList.categories[index].parameterFilter);
               }
             },
             child: Padding(
-              padding: EdgeInsets.all(1),
+              padding: const EdgeInsets.all(1),
               child: Container(
                 decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     color: Preferences.isDarkmode
-                        ? Color.fromARGB(0, 0, 0, 0)
-                        : Color.fromARGB(255, 33, 37, 50),
+                        ? const Color.fromARGB(0, 0, 0, 0)
+                        : const Color.fromARGB(255, 33, 37, 50),
                     borderRadius: BorderRadius.circular(14)),
                 child: Row(
                   children: [
@@ -108,16 +109,16 @@ class CarouselListHome extends StatelessWidget {
                                 // color: Colors.black54,
                                 color:
                                     (categoriesList.selectedCategory == cName)
-                                        ? themeColors.accentColor
+                                        ? themeColors.colorScheme.secondary
                                         : const Color(0xff142A32),
                               )
-                            : Icon(null)),
+                            : const Icon(null)),
 
                     Text('${cName[0].toUpperCase()}${cName.substring(1)}',
                         style: GoogleFonts.openSans(
                           textStyle: TextStyle(
                               color: (categoriesList.selectedCategory == cName)
-                                  ? themeColors.accentColor
+                                  ? themeColors.colorScheme.secondary
                                   : Colors.white,
                               fontSize: 12,
                               fontWeight:

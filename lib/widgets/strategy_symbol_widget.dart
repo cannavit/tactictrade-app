@@ -29,7 +29,7 @@ class StrategySymbolWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // color: Colors.red,
-      margin: EdgeInsets.symmetric(horizontal: 2, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -70,7 +70,7 @@ class StrategySymbolWidget extends StatelessWidget {
                           fontSize: 14,
                           fontWeight: FontWeight.w300)),
                   const SizedBox(width: 5),
-                  Icon(Icons.timer_rounded, color: Colors.white70, size: 14),
+                  const Icon(Icons.timer_rounded, color: Colors.white70, size: 14),
                   const SizedBox(width: 5),
                   Text(symbolName,
                       style: const TextStyle(
@@ -89,9 +89,9 @@ class StrategySymbolWidget extends StatelessWidget {
             child: Row(
               children: [
                 Icon(isActive ? Icons.check : Icons.check,
-                    color: Color(0xff08BEFB), size: 18),
+                    color: const Color(0xff08BEFB), size: 18),
                 Icon(isVerify ? Icons.check : Icons.check,
-                    color: Color(0xff08BEFB), size: 18),
+                    color: const Color(0xff08BEFB), size: 18),
               ],
             ),
           ),

@@ -46,7 +46,7 @@ class ButtonTradingConfigWidgetState extends State<ButtonTradingConfigWidget> {
           true);
     }
 
-    return Container(
+    return SizedBox(
       height: 48,
       width: 70,
       child: RaisedButton(
@@ -57,7 +57,7 @@ class ButtonTradingConfigWidgetState extends State<ButtonTradingConfigWidget> {
                       "_${widget.operation}")
               ? Colors.blue
               : Colors.blue.shade600,
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             // height: 30,
             child: Center(

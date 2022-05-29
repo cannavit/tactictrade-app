@@ -33,7 +33,7 @@ class IconsSocialFavoriteLikeState extends State<IconsSocialFavoriteLike> {
     final strategySocial = Provider.of<StrategySocial>(context);
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         children: [
           // Like Icon
@@ -44,7 +44,7 @@ class IconsSocialFavoriteLikeState extends State<IconsSocialFavoriteLike> {
               children: [
                 StarButton(
                   iconColor: Colors.yellow.shade900,
-                  iconDisabledColor: Color.fromARGB(161, 178, 178, 178),
+                  iconDisabledColor: const Color.fromARGB(161, 178, 178, 178),
                   iconSize: 40,
                   isStarred: widget.isStarred,
                   valueChanged: (_isFavorite) {
@@ -65,7 +65,7 @@ class IconsSocialFavoriteLikeState extends State<IconsSocialFavoriteLike> {
               FavoriteButton(
                 iconSize: 30,
                 isFavorite: widget.isFavorite,
-                iconDisabledColor: Color.fromARGB(161, 178, 178, 178),
+                iconDisabledColor: const Color.fromARGB(161, 178, 178, 178),
                 valueChanged: (_isFavorite) {
                   print('Is Favorite $_isFavorite)');
 

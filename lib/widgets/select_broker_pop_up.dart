@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tactictrade/pages/broker/broker_page.dart';
-import 'package:tactictrade/pages/broker/service/broker_service.dart';
-import 'package:tactictrade/providers/new_strategy_provider.dart';
+import 'package:tactictrade/screens/broker_screen.dart';
+import 'package:tactictrade/services/broker_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 import '../providers/select_broker_trading_config_provider.dart';
 import '../services/trading_config_view.dart';
-import 'editfield_custom.dart';
 
 class SelectBrokerPopUp extends StatefulWidget {
   const SelectBrokerPopUp(BuildContext context);
@@ -32,8 +29,8 @@ class _SelectBrokerPopUpState extends State<SelectBrokerPopUp> {
         physics: const BouncingScrollPhysics(),
         child: SafeArea(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 50),
-            margin: EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+            margin: const EdgeInsets.symmetric(vertical: 20),
             width: 100,
             height: 400,
             child: Dialog(
@@ -43,14 +40,14 @@ class _SelectBrokerPopUpState extends State<SelectBrokerPopUp> {
                     borderRadius: BorderRadius.circular(6.0)),
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) =>
-                      Divider(),
-                  physics: BouncingScrollPhysics(),
+                      const Divider(),
+                  physics: const BouncingScrollPhysics(),
                   itemCount: brokerServices.brokerList.length,
                   itemBuilder: (BuildContext context, int index) =>
                       GestureDetector(
                           child: ClipOval(
                             child: Container(
-                              margin: EdgeInsets.symmetric(vertical: 5),
+                              margin: const EdgeInsets.symmetric(vertical: 5),
                               child: cardBrokerWidget(
                                 simpleView: true,
                                 hideEditIcon: true,

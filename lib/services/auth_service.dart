@@ -9,7 +9,7 @@ import 'package:tactictrade/share_preferences/preferences.dart';
 class AuthService extends ChangeNotifier {
   final String baseUrl = Environment.baseUrl;
 
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   Future<String?> createUser(
       String email, String password, String username) async {
@@ -26,6 +26,7 @@ class AuthService extends ChangeNotifier {
 
     final resp = await http.post(url,
         body: {'email': email, 'password': password, 'username': username});
+    return null;
 
   }
 
@@ -71,7 +72,7 @@ class AuthService extends ChangeNotifier {
 
   // Getters del token de forma estática
   static Future getToken() async {
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access');
 
     return token;
@@ -80,13 +81,12 @@ class AuthService extends ChangeNotifier {
   Future<String> validateToken() async {
     final url = Uri.http(Environment.baseUrl, '/settings/');
 
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
       return '';
     }
-    ;
 
     final response = await http.get(url, headers: {
       'Content-Type': 'applicaction/json',
@@ -105,7 +105,7 @@ class AuthService extends ChangeNotifier {
 
   Future<dynamic> isLoggedIn() async {
     //TODO When the token exist but is expirad or the user is deleted the app not open
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final logged = {'token': ""};
 
@@ -116,7 +116,6 @@ class AuthService extends ChangeNotifier {
     if (token == '') {
       return {'isLogged': false, 'token': ''};
     }
-    ;
 
     final response = await http.get(url, headers: {
       'Content-Type': 'applicaction/json',
@@ -139,12 +138,12 @@ class AuthService extends ChangeNotifier {
   Future readProfileData(String token) async {
     final urlProfile = Uri.http(Environment.baseUrl, '/account/profile/');
 
-    final response_profile = await http.get(urlProfile, headers: {
+    final responseProfile = await http.get(urlProfile, headers: {
       'Content-Type': 'applicaction/json',
       'Authorization': 'Bearer ' + token
     });
 
-    final bodyProfile = json.decode(response_profile.body);
+    final bodyProfile = json.decode(responseProfile.body);
 
     try {
       if (bodyProfile['code'] == 'user_not_found') {
@@ -153,7 +152,6 @@ class AuthService extends ChangeNotifier {
     } catch (e) {
       print('The User exist');
     }
-    ;
 
     return {
       "about": bodyProfile['about'],

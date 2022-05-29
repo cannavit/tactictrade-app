@@ -1,14 +1,8 @@
-import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
-import 'package:tactictrade/widgets/popup_openlong_trading_config.dart';
 
-import '../../models/trading_config_model.dart';
-import '../popup_delete_trading_config.dart';
-import '../popup_openshort_trading_config.dart';
 
 class DropdownProfile extends StatefulWidget {
   const DropdownProfile({Key? key, required this.tradingConfigId})
@@ -77,7 +71,7 @@ class _DropdownProfileState extends State<DropdownProfile> {
             dropdownPadding: const EdgeInsets.symmetric(vertical: 6),
             dropdownDecoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              color: Color.fromARGB(255, 37, 42, 56),
+              color: const Color.fromARGB(255, 37, 42, 56),
             ),
             dropdownElevation: 8,
             offset: const Offset(0, 8),

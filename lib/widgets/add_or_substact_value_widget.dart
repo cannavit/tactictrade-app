@@ -29,10 +29,10 @@ class AddOrSubstractValueWidgetState extends State<AddOrSubstractValueWidget> {
 
     return Container(
       width: 25,
-      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: 30,
             child: Container(
               child: IconButton(
@@ -47,7 +47,7 @@ class AddOrSubstractValueWidgetState extends State<AddOrSubstractValueWidget> {
                   )),
             ),
           ),
-          Container(
+          SizedBox(
             height: 30,
             child: IconButton(
                 onPressed: () {

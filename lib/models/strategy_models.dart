@@ -76,6 +76,8 @@ class Strategy {
         required this.isFavorite,
         required this.likesNumber,
         required this.isFollower,
+        required this.controllerCandleGraph,
+        
     });
 
     int id;
@@ -116,6 +118,7 @@ class Strategy {
     bool isFavorite;
     int likesNumber;
     bool isFollower;
+    List<ControllerCandleGraph> controllerCandleGraph;
 
     factory Strategy.fromJson(String str) => Strategy.fromMap(json.decode(str));
 
@@ -160,6 +163,7 @@ class Strategy {
         isFavorite: json["is_favorite"],
         likesNumber: json["likes_number"],
         isFollower: json["is_follower"],
+        controllerCandleGraph: List<ControllerCandleGraph>.from(json["controller_candle_graph"].map((x) => ControllerCandleGraph.fromMap(x))),
     );
 
     Map<String, dynamic> toMap() => {
@@ -201,6 +205,7 @@ class Strategy {
         "is_favorite": isFavorite,
         "likes_number": likesNumber,
         "is_follower": isFollower,
+        "controller_candle_graph": List<dynamic>.from(controllerCandleGraph.map((x) => x.toMap())),
     };
 }
 
@@ -237,5 +242,35 @@ class Owner {
         "username": username,
         "followers": followers,
         "mantainer_id": mantainerId,
+    };
+}
+
+
+
+class ControllerCandleGraph {
+    ControllerCandleGraph({
+        required this.title,
+        required this.period,
+        required this.interval,
+    });
+
+    String title;
+    String period;
+    String interval;
+
+    factory ControllerCandleGraph.fromJson(String str) => ControllerCandleGraph.fromMap(json.decode(str));
+
+    String toJson() => json.encode(toMap());
+
+    factory ControllerCandleGraph.fromMap(Map<String, dynamic> json) => ControllerCandleGraph(
+        title: json["title"],
+        period: json["period"],
+        interval: json["interval"],
+    );
+
+    Map<String, dynamic> toMap() => {
+        "title": title,
+        "period": period,
+        "interval": interval,
     };
 }

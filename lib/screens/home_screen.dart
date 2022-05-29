@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
     return PieChart(
         dataMap: dataMap,
         initialAngleInDegree: 10,
-        animationDuration: Duration(microseconds: 900),
+        animationDuration: const Duration(microseconds: 900),
         chartType: ChartType.ring,
         // chartType: ChartType.disc,
         chartRadius: 180,
@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
     final categoriesList = Provider.of<CategorySelected>(context);
 
     return ChangeNotifierProvider(
-        create: (_) => new NavigationModel(),
+        create: (_) => NavigationModel(),
         child: Scaffold(
           // appBar: GenericAppBar(themeColors, context, 'Home'),
           body: Column(

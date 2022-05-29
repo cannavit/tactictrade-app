@@ -31,7 +31,7 @@ class GoogleSignInProvider extends ChangeNotifier {
     notifyListeners();
 
 
-    final storage = new FlutterSecureStorage();
+    const storage = FlutterSecureStorage();
     final url = Uri.http(Environment.baseUrl, '/social_auth/google_login/');
     final resp = await http.post(url, body: {'auth_token': googleAuth.idToken});
 

@@ -5,7 +5,7 @@ import 'package:tactictrade/screens/navigation_screen.dart';
 import 'package:tactictrade/widgets/carousel_list_home.dart';
 
 class ListStrategyScreen extends StatelessWidget {
-  ListStrategyScreen({Key? key}) : super(key: key);
+  const ListStrategyScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class ListStrategyScreen extends StatelessWidget {
 
     final themeColors = Theme.of(context);
     return ChangeNotifierProvider(
-      create: (_) => new NavigationModel(),
+      create: (_) => NavigationModel(),
       child: Scaffold(
         // appBar: GenericAppBar(themeColors, context, 'Strategies'),
         //

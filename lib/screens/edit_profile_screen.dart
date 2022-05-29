@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,18 +5,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:tactictrade/screens/login_screens.dart';
 import 'package:tactictrade/services/auth_service.dart';
 import 'package:tactictrade/services/profile_service.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/custom_profile_widget.dart';
 import 'package:tactictrade/widgets/editfield_custom.dart';
-import 'package:tactictrade/widgets/user_appbar_widget.dart';
-import 'package:path/path.dart';
 // https://www.youtube.com/watch?v=gSl-MoykYYk
 
 class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({Key? key}) : super(key: key);
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -49,7 +45,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final profileService = Provider.of<ProfileService>(context, listen: false);
     final authService = Provider.of<AuthService>(context, listen: false);
 
-    final String tempImage = '';
+    const String tempImage = '';
 
     return Scaffold(
         appBar: AppBar(
@@ -71,7 +67,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Navigator.pushReplacementNamed(context, 'navigation');
             },
           ),
-          actions: [],
+          actions: const [],
           elevation: 0,
         ),
         // appBar: userAppBar(context),
@@ -83,14 +79,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 onClicked: () async {
                   final ImagePicker _picker = ImagePicker();
 
-                  var pickedFile;
+                  XFile? pickedFile;
                   try {
                     pickedFile =
                         await _picker.pickImage(source: ImageSource.gallery);
                   } catch (e) {
                     print(e);
                   }
-                  ;
 
                   print(pickedFile);
 
@@ -118,7 +113,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 maxLines: 8),
 
             Container(
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
                 height: 45,
                 width: double.infinity,
                 child: RaisedButton(
@@ -137,16 +132,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                     Preferences.pathGalleryImage = Preferences.tempProfileImage;
 
-                    await profileService.updateProfil(this.usernameCtrl.text,
-                        this.aboutCtrl.text, Preferences.pathGalleryImage);
+                    await profileService.updateProfil(usernameCtrl.text,
+                        aboutCtrl.text, Preferences.pathGalleryImage);
 
                     if (!Preferences.pathGalleryImage.contains('http')) {
                       Preferences.profileImage = Preferences.tempProfileImage;
                     }
-                    ;
 
                     final token =
-                        await FlutterSecureStorage().read(key: 'token_access');
+                        await const FlutterSecureStorage().read(key: 'token_access');
 
                     if (token != '') {
                       final profileData =
@@ -178,7 +172,7 @@ class InputEditWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeColors = Theme.of(context);
     return Container(
-      padding: EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -191,7 +185,7 @@ class InputEditWidgets extends StatelessWidget {
             padding:
                 const EdgeInsets.only(top: 5, left: 5, bottom: 5, right: 20),
             margin: const EdgeInsets.only(bottom: 20),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
             ),
             child: TextFormField(
@@ -229,12 +223,12 @@ class _infoUserWidget extends StatelessWidget {
     return Column(
       children: [
         Text(value,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 18,
                 fontWeight: FontWeight.bold)),
         Text(text,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black54,
                 fontSize: 15,
                 fontWeight: FontWeight.w700)),

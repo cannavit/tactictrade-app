@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tactictrade/providers/providers.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 import '../../providers/trading_config_input_long_provider.dart';
@@ -28,7 +26,7 @@ class GeneralInputField extends StatelessWidget {
     required this.hintText,
     required this.icon,
     this.valueType = '',
-    this.validatorType = null,
+    this.validatorType,
     this.colorBorder = Colors.white,
     this.colorBorderSelected = Colors.blue,
     this.isRequired = false,
@@ -52,7 +50,7 @@ class GeneralInputField extends StatelessWidget {
           decoration: InputDecoration(
               hintText: hintText,
               labelText: labelText,
-              contentPadding: new EdgeInsets.fromLTRB(10, 10, 10, 10),
+              contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: colorBorder),
               ),
@@ -62,7 +60,7 @@ class GeneralInputField extends StatelessWidget {
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
               prefixIcon: Padding(
-                padding: EdgeInsets.all(0.0),
+                padding: const EdgeInsets.all(0.0),
                 child: icon, // icon is 48px widget.
               )),
           validator: (value) {
@@ -108,6 +106,7 @@ class GeneralInputField extends StatelessWidget {
             } else {
               Preferences.createNewStrategy = false;
             }
+            return null;
           }),
     );
   }
@@ -164,7 +163,7 @@ class GeneralInputFieldV2 extends StatelessWidget {
               labelText:
                   data[customTradingConfigView.dbFieldOne + "_$operation"]
                       ['labelText'],
-              contentPadding: new EdgeInsets.fromLTRB(10, 10, 10, 10),
+              contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: colorBorder),
               ),
@@ -174,7 +173,7 @@ class GeneralInputFieldV2 extends StatelessWidget {
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
               prefixIcon: Padding(
-                padding: EdgeInsets.all(0.0),
+                padding: const EdgeInsets.all(0.0),
                 child: Visibility(
                     visible: customTradingConfigView.icon == 0 ? false : true,
                     child: Icon(IconData(customTradingConfigView.icon,
@@ -229,6 +228,7 @@ class GeneralInputFieldV2 extends StatelessWidget {
                 customTradingConfigView.dbFieldOne + "_$operation" + "_dbField",
                 data[customTradingConfigView.dbFieldOne + "_$operation"]
                     ['dbField']);
+            return null;
           }),
     );
   }

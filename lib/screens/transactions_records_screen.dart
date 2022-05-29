@@ -22,8 +22,8 @@ import 'loading_strategy.dart';
 class TransactionPageScreen extends StatelessWidget {
   const TransactionPageScreen({
     Key? key,
-    this.isPrivateRecord: false,
-    this.strategyId: -1,
+    this.isPrivateRecord = false,
+    this.strategyId = -1,
     required this.urlSymbol,
     required this.urlPusher,
     required this.timeTrade,
@@ -71,7 +71,7 @@ class TransactionPageScreen extends StatelessWidget {
     // final recordsProvider =
     //     Provider.of<TransactionRecordsServices>(context, listen: true);
 
-    if (recordsProvider.isLoading) return LoadingView();
+    if (recordsProvider.isLoading) return const LoadingView();
 
     // Build the data for Graph
 
@@ -94,7 +94,7 @@ class TransactionPageScreen extends StatelessWidget {
             }
           }
 
-          if (recordsProvider.recordsList.length == 0) {
+          if (recordsProvider.recordsList.isEmpty) {
             recordsShortProfit.add(0);
             recordsShortProfit.add(0);
             recordsShortProfit.add(0);
@@ -104,19 +104,18 @@ class TransactionPageScreen extends StatelessWidget {
           }
 
           var recordsShortProfitReverser =
-              new List.from(recordsShortProfit.reversed);
+              List.from(recordsShortProfit.reversed);
 
-          var recordsLongProfitReverser =
-              new List.from(recordsLongProfit.reversed);
+          var recordsLongProfitReverser = List.from(recordsLongProfit.reversed);
 
-          final totalList = new List.from(recordsShortProfit)
+          final totalList = List.from(recordsShortProfit)
             ..addAll(recordsLongProfit);
 
           final value1 = (recordsLongProfit.reduce(max));
           final value2 = (recordsLongProfit.reduce(min));
 
-          var xMaxValue;
-          var xMinValue;
+          double xMaxValue;
+          double xMinValue;
 
           if (value1 > value2) {
             xMaxValue = value1;
@@ -163,7 +162,7 @@ class TransactionPageScreen extends StatelessWidget {
                     Navigator.pushReplacementNamed(context, 'navigation');
                   },
                 ),
-                actions: [],
+                actions: const [],
                 elevation: 0,
               ),
               body: Column(
@@ -183,7 +182,7 @@ class TransactionPageScreen extends StatelessWidget {
                     urlSymbol: urlSymbol,
                   ),
 
-                  Divider(height: 1),
+                  const Divider(height: 1),
 
                   // Graph 2D -----------------------------------------
                   _2dGraphProfit(
@@ -198,12 +197,12 @@ class TransactionPageScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Row Filters --------------------------------------
-                  Container(
+                  SizedBox(
                     height: 25,
                     width: double.infinity,
                     child: Row(
                       children: [
-                        Container(
+                        const SizedBox(
                           height: 30,
                           width: 30,
                           child: _buttonChangeGraph(),
@@ -216,13 +215,13 @@ class TransactionPageScreen extends StatelessWidget {
                     ),
                   ),
 
-                  ColumnTitlesTransactionsRecordsWidget(),
+                  const ColumnTitlesTransactionsRecordsWidget(),
 
                   Expanded(
                     // height: double.infinity,
                     child: ListView.separated(
                         separatorBuilder: (BuildContext context, int index) =>
-                            Divider(),
+                            const Divider(),
                         itemCount: recordsProvider.recordsList.length,
                         itemBuilder: (BuildContext context, int index) => TransactionRecordRowWidget(
                             order: recordsProvider.recordsList[index].order,
@@ -263,6 +262,10 @@ class TransactionPageScreen extends StatelessWidget {
         });
   }
 }
+
+// class CategoryTimerSelected {
+
+// }
 
 class _2dGraphProfit extends StatelessWidget {
   const _2dGraphProfit({
@@ -321,7 +324,7 @@ class _2dProfitGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       width: double.infinity,
       height: 200,
       child: LineChart(
@@ -381,12 +384,12 @@ class _buttonChangeGraphState extends State<_buttonChangeGraph> {
           });
         },
         icon: Preferences.showProfitGraph
-            ? Icon(
+            ? const Icon(
                 CupertinoIcons.graph_circle,
                 color: Colors.blue,
                 size: 16,
               )
-            : Icon(
+            : const Icon(
                 CupertinoIcons.graph_circle_fill,
                 color: Colors.blue,
                 size: 16,
@@ -402,7 +405,7 @@ class ColumnTitlesTransactionsRecordsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         children: [
           Column(

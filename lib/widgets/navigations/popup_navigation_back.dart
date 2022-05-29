@@ -14,9 +14,9 @@ class PopUpMovement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new AlertDialog(
+    return AlertDialog(
       title: Text(titleHeader),
-      content: new Column(
+      content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -24,7 +24,7 @@ class PopUpMovement extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        FlatButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -32,7 +32,7 @@ class PopUpMovement extends StatelessWidget {
           child: Row(
             children: [
               TextButton(
-                child: Text('Continue',
+                child: const Text('Continue',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 15,
@@ -46,7 +46,7 @@ class PopUpMovement extends StatelessWidget {
               ),
               Expanded(child: Container()),
               TextButton(
-                child: Text('Cancel',
+                child: const Text('Cancel',
                     style: TextStyle(
                         color: Colors.red,
                         fontSize: 15,

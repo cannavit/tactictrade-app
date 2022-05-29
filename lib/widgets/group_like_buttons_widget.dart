@@ -28,7 +28,7 @@ class GroupLikeButtons extends StatelessWidget {
                 },
               ),
               Text(numberLikes,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
                       fontWeight: FontWeight.w500))

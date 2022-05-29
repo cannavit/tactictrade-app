@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tactictrade/models/menu_home_categories.dart';
 
 import '../share_preferences/preferences.dart';
 
@@ -17,6 +16,6 @@ class ShowGraph2dProfitProvider with ChangeNotifier {
   }
 
   read() {
-    return this.showProfitGraph;
+    return showProfitGraph;
   }
 }

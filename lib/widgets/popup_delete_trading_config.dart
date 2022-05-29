@@ -20,9 +20,9 @@ class PopUpDeleteTradingConfigSecure extends StatelessWidget {
 
         final tradingConfig = Provider.of<TradingConfig>(context);
 
-    return new AlertDialog(
+    return AlertDialog(
       title: Text(titleHeader),
-      content: new Column(
+      content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -30,7 +30,7 @@ class PopUpDeleteTradingConfigSecure extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        FlatButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -38,7 +38,7 @@ class PopUpDeleteTradingConfigSecure extends StatelessWidget {
           child: Row(
             children: [
               TextButton(
-                child: Text('Delete',
+                child: const Text('Delete',
                     style: TextStyle(
                         color: Colors.red,
                         fontSize: 15,
@@ -52,7 +52,7 @@ class PopUpDeleteTradingConfigSecure extends StatelessWidget {
               ),
               Expanded(child: Container()),
               TextButton(
-                child: Text('Cancel',
+                child: const Text('Cancel',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 15,

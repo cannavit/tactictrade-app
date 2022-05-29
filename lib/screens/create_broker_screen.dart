@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tactictrade/pages/broker/service/create_strategy_buttom_widget.dart';
+import 'package:tactictrade/services/create_strategy_buttom_widget.dart';
 
-import '../../screens/create_strategy_screen.dart';
-import '../../share_preferences/preferences.dart';
-import '../../widgets/forms_components/general_input_field.dart';
+import 'create_strategy_screen.dart';
+import '../share_preferences/preferences.dart';
+import '../widgets/forms_components/general_input_field.dart';
 
 class NewBrokerScreen extends StatelessWidget {
   const NewBrokerScreen({Key? key}) : super(key: key);
@@ -42,7 +41,7 @@ class NewBrokerScreen extends StatelessWidget {
 
               showDialog(
                 context: context,
-                builder: (BuildContext context) => PopUpMovement(
+                builder: (BuildContext context) => const PopUpMovement(
                   titleHeader: 'Exit of Create Broker Connection',
                   message: 'You are sure of move it? Current data will be lost',
                 ),
@@ -51,16 +50,16 @@ class NewBrokerScreen extends StatelessWidget {
               Navigator.pushReplacementNamed(context, 'navigation');
             },
           ),
-          actions: [],
+          actions: const [],
           elevation: 0,
         ),
         body: Center(
           child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    const SizedBox(
                         height: 70,
                         child: Image(
                             image: AssetImage(
@@ -107,7 +106,7 @@ class NewBrokerScreen extends StatelessWidget {
                           )),
                     ),
                     Expanded(child: Container()),
-                    Container(
+                    SizedBox(
                         height: 50,
                         child: ButtonCreateBroker(
                           buttonText: 'Create Broker',

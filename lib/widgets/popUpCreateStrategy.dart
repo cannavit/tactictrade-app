@@ -27,14 +27,14 @@ class PopUpCreateStrategy extends StatelessWidget {
         child: SafeArea(
           child: Dialog(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              insetPadding: EdgeInsets.only(top: 40),
+              insetPadding: const EdgeInsets.only(top: 40),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4.0)),
               child: Stack(
-                overflow: Overflow.visible,
+                // overflow: Overflow.visible, //TODO this not work
                 alignment: Alignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     // height: 400,
                     width: double.infinity,
                     child: Padding(
@@ -101,7 +101,7 @@ class PopUpCreateStrategy extends StatelessWidget {
                               themeColors: themeColors,
                               usernameCtrl: messageCtrl,
                               nameEditField: '2) Copy This in Message',
-                              colorFilled: Color(0xff2D333B),
+                              colorFilled: const Color(0xff2D333B),
                               readOnly: false,
                               maxLines: 4,
                               fontSize: 15,

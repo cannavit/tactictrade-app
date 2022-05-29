@@ -11,15 +11,15 @@ class PositionServices extends ChangeNotifier {
   List positionsList = [];
 
   PositionServices() {
-    this.read();
+    read();
   }
 
   Future read() async {
-    this.isLoading = true;
+    isLoading = true;
     notifyListeners();
 
     final url = Uri.http(Environment.baseUrl, '/transactions/opens');
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -34,19 +34,19 @@ class PositionServices extends ChangeNotifier {
 
     final data = json.decode(response.body)['results'];
 
-    this.positionsList = data;
+    positionsList = data;
 
-    this.isLoading = false;
+    isLoading = false;
     notifyListeners();
 
-    return this.positionsList;
+    return positionsList;
   }
 
 
   Future readv2() async {
 
     final url = Uri.http(Environment.baseUrl, '/transactions/opens');
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -61,11 +61,11 @@ class PositionServices extends ChangeNotifier {
 
     final data = json.decode(response.body)['results'];
 
-    this.positionsList = data;
+    positionsList = data;
     notifyListeners();
 
 
-    return this.positionsList;
+    return positionsList;
   }
 
 
@@ -74,7 +74,7 @@ class PositionServices extends ChangeNotifier {
 
     final url = Uri.http(
         Environment.baseUrl, '/transactions/close_manual/$transactionId');
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -93,11 +93,11 @@ class PositionServices extends ChangeNotifier {
 
     final data = json.decode(response.body)['results'];
 
-    this.positionsList = data;
+    positionsList = data;
 
-    this.isLoading = false;
+    isLoading = false;
     notifyListeners();
 
-    return this.positionsList;
+    return positionsList;
   }
 }

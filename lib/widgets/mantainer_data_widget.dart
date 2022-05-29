@@ -17,7 +17,7 @@ class MantainerDataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 70,
       child: _headCardWidget(
         mantainerName: mantainerName,
@@ -76,16 +76,16 @@ class _mantainerName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('${titleLevelOne}',
+          Text(titleLevelOne,
               style: TextStyle(
                   color: Preferences.isDarkmode
                       ? Colors.black45
-                      : Color(0xffCECECE),
+                      : const Color(0xffCECECE),
                   fontSize: 13,
                   fontWeight: FontWeight.w300)),
           Text(mantainerName,
@@ -94,7 +94,7 @@ class _mantainerName extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w600)),
           const SizedBox(height: 3),
-          Text('Followers: ${followers}',
+          Text('Followers: $followers',
               style: const TextStyle(
                   color: Color(0xff08BEFB),
                   fontSize: 13,
@@ -116,7 +116,7 @@ class _strategyName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

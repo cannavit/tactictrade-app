@@ -14,24 +14,22 @@ class MarketDataService extends ChangeNotifier {
   List<Candle> MarketDataList = [];
 
   MarketDataService() {
-    this.read('100');
+    read('1w','1h');
   }
 
 
   // getCarrousel
 
-  Future read(String days) async {
-    this.isLoading = true;
+  Future read(String period, String interval, ) async {
+    isLoading = true;
 
-    notifyListeners();
+    notifyListeners();       
 
-    print(">>>>>-1762049570>>>>>");
-    print(days);
-    print("<<<<<<<<<<<<<<<<<<<");
+    // Example of use of the API
+    // /market_data/yahoo/SOL-USD/1mo/30m
+    final url = Uri.http(Environment.baseUrl, '/market_data/yahoo/SOL-USD/$period/$interval');
 
-    final url = Uri.http(Environment.baseUrl, '/market_data/yahoo/SPY/1d/$days');
-
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -54,7 +52,7 @@ class MarketDataService extends ChangeNotifier {
 
     MarketDataList = dataList.results;
 
-    this.isLoading = false;
+    isLoading = false;
 
     notifyListeners();
 

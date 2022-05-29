@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tactictrade/models/menu_home_categories.dart';
 
 import '../share_preferences/preferences.dart';
 
@@ -140,13 +139,13 @@ class TradingConfigInputLongProvider with ChangeNotifier {
     useQty = value;
 
     if (useQty == true) {
-      this.buttomSelectorChangeText = 'QTY';
-      this.labelText = 'Invest Amount [Units]';
-      this.hintText = 'example 1unit';
+      buttomSelectorChangeText = 'QTY';
+      labelText = 'Invest Amount [Units]';
+      hintText = 'example 1unit';
     } else {
-      this.buttomSelectorChangeText = 'USD';
-      this.labelText = 'Invest Amount [QTY]';
-      this.hintText = 'example 100usd';
+      buttomSelectorChangeText = 'USD';
+      labelText = 'Invest Amount [QTY]';
+      hintText = 'example 100usd';
     }
 
     notifyListeners();
@@ -156,13 +155,13 @@ class TradingConfigInputLongProvider with ChangeNotifier {
     percentage = value;
 
     if (percentage == true) {
-      this.buttomSelectorChangeTextPercentage = 'QTY';
-      this.labelTextPercentage = 'Stop Loss [%]';
-      this.hintTextPercentage = 'example 1unit';
+      buttomSelectorChangeTextPercentage = 'QTY';
+      labelTextPercentage = 'Stop Loss [%]';
+      hintTextPercentage = 'example 1unit';
     } else {
-      this.buttomSelectorChangeTextPercentage = '%';
-      this.labelTextPercentage = 'Stop Loss [QTY]';
-      this.hintTextPercentage = 'example 100usd';
+      buttomSelectorChangeTextPercentage = '%';
+      labelTextPercentage = 'Stop Loss [QTY]';
+      hintTextPercentage = 'example 100usd';
     }
 
     notifyListeners();
@@ -172,13 +171,13 @@ class TradingConfigInputLongProvider with ChangeNotifier {
     takeprofit = value;
 
     if (takeprofit == true) {
-      this.buttomSelectorChangeTextTakeProfit = 'QTY';
-      this.labelTextTakeProfit = 'Take Profit [%]';
-      this.hintTextTakeProfit = 'example 10%';
+      buttomSelectorChangeTextTakeProfit = 'QTY';
+      labelTextTakeProfit = 'Take Profit [%]';
+      hintTextTakeProfit = 'example 10%';
     } else {
-      this.buttomSelectorChangeTextTakeProfit = '%';
-      this.labelTextTakeProfit = 'Take Profit [QTY]';
-      this.hintTextTakeProfit = 'example 100usd';
+      buttomSelectorChangeTextTakeProfit = '%';
+      labelTextTakeProfit = 'Take Profit [QTY]';
+      hintTextTakeProfit = 'example 100usd';
     }
 
     notifyListeners();
@@ -262,13 +261,13 @@ class TradingConfigInputLongProvider with ChangeNotifier {
     useQtyShort = value;
 
     if (useQtyShort == true) {
-      this.buttomSelectorChangeTextShort = 'QTY';
-      this.labelTextShort = 'Invest Amount [Units]';
-      this.hintTextShort = 'example 1unit';
+      buttomSelectorChangeTextShort = 'QTY';
+      labelTextShort = 'Invest Amount [Units]';
+      hintTextShort = 'example 1unit';
     } else {
-      this.buttomSelectorChangeTextShort = 'USD';
-      this.labelTextShort = 'Invest Amount [QTY]';
-      this.hintTextShort = 'example 100usd';
+      buttomSelectorChangeTextShort = 'USD';
+      labelTextShort = 'Invest Amount [QTY]';
+      hintTextShort = 'example 100usd';
     }
 
     notifyListeners();
@@ -278,13 +277,13 @@ class TradingConfigInputLongProvider with ChangeNotifier {
     percentageShort = value;
 
     if (percentageShort == true) {
-      this.buttomSelectorChangeTextPercentageShort = 'QTY';
-      this.labelTextPercentageShort = 'Stop Loss [%]';
-      this.hintTextPercentageShort = 'example 1unit';
+      buttomSelectorChangeTextPercentageShort = 'QTY';
+      labelTextPercentageShort = 'Stop Loss [%]';
+      hintTextPercentageShort = 'example 1unit';
     } else {
-      this.buttomSelectorChangeTextPercentageShort = '%';
-      this.labelTextPercentageShort = 'Stop Loss [QTY]';
-      this.hintTextPercentageShort = 'example 100usd';
+      buttomSelectorChangeTextPercentageShort = '%';
+      labelTextPercentageShort = 'Stop Loss [QTY]';
+      hintTextPercentageShort = 'example 100usd';
     }
 
     notifyListeners();
@@ -294,13 +293,13 @@ class TradingConfigInputLongProvider with ChangeNotifier {
     takeprofitShort = value;
 
     if (takeprofitShort == true) {
-      this.buttomSelectorChangeTextTakeProfitShort = 'QTY';
-      this.labelTextTakeProfitShort = 'Take Profit [%]';
-      this.hintTextTakeProfitShort = 'example 10%';
+      buttomSelectorChangeTextTakeProfitShort = 'QTY';
+      labelTextTakeProfitShort = 'Take Profit [%]';
+      hintTextTakeProfitShort = 'example 10%';
     } else {
-      this.buttomSelectorChangeTextTakeProfitShort = '%';
-      this.labelTextTakeProfitShort = 'Take Profit [QTY]';
-      this.hintTextTakeProfitShort = 'example 100usd';
+      buttomSelectorChangeTextTakeProfitShort = '%';
+      labelTextTakeProfitShort = 'Take Profit [QTY]';
+      hintTextTakeProfitShort = 'example 100usd';
     }
 
     notifyListeners();

@@ -42,7 +42,7 @@ class _StrategyHistorialScreenState extends State<StrategyHistorialScreen> {
      
         body: Column(
           children: [
-            Container(
+            SizedBox(
               height: 400,
               child: Center(
               child: Candlesticks(

@@ -16,7 +16,7 @@ class SimpleAppBarTextAndButtom extends StatelessWidget {
         child: Row(
       children: [
 
-        Container(
+        SizedBox(
           width: 26,
           child: IconButton(
             onPressed: () =>

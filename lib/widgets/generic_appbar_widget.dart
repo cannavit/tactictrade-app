@@ -1,5 +1,3 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:avatars/avatars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 import 'forms_components/dropdown_profile.dart';
-import 'forms_components/dropdown_trading_config.dart';
 
 AppBar GenericAppBar(
     ThemeData themeColors, BuildContext context, String textNavBar) {
@@ -22,10 +19,10 @@ AppBar GenericAppBar(
     ),
     leadingWidth: 700,
     leading: Container(
-      margin: EdgeInsets.only(left: 8),
+      margin: const EdgeInsets.only(left: 8),
       child: Row(
-        children: [
-          Container(
+        children: const [
+          SizedBox(
               width: 40,
               child: Image(image: AssetImage('assets/ReduceBrokerTacticTradeIconV2.png'))),
 
@@ -45,15 +42,15 @@ AppBar GenericAppBar(
 
        Container(
                   // margin: EdgeInsets.symmetric(vertical: 10),
-                  margin: EdgeInsets.only(top: 0, left: 1),
-                  padding: EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+                  margin: const EdgeInsets.only(top: 0, left: 1),
+                  padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
 
                   decoration: BoxDecoration(
                       // color: Preferences.isPaperTrading ? Color.fromARGB(255, 12, 108, 186) : Color.fromARGB(255, 222, 168, 7),
                       borderRadius: BorderRadius.circular(40)),
                   child: Text(Preferences.isPaperTrading ? 'Paper Trading' : 'Real Trading',
                       style: GoogleFonts.openSans( textStyle:TextStyle(
-                          color: Preferences.isPaperTrading ? Color.fromARGB(255, 12, 108, 186) : Color.fromARGB(255, 222, 168, 7),
+                          color: Preferences.isPaperTrading ? const Color.fromARGB(255, 12, 108, 186) : const Color.fromARGB(255, 222, 168, 7),
                           fontSize: 11,
                           fontWeight: FontWeight.w500))),
                 ),
@@ -76,7 +73,7 @@ AppBar GenericAppBar(
                       color: Colors.red,
                       width: 35,
                       height: 35,
-                      child:  DropdownProfile(tradingConfigId: 1,)
+                      child:  const DropdownProfile(tradingConfigId: 1,)
                       ),
               ],
             )

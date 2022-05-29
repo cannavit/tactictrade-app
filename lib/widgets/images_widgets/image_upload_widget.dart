@@ -73,7 +73,7 @@ class _UploadImageState extends State<_UploadImage> {
               child: buildEditImageIcon(themeColors.primaryColor, widget.icon),
               onTap: () async {
 
-                final picker = await ImagePicker();
+                final picker = ImagePicker();
 
                 final pickedFile = await picker.pickImage(
                     source: ImageSource.camera, imageQuality: 100);
@@ -91,7 +91,7 @@ class _UploadImageState extends State<_UploadImage> {
           Positioned(
             child: GestureDetector(
               onTap: () async {
-                final picker = await ImagePicker();
+                final picker = ImagePicker();
 
                 final pickedFile =
                     await picker.pickImage(source: ImageSource.gallery);
@@ -115,9 +115,8 @@ class _UploadImageState extends State<_UploadImage> {
   Widget buildImage() {
     var imageStrategyPicture;
 
-    if (Preferences.tempStrategyImage == '' ||
-        Preferences.tempStrategyImage == null) {
-      return Image(image: AssetImage('assets/no-image.png'), fit: BoxFit.cover);
+    if (Preferences.tempStrategyImage == '') {
+      return const Image(image: AssetImage('assets/no-image.png'), fit: BoxFit.cover);
     } else if (Preferences.tempStrategyImage.startsWith('http')) {
       return Image(
           image: NetworkImage(Preferences.tempStrategyImage),

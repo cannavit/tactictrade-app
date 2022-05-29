@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:tactictrade/screens/position_screens.dart';
 import 'package:tactictrade/widgets/circle_image_widget.dart';
 
 import '../services/positions_service.dart';
@@ -18,10 +17,10 @@ class BotsScreen extends StatelessWidget {
     RefreshController _refreshController =
         RefreshController(initialRefresh: false);
 
-    if (positions.isLoading) return LoadingView();
+    if (positions.isLoading) return const LoadingView();
 
     return ChangeNotifierProvider(
-      create: (_) => new NavigationModel(),
+      create: (_) => NavigationModel(),
       child: Scaffold(
           body: SmartRefresher(
         controller: _refreshController,
@@ -41,8 +40,8 @@ class BotsScreen extends StatelessWidget {
 
   ListView _listViewOperations(PositionServices positions) {
     return ListView.separated(
-        separatorBuilder: (BuildContext context, int index) => Divider(),
-        physics: BouncingScrollPhysics(),
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        physics: const BouncingScrollPhysics(),
         itemCount: positions.positionsList.length,
         itemBuilder: (BuildContext context, int index) => Dismissible(
               key: Key("${positions.positionsList[index]['id']}"),
@@ -82,12 +81,12 @@ class BotsScreen extends StatelessWidget {
                 );
               },
               background: Container(
-                color: Color.fromARGB(255, 0, 97, 176),
+                color: const Color.fromARGB(255, 0, 97, 176),
                 child: Row(
-                  children: [
-                    const SizedBox(width: 10),
+                  children: const [
+                    SizedBox(width: 10),
                     Icon(Icons.sell_rounded),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10),
                     Text('Close Trade Manual',
                         style: TextStyle(
                             color: Colors.white,
@@ -179,7 +178,7 @@ class OpenPositionsWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: Column(children: [
         Row(
           children: [
@@ -202,9 +201,9 @@ class OpenPositionsWidgets extends StatelessWidget {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             image: broker == 'paperTrade'
-                                ? AssetImage(
+                                ? const AssetImage(
                                     'assets/ReduceBrokerTacticTradeIcon.png')
-                                : AssetImage('assets/AlpacaMiniLogo.png'),
+                                : const AssetImage('assets/AlpacaMiniLogo.png'),
                             fit: BoxFit.fill),
                       ),
                     ),
@@ -223,7 +222,7 @@ class OpenPositionsWidgets extends StatelessWidget {
                             : Colors.amber.shade500,
                         fontSize: 14,
                         fontWeight: FontWeight.w300)),
-                Text('$brokerName',
+                Text(brokerName,
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 11,

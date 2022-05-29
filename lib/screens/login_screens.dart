@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_button/constants.dart';
 import 'package:sign_button/create_button.dart';
 import 'package:tactictrade/providers/login_form_provider.dart';
@@ -28,21 +26,19 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const LogoImage(),
-              Text('Login', style: TextStyle(fontSize: 30)),
+              const Text('Login', style: TextStyle(fontSize: 30)),
               ChangeNotifierProvider(
                 create: (_) => LoginFormProvider(),
-                child: _Form(),
+                child: const _Form(),
               ), // Import Provider
 
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 35),
+                margin: const EdgeInsets.symmetric(horizontal: 35),
                 height: 50,
                 width: double.infinity,
                 child: SignInButton(
                     buttonType: ButtonType.google,
                     onPressed: () async {
-                      print('click ----------------');
-
                       final providerGoogleSignIn =
                           Provider.of<GoogleSignInProvider>(context,
                               listen: false);
@@ -70,7 +66,7 @@ class LoginScreen extends StatelessWidget {
 
 // Add Forms Input -----------------------------------
 class _Form extends StatefulWidget {
-  _Form({Key? key}) : super(key: key);
+  const _Form({Key? key}) : super(key: key);
 
   @override
   __FormState createState() => __FormState();
@@ -168,10 +164,10 @@ class ButtonLogin extends StatelessWidget {
         highlightElevation: 5,
         color: Colors.blue,
         shape: const StadiumBorder(),
-        child: Container(
+        child: const SizedBox(
           width: double.infinity,
           height: 55,
-          child: const Center(
+          child: Center(
             child: Text('Sign In',
                 style: TextStyle(
                     color: Colors.white,
@@ -187,7 +183,7 @@ class ButtonLogin extends StatelessWidget {
 
           String pattern =
               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-          RegExp regExp = new RegExp(pattern);
+          RegExp regExp = RegExp(pattern);
 
           if (regExp.hasMatch(emailCtrl.text) && passCtrl.text.length >= 6) {
             final String? errorMessage =

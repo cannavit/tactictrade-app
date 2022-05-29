@@ -9,7 +9,6 @@ class CategoryStrategiesSelected with ChangeNotifier {
     Category(null, 'All', null, 'all'),
     Category(null, 'Favorite', null, 'favorite'),
     Category(null, 'Likes', null, 'likes'),
-
     Category(null, 'Me Strategies', null, 'me'),
     Category(null, 'Winners', null, 'winners'),
     Category(null, 'Top Shorts', null, 'top_short'),

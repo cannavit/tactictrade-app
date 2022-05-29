@@ -19,7 +19,7 @@ class StatisticsValuesWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -61,7 +61,7 @@ class _cardTextPorcentaje extends StatelessWidget {
       {Key? key,
       required this.variable,
       required this.value,
-      this.forceColor = null,
+      this.forceColor,
       this.titleLevelOne = 'Mantainer'})
       : super(key: key);
 
@@ -83,13 +83,11 @@ class _cardTextPorcentaje extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          '${value}%',
+          '$value%',
           style: TextStyle(
-              color: forceColor != null
-                  ? forceColor
-                  : value <= 0
+              color: forceColor ?? (value <= 0
                       ? Colors.red
-                      : Colors.green,
+                      : Colors.green),
               fontSize: 14,
               fontWeight: FontWeight.w700),
         ),

@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/models/create_strategy.dart';
 import 'package:tactictrade/providers/providers.dart';
-import 'package:tactictrade/providers/strategies_categories_provider.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
 import 'package:tactictrade/services/notifications_service.dart';
 import 'package:tactictrade/services/strategies_services.dart';
@@ -26,9 +25,9 @@ class PopUpMovement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new AlertDialog(
+    return AlertDialog(
       title: Text(titleHeader),
-      content: new Column(
+      content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -36,7 +35,7 @@ class PopUpMovement extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        FlatButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -44,7 +43,7 @@ class PopUpMovement extends StatelessWidget {
           child: Row(
             children: [
               TextButton(
-                child: Text('Continue',
+                child: const Text('Continue',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 15,
@@ -58,7 +57,7 @@ class PopUpMovement extends StatelessWidget {
               ),
               Expanded(child: Container()),
               TextButton(
-                child: Text('Cancel',
+                child: const Text('Cancel',
                     style: TextStyle(
                         color: Colors.red,
                         fontSize: 15,
@@ -77,7 +76,7 @@ class PopUpMovement extends StatelessWidget {
 }
 
 class CreateStrategyScreen extends StatelessWidget {
-  CreateStrategyScreen({Key? key}) : super(key: key);
+  const CreateStrategyScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +88,7 @@ class CreateStrategyScreen extends StatelessWidget {
     // strategyNameCtrl = TextEditingController();
 
     return ChangeNotifierProvider(
-      create: (_) => new NavigationModel(),
+      create: (_) => NavigationModel(),
       child: Scaffold(
         appBar: AppBar(
           systemOverlayStyle: SystemUiOverlayStyle(
@@ -111,20 +110,20 @@ class CreateStrategyScreen extends StatelessWidget {
               Preferences.tempStrategyImage = "";
               showDialog(
                 context: context,
-                builder: (BuildContext context) => PopUpMovement(
+                builder: (BuildContext context) => const PopUpMovement(
                   titleHeader: 'Exit of Create Strategy',
                   message: 'You are sure of move it? Current data will be lost',
                 ),
               );
             },
           ),
-          actions: [],
+          actions: const [],
           elevation: 0,
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(), // Same efect in Android
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               _Form(themeColors: themeColors),
@@ -197,7 +196,7 @@ class _FormState extends State<_Form> {
           color: Colors.white30,
         ),
 
-        ImageUploadWidget(),
+        const ImageUploadWidget(),
 
         const SizedBox(height: 15),
 
@@ -229,7 +228,7 @@ class _FormState extends State<_Form> {
 
         Row(
           children: [
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
               child: GeneralInputField(
                   textController: strategyNameCtrl,
@@ -246,7 +245,7 @@ class _FormState extends State<_Form> {
 
             Expanded(child: Container()),
 
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
               child: GeneralInputField(
                   textController: symbolCtrl,
@@ -267,7 +266,7 @@ class _FormState extends State<_Form> {
           children: [
             // DropDown(),
 
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width * 0.4,
               child: GeneralInputField(
                   textController: timeTradeCtrl,
@@ -295,7 +294,7 @@ class _FormState extends State<_Form> {
               textController: strategyUrlCtrl,
               labelText: 'Strategy URL',
               hintText: 'https://www.tradingview.com/..',
-              icon: Icon(
+              icon: const Icon(
                 // Icons.grading,
                 Icons.list_alt_sharp,
                 color: Colors.grey,
@@ -324,17 +323,17 @@ class _FormState extends State<_Form> {
 
         const SizedBox(height: 40),
 
-        Container(
+        SizedBox(
             height: 50,
             child: ButtonNext(
               bodyRequest: {
-                'strategyNews': this.strategyNameCtrl,
-                'symbol': this.symbolCtrl,
-                'timeTradeCtrl': this.timeTradeCtrl,
-                'strategyUrlCtrl': this.strategyUrlCtrl,
+                'strategyNews': strategyNameCtrl,
+                'symbol': symbolCtrl,
+                'timeTradeCtrl': timeTradeCtrl,
+                'strategyUrlCtrl': strategyUrlCtrl,
                 // 'is_public': true,
                 // 'is_active': true,
-                'description': this.descriptionCtrl,
+                'description': descriptionCtrl,
               },
               btnEnabled: _btnEnabled,
             )),
@@ -361,7 +360,7 @@ class _DropDownState extends State<DropDown> {
     var selectedValue;
 
     return DropdownButtonHideUnderline(
-      child: Container(
+      child: SizedBox(
         // width: MediaQuery.of(context).size.width * 0.3,
         height: 47,
         child: Container(
@@ -369,7 +368,7 @@ class _DropDownState extends State<DropDown> {
             hint: Row(
               children: [
                 const SizedBox(width: 6),
-                Icon(
+                const Icon(
                   Icons.calendar_view_month_sharp,
                   color: Colors.white60,
                 ),
@@ -454,7 +453,7 @@ class _SwitchCustomIsPublicState extends State<SwitchCustomIsPublic> {
         value: Preferences.isPublicNewStrategy,
         activeColor: Colors.blue,
         title: Text(widget.swithText,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300)),
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w300)),
         onChanged: (bool value) {
           Preferences.isPublicNewStrategy = value;
           setState(() {});
@@ -478,8 +477,8 @@ class InputDecorations {
         labelText: labelText,
         labelStyle: const TextStyle(color: Colors.grey),
         border: OutlineInputBorder(
-          borderRadius: new BorderRadius.circular(25.0),
-          borderSide: new BorderSide(),
+          borderRadius: BorderRadius.circular(25.0),
+          borderSide: const BorderSide(),
         ),
         prefixIcon: prefixIcon != null
             ? Icon(prefixIcon, color: Colors.deepPurple)
@@ -509,12 +508,12 @@ class ButtonNext extends StatelessWidget {
         highlightElevation: 5,
         color: Colors.blue,
         shape: const StadiumBorder(),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           height: 55,
           child: Center(
             child: Text(buttonText,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold)),

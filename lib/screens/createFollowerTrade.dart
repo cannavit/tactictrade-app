@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tactictrade/pages/broker/broker_page.dart';
-import 'package:tactictrade/pages/broker/service/broker_service.dart';
+import 'package:tactictrade/screens/broker_screen.dart';
+import 'package:tactictrade/services/broker_service.dart';
 import 'package:tactictrade/providers/providers.dart';
 import 'package:tactictrade/providers/trading_config_input_long_provider.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
@@ -24,7 +24,7 @@ import '../widgets/navigations/popup_navigation_back.dart';
 import 'loading_strategy.dart';
 
 class CreateFollowTrade extends StatelessWidget {
-  CreateFollowTrade({
+  const CreateFollowTrade({
     Key? key,
   }) : super(key: key);
 
@@ -67,13 +67,13 @@ class CreateFollowTrade extends StatelessWidget {
               );
             },
           ),
-          actions: [],
+          actions: const [],
           elevation: 0,
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(), // Same efect in Android
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               _Form(
@@ -132,13 +132,11 @@ class _Form extends StatefulWidget {
 }
 
 class _FormState extends State<_Form> {
-
   final tradingLongValue = false;
   final tradingShortValue = false;
 
   @override
   Widget build(BuildContext context) {
-   
     final brokerConfig = Provider.of<BrokerConfig>(context);
     final GlobalKey<ScaffoldMessengerState> messagedKey =
         GlobalKey<ScaffoldMessengerState>();
@@ -150,7 +148,6 @@ class _FormState extends State<_Form> {
     return _widgetTradingConfigForm(
       widget: widget,
       selectBrokerTradingConfig: selectBrokerTradingConfig,
-     
     );
   }
 }
@@ -171,7 +168,7 @@ class _widgetTradingConfigForm extends StatelessWidget {
 
     final tradingConfigViewService =
         Provider.of<TradingConfigViewService>(context);
-    
+
     final tradingConfigInputLongProvider =
         Provider.of<TradingConfigInputLongProvider>(context);
 
@@ -182,7 +179,7 @@ class _widgetTradingConfigForm extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
+            SizedBox(
               width: 220,
               child: StrategySymbolWidget(
                   isActive: widget.isActive,
@@ -211,7 +208,7 @@ class _widgetTradingConfigForm extends StatelessWidget {
 
         Container(
           alignment: AlignmentDirectional.centerStart,
-          margin: EdgeInsets.only(left: 12),
+          margin: const EdgeInsets.only(left: 12),
           child: Text('Add trading parameters',
               style: GoogleFonts.openSans(
                 textStyle: const TextStyle(
@@ -263,7 +260,7 @@ class _widgetTradingConfigForm extends StatelessWidget {
                   .longRead()
               ? 1
               : 0,
-          duration: Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: 1000),
           child: Visibility(
             visible: Provider.of<TradingConfigProvider>(context, listen: true)
                 .longRead(),
@@ -273,7 +270,6 @@ class _widgetTradingConfigForm extends StatelessWidget {
                 tradingConfigViewService: tradingConfigViewService),
           ),
         ),
-
 
         const SizedBox(
           height: 20,
@@ -295,7 +291,7 @@ class _widgetTradingConfigForm extends StatelessWidget {
                   .shortRead()
               ? 1
               : 0,
-          duration: Duration(milliseconds: 1000),
+          duration: const Duration(milliseconds: 1000),
           child: Visibility(
             visible: Provider.of<TradingConfigProvider>(context, listen: true)
                 .shortRead(),
@@ -322,14 +318,14 @@ class _widgetTradingConfigForm extends StatelessWidget {
             // width: 340,
             // height: 45,
 
-            constraints: BoxConstraints(minWidth: 150, maxWidth: 300),
+            constraints: const BoxConstraints(minWidth: 150, maxWidth: 300),
 
             child: RaisedButton(
               elevation: 2,
               highlightElevation: 5,
               color: Colors.blue,
               shape: const StadiumBorder(),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: Center(
@@ -374,10 +370,10 @@ class _widgetTradingConfigForm extends StatelessWidget {
                 } else if (message == "This trading_config already exist") {
                   await NotificationsService.showSnackbar(
                       context, 'You are already a follower of this strategy');
-                  return null;
+                  return;
                 } else {
                   await NotificationsService.showSnackbar(context, message);
-                  return null;
+                  return;
                 }
 
                 Preferences.brokerNewUseTradingLong = false;
@@ -415,7 +411,7 @@ class TradingConfigInputForm extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Container(
+          SizedBox(
             height: 250,
             child: Container(
               child: ListView.builder(
@@ -530,7 +526,8 @@ class _SwiftListLongState extends State<_SwiftListLong> {
           secondary: Icon(widget.iconSwift, size: 27, color: widget.iconColor),
           value: Preferences.brokerNewUseTradingLong,
           title: Text(widget.textSwift,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
+              style:
+                  const TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
           onChanged: (value) {
             configTradeProvider.longValue(value);
           }),
@@ -569,7 +566,8 @@ class _SwiftListShortState extends State<_SwiftListShort> {
           secondary: Icon(widget.iconSwift, size: 27, color: widget.iconColor),
           value: Preferences.brokerNewUseTradingShort,
           title: Text(widget.textSwift,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
+              style:
+                  const TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
           onChanged: (value) {
             configTradeProvider.shortValue(value);
           }),

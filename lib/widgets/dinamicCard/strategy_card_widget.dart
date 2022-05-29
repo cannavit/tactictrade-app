@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,11 +6,9 @@ import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/forms_components/dropdown_trading_config.dart';
 
 import '../../providers/theme_provider.dart';
-import '../../screens/createFollowerTrade.dart';
 import '../../screens/transactions_records_screen.dart';
 import '../../services/trading_config.dart';
 import '../../services/transactions_record_service.dart';
-import '../popup_delete_trading_config.dart';
 
 class StrategyCard extends StatelessWidget {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
@@ -85,12 +82,12 @@ class StrategyCard extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: SimpleFoldingCell.create(
         // padding: EdgeInsets.all(1),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
         key: _foldingCellKey,
         frontWidget: _buildFrontWidget(context),
         innerWidget: _buildInnerWidget(context),
         cellSize: Size(MediaQuery.of(context).size.width, 195),
-        animationDuration: Duration(milliseconds: 400),
+        animationDuration: const Duration(milliseconds: 400),
         borderRadius: 10,
         onOpen: () => print('cell opened'),
         onClose: () => print('cell closed'),
@@ -100,7 +97,7 @@ class StrategyCard extends StatelessWidget {
 
   Widget _buildFrontWidget(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       decoration: _BackgroundCardColor(context),
       alignment: Alignment.center,
       child: Column(
@@ -119,7 +116,7 @@ class StrategyCard extends StatelessWidget {
                   brokerType: brokerType),
             ],
           ),
-          Divider(
+          const Divider(
             height: 1,
             color: Colors.white,
           ),
@@ -137,7 +134,7 @@ class StrategyCard extends StatelessWidget {
             child: Center(
               child: IconButton(
                 onPressed: () => _foldingCellKey.currentState?.toggleFold(),
-                icon: Icon(Icons.arrow_drop_down_sharp),
+                icon: const Icon(Icons.arrow_drop_down_sharp),
               ),
             ),
           ),
@@ -184,7 +181,7 @@ class StrategyCard extends StatelessWidget {
             ],
           ),
 
-          Divider(
+          const Divider(
             height: 2,
             color: Colors.white,
           ),
@@ -220,7 +217,7 @@ class StrategyCard extends StatelessWidget {
             // color: Colors.green,
             // height: 100,
             // width: 10,
-            margin: EdgeInsets.symmetric(horizontal: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               // crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -290,7 +287,7 @@ class StrategyCard extends StatelessWidget {
           Center(
             child: TextButton(
               onPressed: () => _foldingCellKey.currentState?.toggleFold(),
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_drop_up,
                 color: Colors.white,
               ),
@@ -302,7 +299,7 @@ class StrategyCard extends StatelessWidget {
   }
 
   TextStyle _textHeaderTableStyle() {
-    return TextStyle(
+    return const TextStyle(
         color: Colors.white,
         fontSize: 12,
         fontWeight: FontWeight.w300,
@@ -312,7 +309,7 @@ class StrategyCard extends StatelessWidget {
   }
 
   TextStyle _textHeaderTableStyleBlue() {
-    return TextStyle(
+    return const TextStyle(
       fontFamily: 'Oswald',
       fontSize: 20,
       height: 1.8,
@@ -346,7 +343,7 @@ class _ControlButtomsState extends State<_ControlButtoms> {
     return Container(
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 160,
             child: SwitchListTile(
                 activeColor: Colors.blue,
@@ -372,7 +369,7 @@ class _ControlButtomsState extends State<_ControlButtoms> {
                 }),
           ),
           Expanded(child: Container()),
-          Container(
+          SizedBox(
             width: 160,
             child: SwitchListTile(
                 activeColor: Colors.blue,
@@ -428,11 +425,11 @@ class _tableProfit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _ColumnTableE(
+          const _ColumnTableE(
               titleOne: 'TRADING',
               titleTwo: 'TYPE',
               valueOne: 'LONG',
@@ -490,7 +487,7 @@ class _ColumnTableE extends StatelessWidget {
           children: [
             Text(titleOne,
                 style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     letterSpacing: .5,
                     fontSize: 11,
@@ -499,7 +496,7 @@ class _ColumnTableE extends StatelessWidget {
                 )),
             Text(titleTwo,
                 style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     letterSpacing: .5,
                     fontSize: 11,
@@ -512,18 +509,18 @@ class _ColumnTableE extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('$valueOne',
+            Text(valueOne,
                 style: GoogleFonts.oswald(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.blue, letterSpacing: .5,
                     fontSize: 18,
                     height: 1.4,
                     // letterSpacing: .1,
                   ),
                 )),
-            Text('$valueTwo',
+            Text(valueTwo,
                 style: GoogleFonts.oswald(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.orange, letterSpacing: .5,
                     fontSize: 18,
                     height: 1.4,
@@ -561,7 +558,7 @@ class _ColumnTablePercentage extends StatelessWidget {
           children: [
             Text(titleOne,
                 style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     letterSpacing: .5,
                     fontSize: 11,
@@ -570,7 +567,7 @@ class _ColumnTablePercentage extends StatelessWidget {
                 )),
             Text(titleTwo,
                 style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     letterSpacing: .5,
                     fontSize: 11,
@@ -670,7 +667,7 @@ class _ColumnTableUSD extends StatelessWidget {
           children: [
             Text(titleOne,
                 style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     letterSpacing: .5,
                     fontSize: 11,
@@ -679,7 +676,7 @@ class _ColumnTableUSD extends StatelessWidget {
                 )),
             Text(titleTwo,
                 style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     letterSpacing: .5,
                     fontSize: 11,
@@ -696,7 +693,7 @@ class _ColumnTableUSD extends StatelessWidget {
               children: [
                 Text('$valueOne',
                     style: GoogleFonts.oswald(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         color: Colors.green, letterSpacing: .5,
                         fontSize: 16,
                         height: 1.4,
@@ -705,7 +702,7 @@ class _ColumnTableUSD extends StatelessWidget {
                     )),
                 Text('USD',
                     style: GoogleFonts.oswald(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         color: Colors.green, letterSpacing: .5,
                         fontSize: 13,
                         height: 1,
@@ -718,7 +715,7 @@ class _ColumnTableUSD extends StatelessWidget {
               children: [
                 Text('$valueTwo',
                     style: GoogleFonts.oswald(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         color: Colors.green, letterSpacing: .5,
                         fontSize: 18,
                         height: 1.4,
@@ -727,7 +724,7 @@ class _ColumnTableUSD extends StatelessWidget {
                     )),
                 Text('USD',
                     style: GoogleFonts.oswald(
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         color: Colors.green, letterSpacing: .5,
                         fontSize: 13,
                         height: 1,
@@ -771,7 +768,7 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
           children: [
             Text(titleOne,
                 style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     letterSpacing: .5,
                     fontSize: 11,
@@ -780,7 +777,7 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
                 )),
             Text(titleTwo,
                 style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     letterSpacing: .5,
                     fontSize: 11,
@@ -795,7 +792,7 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text('${currentCapitalLong}',
+                Text('$currentCapitalLong',
                     style: GoogleFonts.oswald(
                       textStyle: TextStyle(
                         color: initialCapitalLong < currentCapitalLong
@@ -823,7 +820,7 @@ class _ColumnTableUSDCurrent extends StatelessWidget {
             ),
             Row(
               children: [
-                Text('${currentCapitalShort}',
+                Text('$currentCapitalShort',
                     style: GoogleFonts.oswald(
                       textStyle: TextStyle(
                         color: initialCapitalShort < currentCapitalShort
@@ -879,7 +876,7 @@ class StrategyCardSimple extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 5, left: 1, right: 5),
+      padding: const EdgeInsets.only(top: 5, left: 1, right: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -899,7 +896,7 @@ class StrategyCardSimple extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(symbol,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500)),
@@ -908,12 +905,12 @@ class StrategyCardSimple extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(timeTrade,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400)),
                             const SizedBox(width: 4),
-                            Icon(
+                            const Icon(
                               Icons.timer,
                               color: Colors.white,
                               size: 18,
@@ -928,7 +925,7 @@ class StrategyCardSimple extends StatelessWidget {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -940,17 +937,17 @@ class StrategyCardSimple extends StatelessWidget {
                 Row(
                   children: [
                     Text('$totalNumberOfWinTrades',
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 35,
                             fontWeight: FontWeight.w700)),
-                    Text('/',
+                    const Text('/',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w300)),
                     Text('$totalOfTrades',
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 25,
                             fontWeight: FontWeight.w700)),
@@ -960,15 +957,15 @@ class StrategyCardSimple extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 0, top: 4),
+            margin: const EdgeInsets.only(left: 0, top: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Trading Profit',
                     style: TextStyle(
                         color: totalTradingProfit >= 0
-                            ? Color(0xff1BC232)
-                            : Color.fromARGB(255, 226, 46, 40),
+                            ? const Color(0xff1BC232)
+                            : const Color.fromARGB(255, 226, 46, 40),
                         fontSize: 15,
                         fontWeight: FontWeight.w300)),
                 Row(
@@ -979,21 +976,21 @@ class StrategyCardSimple extends StatelessWidget {
                         Text('$totalTradingProfit',
                             style: TextStyle(
                                 color: totalTradingProfit >= 0
-                                    ? Color(0xff1BC232)
-                                    : Color.fromARGB(255, 194, 33, 27),
+                                    ? const Color(0xff1BC232)
+                                    : const Color.fromARGB(255, 194, 33, 27),
                                 fontSize: 30,
                                 fontWeight: FontWeight.w700)),
                         Text('%',
                             style: TextStyle(
                                 color: totalTradingProfit >= 0
-                                    ? Color(0xff1BC232)
-                                    : Color.fromARGB(255, 194, 33, 27),
+                                    ? const Color(0xff1BC232)
+                                    : const Color.fromARGB(255, 194, 33, 27),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700)),
                       ],
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 10, top: 0),
+                      margin: const EdgeInsets.only(left: 10, top: 0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -1001,15 +998,15 @@ class StrategyCardSimple extends StatelessWidget {
                           Text('$totalProfitUSD',
                               style: TextStyle(
                                   color: totalTradingProfit >= 0
-                                      ? Color(0xff1BC232)
-                                      : Color.fromARGB(255, 194, 33, 27),
+                                      ? const Color(0xff1BC232)
+                                      : const Color.fromARGB(255, 194, 33, 27),
                                   fontSize: 25,
                                   fontWeight: FontWeight.w700)),
                           Text('USD',
                               style: TextStyle(
                                   color: totalTradingProfit >= 0
-                                      ? Color(0xff1BC232)
-                                      : Color.fromARGB(255, 194, 33, 27),
+                                      ? const Color(0xff1BC232)
+                                      : const Color.fromARGB(255, 194, 33, 27),
                                   fontSize: 11,
                                   fontWeight: FontWeight.w400)),
                         ],
@@ -1042,7 +1039,7 @@ class PusherStrategyImageText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       // --------------------
       // Logo (TradingView)
       //      (StrategyName)
@@ -1058,7 +1055,7 @@ class PusherStrategyImageText extends StatelessWidget {
             colorBorder: mainTextColor,
           ),
           Container(
-            margin: EdgeInsets.only(left: 5),
+            margin: const EdgeInsets.only(left: 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1108,8 +1105,8 @@ class ImageCircleBorder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(left: 10),
-        padding: EdgeInsets.all(1),
+        margin: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.all(1),
         width: radioImage,
         height: radioImage,
         decoration: BoxDecoration(
@@ -1145,22 +1142,22 @@ class BrokerImageText extends StatelessWidget {
       children: [
         Align(
           child: Container(
-            margin: EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('Broker',
+                const Text('Broker',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                         fontWeight: FontWeight.w400)),
                 Text(brokerName,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.w400)),
                 Text(brokerType,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 11,
                         fontWeight: FontWeight.w300)),
@@ -1207,7 +1204,7 @@ class _SimpleSwitchTradeState extends State<_SimpleSwitchTrade> {
             Text(widget.TextSwitch.toUpperCase(), style: widget.titleTextStyle)
           ],
         ),
-        Container(
+        SizedBox(
           height: 25,
           width: 120,
           child: Switch(
@@ -1237,9 +1234,9 @@ class _PopUpDelete extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new AlertDialog(
+    return AlertDialog(
       title: Text(titleHeader),
-      content: new Column(
+      content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -1247,7 +1244,7 @@ class _PopUpDelete extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        FlatButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -1255,7 +1252,7 @@ class _PopUpDelete extends StatelessWidget {
           child: Row(
             children: [
               TextButton(
-                child: Text('Continue',
+                child: const Text('Continue',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 15,
@@ -1264,7 +1261,7 @@ class _PopUpDelete extends StatelessWidget {
               ),
               Expanded(child: Container()),
               TextButton(
-                child: Text('Cancel',
+                child: const Text('Cancel',
                     style: TextStyle(
                         color: Colors.red,
                         fontSize: 15,

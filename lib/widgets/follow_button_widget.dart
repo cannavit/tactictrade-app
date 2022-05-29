@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../pages/broker/service/broker_service.dart';
+import '../services/broker_service.dart';
 import '../providers/trading_config_short_provider.dart';
 import '../services/trading_config_view.dart';
 import '../share_preferences/preferences.dart';
-
 
 class FollowButtonWidget extends StatelessWidget {
   const FollowButtonWidget({
@@ -43,7 +42,6 @@ class FollowButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final tradingConfigViewService =
         Provider.of<TradingConfigViewService>(context);
 
@@ -75,9 +73,9 @@ class FollowButtonWidget extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text("  Connect/Follower Strategy"),
-                  content:
-                      Text("Do you want use this strategy for doing trade?"),
+                  title: const Text("  Connect/Follower Strategy"),
+                  content: const Text(
+                      "Do you want use this strategy for doing trade?"),
                   actions: <Widget>[
                     FlatButton(
                         color: Colors.green,
@@ -118,12 +116,10 @@ class FollowButtonWidget extends StatelessWidget {
         // Icon(Icons.play_arrow_rounded),
 
         Text(isFollower ? 'Followed' : 'Follow',
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15,
                 fontWeight: FontWeight.w300)),
-
-
       ],
     );
   }

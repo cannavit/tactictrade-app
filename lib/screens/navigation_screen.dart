@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/screens/bots_page.dart';
-import 'package:tactictrade/screens/home_screen.dart';
-import 'package:tactictrade/screens/position_screens.dart';
 import 'package:tactictrade/screens/strategies_owner_screen.dart';
 import 'package:tactictrade/screens/strategy_screen.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/custom_navbar_widget.dart';
 import 'package:tactictrade/widgets/generic_appbar_widget.dart';
 
-import '../pages/broker/broker_page.dart';
+import 'broker_screen.dart';
 import '../providers/strategies_categories_provider.dart';
 import '../services/strategies_services.dart';
-import 'favorite_page.dart';
 
 class NavigationScreen extends StatelessWidget {
   const NavigationScreen({Key? key}) : super(key: key);
@@ -26,8 +23,8 @@ class NavigationScreen extends StatelessWidget {
         child: Scaffold(
             appBar: GenericAppBar(
                 themeColors, context, Preferences.selectedAppBarName),
-            body: _Pages(),
-            bottomNavigationBar: CustomNavbar()));
+            body: const _Pages(),
+            bottomNavigationBar: const CustomNavbar()));
   }
 }
 
@@ -38,7 +35,6 @@ class _Pages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final navigationModel = Provider.of<NavigationModel>(context);
     final strategies = Provider.of<StrategyLoadServices>(context);
     final categoriesList = Provider.of<CategoryStrategiesSelected>(context);
@@ -49,9 +45,9 @@ class _Pages extends StatelessWidget {
       children: <Widget>[
         StrategyScreen(
             strategyProvider: strategies, categoriesList: categoriesList),
-        StrategiesOwnerScreen(),
-        BotsScreen(),
-        BrokersPages(),
+        const StrategiesOwnerScreen(),
+        const BotsScreen(),
+        const BrokersPages(),
       ],
     );
   }
@@ -70,10 +66,10 @@ class NavigationModel with ChangeNotifier {
     Preferences.navigationCurrentPage = value;
 
     _pageController.animateToPage(value,
-        duration: Duration(microseconds: 250), curve: Curves.easeOut);
+        duration: const Duration(microseconds: 250), curve: Curves.easeOut);
     notifyListeners();
   }
 
   // Change selected page
-  PageController get pageController => this._pageController;
+  PageController get pageController => _pageController;
 }

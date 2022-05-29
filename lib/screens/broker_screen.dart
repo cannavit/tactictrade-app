@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:tactictrade/pages/broker/service/broker_service.dart';
-import 'package:tactictrade/pages/broker/widgets/broker_capital_widget.dart';
-import 'package:tactictrade/pages/broker/widgets/broker_info_widget.dart';
+import 'package:tactictrade/services/broker_service.dart';
 import 'package:tactictrade/screens/loading_strategy.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
+import 'package:tactictrade/widgets/broker_capital_widget.dart';
+import 'package:tactictrade/widgets/broker_info_widget.dart';
 
-import '../../widgets/circle_navigation_button_widget.dart';
+import '../widgets/circle_navigation_button_widget.dart';
 
 class BrokersPages extends StatelessWidget {
-  BrokersPages({Key? key}) : super(key: key);
+  const BrokersPages({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +21,13 @@ class BrokersPages extends StatelessWidget {
 
     if (brokerServices.isLoading) {
       // brokerServices.loadBroker();
-      LoadingView();
+      const LoadingView();
     }
-    ;
 
     return ChangeNotifierProvider(
-      create: (_) => new NavigationModel(),
+      create: (_) => NavigationModel(),
       child: Scaffold(
-        floatingActionButton: CircleNavigationButtonWidget(navigationTo: 'create_broker'),
+        floatingActionButton: const CircleNavigationButtonWidget(navigationTo: 'create_broker'),
         body: SmartRefresher(
           controller: _refreshController,
           child: _listViewBrokers(brokerServices),
@@ -52,8 +50,8 @@ class BrokersPages extends StatelessWidget {
 
   ListView _listViewBrokers(BrokerServices brokerServices) {
     return ListView.separated(
-      separatorBuilder: (BuildContext context, int index) => Divider(),
-      physics: BouncingScrollPhysics(),
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
+      physics: const BouncingScrollPhysics(),
       itemCount: brokerServices.brokerList.length,
       itemBuilder: (BuildContext context, int index) => cardBrokerWidget(
         broker: brokerServices.brokerList[index]['broker'],
@@ -90,7 +88,7 @@ class cardBrokerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: simpleView ? 100 : 160,
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: IntrinsicHeight(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

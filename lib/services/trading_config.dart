@@ -17,14 +17,14 @@ class TradingConfig extends ChangeNotifier {
   Map categoriesStrategy = {};
 
   TradingConfig() {
-    this.read();
+    read();
   }
 
 //   // int strategyId
   Future create(dynamic data) async {
     final url = Uri.http(Environment.baseUrl, '/trading/tradingvalues');
 
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -50,12 +50,12 @@ class TradingConfig extends ChangeNotifier {
   }
 
   Future read() async {
-    this.isLoading = true;
+    isLoading = true;
 
     notifyListeners();
 
     final url = Uri.http(Environment.baseUrl, '/trading/all');
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
@@ -79,12 +79,12 @@ class TradingConfig extends ChangeNotifier {
 
     final tradingConfigData = TradingConfigModel.fromJson(response.body);
 
-    this.tradingConfigList = tradingConfigData.results;
+    tradingConfigList = tradingConfigData.results;
 
-    this.isLoading = false;
+    isLoading = false;
     notifyListeners();
 
-    return this.tradingConfigList;
+    return tradingConfigList;
   }
 
   Future readv2() async {
@@ -93,7 +93,7 @@ class TradingConfig extends ChangeNotifier {
     final categoryListData = categoriesStrategy[category];
     // Check if the data exist in memory
     if (categoriesStrategy[category] != null && !updateList) {
-      this.tradingConfigList = categoriesStrategy[category];
+      tradingConfigList = categoriesStrategy[category];
       Preferences.updateStrategyOwnerSelected = false;
       return categoriesStrategy[category];
     }
@@ -101,7 +101,7 @@ class TradingConfig extends ChangeNotifier {
     final url =
         Uri.http(Environment.baseUrl, '/trading/all', {'category': category});
 
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
@@ -119,23 +119,23 @@ class TradingConfig extends ChangeNotifier {
 
     final tradingConfigData = TradingConfigModel.fromJson(response.body);
 
-    this.tradingConfigList = tradingConfigData.results;
+    tradingConfigList = tradingConfigData.results;
 
     categoriesStrategy[category] = tradingConfigData.results;
 
     notifyListeners();
 
-    return this.tradingConfigList;
+    return tradingConfigList;
   }
 
   Future delete(tradingConfigId) async {
-    this.isLoading = true;
+    isLoading = true;
 
     notifyListeners();
 
     final url = Uri.http(
-        Environment.baseUrl, '/trading/tradingvalues/${tradingConfigId}');
-    final _storage = new FlutterSecureStorage();
+        Environment.baseUrl, '/trading/tradingvalues/$tradingConfigId');
+    const _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
@@ -154,26 +154,26 @@ class TradingConfig extends ChangeNotifier {
     final data = json.decode(response.body)['results'];
 
 
-    this.tradingConfigList = data;
+    tradingConfigList = data;
 
-    this.isLoading = false;
+    isLoading = false;
     notifyListeners();
 
-    return this.tradingConfigList;
+    return tradingConfigList;
   }
 
   Future edit_tradingconfig(int tradingConfigId, dynamic body) async {
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
       return '';
     }
 
-    final body_json = json.encode(body);
+    final bodyJson = json.encode(body);
 
     final url = Uri.http(
-        Environment.baseUrl, '/trading/tradingvalues/${tradingConfigId}');
+        Environment.baseUrl, '/trading/tradingvalues/$tradingConfigId');
 
     final response = await http.put(url,
         headers: {
@@ -181,7 +181,7 @@ class TradingConfig extends ChangeNotifier {
           'accept': 'application/json',
           'Authorization': 'Bearer ' + token
         },
-        body: body_json);
+        body: bodyJson);
 
     final message = json.decode(response.body)['message'];
 
@@ -189,7 +189,7 @@ class TradingConfig extends ChangeNotifier {
   }
 
   Future openLong(int tradingConfigId) async {
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
     final token = await _storage.read(key: 'token_access') ?? '';
 
     if (token == '') {
@@ -197,7 +197,7 @@ class TradingConfig extends ChangeNotifier {
     }
 
     final url =
-        Uri.http(Environment.baseUrl, '/trading/openlong/${tradingConfigId}');
+        Uri.http(Environment.baseUrl, '/trading/openlong/$tradingConfigId');
 
     final response = await http.post(url, headers: {
       'Content-Type': 'application/json',
@@ -209,7 +209,7 @@ class TradingConfig extends ChangeNotifier {
   }
 
   Future openShort(int tradingConfigId) async {
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -218,7 +218,7 @@ class TradingConfig extends ChangeNotifier {
     }
 
     final url =
-        Uri.http(Environment.baseUrl, '/trading/openshort/${tradingConfigId}');
+        Uri.http(Environment.baseUrl, '/trading/openshort/$tradingConfigId');
 
     final response = await http.post(url, headers: {
       'Content-Type': 'application/json',

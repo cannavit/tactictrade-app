@@ -1,7 +1,6 @@
 import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
-import 'package:pie_chart/pie_chart.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
 class ProductCard extends StatelessWidget {
@@ -12,7 +11,7 @@ class ProductCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Container(
-        margin: EdgeInsets.only(top: 20),
+        margin: const EdgeInsets.only(top: 20),
         width: double.infinity,
         height: 230,
         decoration: _cardBorder(),
@@ -20,34 +19,32 @@ class ProductCard extends StatelessWidget {
           children: [
             // Header Cards ........
 
-            Container(
+            const SizedBox(
               height: 70,
-              child: const _headCardWidget(
+              child: _headCardWidget(
                 timeTrade: '1h',
                 urlPusher:
                     'https://s3.tradingview.com/userpics/6171439-Hlns_big.png',
                 urlUser:
                     'https://www.shareicon.net/data/512x512/2016/09/15/829452_user_512x512.png',
-                urlSymbol: 'https://universal.hellopublic.com/companyLogos/' +
-                    'FB' +
-                    '@2x.png',
+                urlSymbol: 'https://universal.hellopublic.com/companyLogos/' 'FB' '@2x.png',
               ),
             ),
 
             Row(
               children: [
                 Expanded(
-                    child: Container(
+                    child: SizedBox(
                         height: 150,
                         child: Column(
                           children: [
                             Expanded(
-                                child: Container(
+                                child: SizedBox(
                               height: 130,
                               // color: Colors.orange,
                               child: _StrategyStatistics(),
                             )),
-                            Container(
+                            const SizedBox(
                               height: 40,
                               child: GroupLikeButtons(
                                 numberLikes: '200',
@@ -55,8 +52,8 @@ class ProductCard extends StatelessWidget {
                             ),
                           ],
                         ))),
-                Expanded(
-                    child: Container(
+                const Expanded(
+                    child: SizedBox(
                   height: 150,
                   child: _graph2D(
                     data: [
@@ -85,7 +82,7 @@ class ProductCard extends StatelessWidget {
 
   Container _StrategyStatistics() {
     return Container(
-      margin: EdgeInsets.only(left: 20),
+      margin: const EdgeInsets.only(left: 20),
       width: 180,
       height: 100,
       child: Column(
@@ -94,18 +91,18 @@ class ProductCard extends StatelessWidget {
             variable: 'Profitable: ',
             value: 39.5,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _cardTextPorcentaje(
             variable: 'Max Drawdown: ',
             value: 5.42,
             forceColor: Colors.red,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _cardTextPorcentaje(
             variable: 'Net Profit: ',
             value: 61.29,
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
         ],
       ),
     );
@@ -144,7 +141,7 @@ class _headCardWidget extends StatelessWidget {
         const _strategyName(strategyName: 'Argon2020'),
         Expanded(child: Container()),
         Container(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           child: Row(
             children: [
               Text(timeTrade,
@@ -236,7 +233,7 @@ class _graph2D extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: Container(
+        child: SizedBox(
             width: 100,
             height: 80,
             // color: Colors.black87,
@@ -259,7 +256,7 @@ class _cardTextPorcentaje extends StatelessWidget {
     Key? key,
     required this.variable,
     required this.value,
-    this.forceColor = null,
+    this.forceColor,
   }) : super(key: key);
 
   final String variable;
@@ -279,13 +276,11 @@ class _cardTextPorcentaje extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         Text(
-          '${value}%',
+          '$value%',
           style: TextStyle(
-              color: forceColor != null
-                  ? forceColor
-                  : value <= 0
+              color: forceColor ?? (value <= 0
                       ? Colors.red
-                      : Colors.green,
+                      : Colors.green),
               fontSize: 18,
               fontWeight: FontWeight.w700),
         ),
@@ -305,7 +300,7 @@ class _strategyName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

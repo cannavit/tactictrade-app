@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:tactictrade/pages/broker/service/broker_service.dart';
 import 'package:tactictrade/screens/login_screens.dart';
 import 'package:tactictrade/services/auth_service.dart';
-import 'package:tactictrade/services/settings_services.dart';
-import 'package:tactictrade/services/strategies_services.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/logo_center_widget.dart';
 
-import '../models/trading_config_model.dart';
-import '../services/trading_config_view.dart';
 import 'navigation_screen.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -64,11 +59,11 @@ class LoadingScreen extends StatelessWidget {
     Preferences.updateStrategyOwnerSelected = false;
     Preferences.brokerSelectedPreferences = 1;
 
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
-    final token_saved = await _storage.read(key: 'token_access') ?? '';
+    final tokenSaved = await _storage.read(key: 'token_access') ?? '';
 
-    if (token_saved == '') {
+    if (tokenSaved == '') {
       logged = false;
     }
 

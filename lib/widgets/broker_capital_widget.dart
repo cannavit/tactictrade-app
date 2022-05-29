@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tactictrade/share_preferences/preferences.dart';
-import 'package:tactictrade/widgets/popUpCreateStrategy.dart';
 import 'package:tactictrade/widgets/select_broker_pop_up.dart';
 
 class BrokerCapitalWidget extends StatelessWidget {
@@ -26,7 +24,7 @@ class BrokerCapitalWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
       color: Colors.transparent,
       // color: Preferences.isDarkmode ? Color(0xffE7EDEF) : Color.fromARGB(255, 24, 26, 27),
       width: MediaQuery.of(context).size.width * (simpleView ? 0.400 : 0.55),
@@ -79,7 +77,7 @@ class BrokerCapitalWidget extends StatelessWidget {
                 'Available Capital',
                 style: GoogleFonts.roboto(
                   textStyle: TextStyle(
-                      color: Color(0xff1BC232),
+                      color: const Color(0xff1BC232),
                       letterSpacing: 1.5,
                       fontSize: simpleView ? 13 : 17,
                       fontWeight: FontWeight.w300),
@@ -97,7 +95,7 @@ class BrokerCapitalWidget extends StatelessWidget {
                 '$capital',
                 style: GoogleFonts.roboto(
                   textStyle: TextStyle(
-                      color: Color(0xff1BC232),
+                      color: const Color(0xff1BC232),
                       letterSpacing: 0.7,
                       fontSize: simpleView ? 15 : 20,
                       fontWeight: FontWeight.w700),
@@ -107,7 +105,7 @@ class BrokerCapitalWidget extends StatelessWidget {
                 'USD',
                 style: GoogleFonts.roboto(
                   textStyle: TextStyle(
-                      color: Color(0xff1BC232),
+                      color: const Color(0xff1BC232),
                       letterSpacing: 0.7,
                       fontSize: simpleView ? 10 : 20,
                       fontWeight: FontWeight.w300),
@@ -125,14 +123,14 @@ class BrokerCapitalWidget extends StatelessWidget {
                       simpleView ? false : (tagBroker == '' ? false : true),
                   child: Container(
                     // margin: EdgeInsets.symmetric(vertical: 10),
-                    margin: EdgeInsets.only(top: 10, left: 10),
+                    margin: const EdgeInsets.only(top: 10, left: 10),
                     decoration: BoxDecoration(
                         // color: PositionData.isActive ? Colors.green[300] : Colors.red,
-                        color: Color(0xff008CED),
+                        color: const Color(0xff008CED),
                         borderRadius: BorderRadius.circular(100)),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(tagPrice,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w300)),
                   )),
               Expanded(child: Container()),

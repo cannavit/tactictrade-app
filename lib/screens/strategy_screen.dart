@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:tactictrade/models/strategy_models.dart';
 import 'package:tactictrade/screens/loading_strategy.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
 import 'package:tactictrade/services/strategies_services.dart';
@@ -13,7 +12,7 @@ import '../widgets/circle_navigation_button_widget.dart';
 import '../widgets/strategy_card.dart';
 
 class StrategyScreen extends StatefulWidget {
-  StrategyScreen(
+  const StrategyScreen(
       {Key? key, required this.strategyProvider, required this.categoriesList})
       : super(key: key);
 
@@ -47,10 +46,10 @@ class _StrategyScreenState extends State<StrategyScreen> {
     final themeColors = Theme.of(context);
     final categoriesList = widget.categoriesList;
 
-    if (strategies.strategyList.length == 0) {
+    if (strategies.strategyList.isEmpty) {
       if (strategies.isLoading) {
         // strategies.loadStrategy();
-        LoadingView();
+        const LoadingView();
       }
     }
 
@@ -62,11 +61,11 @@ class _StrategyScreenState extends State<StrategyScreen> {
         RefreshController(initialRefresh: false);
 
     return ChangeNotifierProvider(
-        create: (_) => new NavigationModel(),
+        create: (_) => NavigationModel(),
         child: Scaffold(
           body: Column(
             children: [
-              Container(
+              SizedBox(
                 height: 30,
                 width: double.infinity,
                 child: CarouselListHome(categoriesList: categoriesList),
@@ -93,7 +92,7 @@ class _StrategyScreenState extends State<StrategyScreen> {
                       itemBuilder: (BuildContext context, int index) =>
                           ProductCard(
                             strategyData: strategies.strategyList[index],
-                            historicalData: [],
+                            historicalData: const [],
                           )),
                 ),
               ),

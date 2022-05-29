@@ -95,9 +95,9 @@ class StrategyData {
         percentageProfitableVerified: json["percentage_profitable_verified"],
         ranking: json["ranking"],
         strategyLink:
-            json["strategy_link"] == null ? null : json["strategy_link"],
+            json["strategy_link"],
         strategyToken:
-            json["strategy_token"] == null ? null : json["strategy_token"],
+            json["strategy_token"],
         period: json["period"],
         timer: json["timer"],
         description: json["description"],
@@ -131,8 +131,8 @@ class StrategyData {
         "net_profit_verified": netProfitVerified,
         "percentage_profitable_verified": percentageProfitableVerified,
         "ranking": ranking,
-        "strategy_link": strategyLink == null ? null : strategyLink,
-        "strategy_token": strategyToken == null ? null : strategyToken,
+        "strategy_link": strategyLink,
+        "strategy_token": strategyToken,
         "period": period,
         "timer": timer,
         "description": description,

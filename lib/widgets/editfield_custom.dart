@@ -9,7 +9,7 @@ class EditTextField extends StatelessWidget {
     this.maxLines = 1,
     this.readOnly = false,
     this.colorFilled = Colors.transparent,
-    this.suffixIcon = null, 
+    this.suffixIcon, 
     this.fontSize=20,
     // this.textStyle = ,
   }) : super(key: key);
@@ -27,7 +27,7 @@ class EditTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,7 +48,7 @@ class EditTextField extends StatelessWidget {
                   fillColor: colorFilled,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(18)),
-                  suffixIcon: suffixIcon != null ? suffixIcon : null),
+                  suffixIcon: suffixIcon),
             ),
           ),
           const SizedBox(height: 5),

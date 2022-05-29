@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:provider/provider.dart';
-import '../../../providers/new_strategy_provider.dart';
 import 'package:flutter/material.dart';
-import '../../../services/notifications_service.dart';
-import '../../../share_preferences/preferences.dart';
+import 'notifications_service.dart';
+import '../share_preferences/preferences.dart';
 import 'broker_service.dart';
 
 class ButtonCreateBroker extends StatelessWidget {
@@ -27,12 +26,12 @@ class ButtonCreateBroker extends StatelessWidget {
         highlightElevation: 5,
         color: Colors.blue,
         shape: const StadiumBorder(),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           height: 55,
           child: Center(
             child: Text(buttonText,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold)),
@@ -59,7 +58,7 @@ class ButtonCreateBroker extends StatelessWidget {
                 if (isMandatory) {
                   NotificationsService.showSnackbar(
                       context, 'It has fields that are mandatory empty');
-                  return null;
+                  return;
                 }
 
                 var brokerName = bodyRequest["brokerName"];
@@ -86,7 +85,7 @@ class ButtonCreateBroker extends StatelessWidget {
 
                   NotificationsService.showSnackbar(
                       context, message["message"]);
-                  return null;
+                  return;
                 }
 
                 brokerService.loadBroker();

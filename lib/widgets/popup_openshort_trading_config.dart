@@ -19,9 +19,9 @@ class PopUpOpenTradeShort extends StatelessWidget {
   Widget build(BuildContext context) {
     final tradingConfig = Provider.of<TradingConfig>(context);
 
-    return new AlertDialog(
+    return AlertDialog(
       title: Text(titleHeader),
-      content: new Column(
+      content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -29,7 +29,7 @@ class PopUpOpenTradeShort extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        FlatButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -37,7 +37,7 @@ class PopUpOpenTradeShort extends StatelessWidget {
           child: Row(
             children: [
               TextButton(
-                child: Text('Create Trade',
+                child: const Text('Create Trade',
                     style: TextStyle(
                         color: Colors.green,
                         fontSize: 15,
@@ -51,7 +51,7 @@ class PopUpOpenTradeShort extends StatelessWidget {
               ),
               Expanded(child: Container()),
               TextButton(
-                child: Text('Cancel',
+                child: const Text('Cancel',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 15,

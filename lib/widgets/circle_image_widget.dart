@@ -16,8 +16,8 @@ class CircleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10),
-      padding: EdgeInsets.all(1),
+      margin: const EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.all(1),
 
       width: size,
       height: size,

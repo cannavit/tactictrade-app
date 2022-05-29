@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tactictrade/screens/login_screens.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/custom_profile_widget.dart';
-import 'package:tactictrade/widgets/user_appbar_widget.dart';
 
 // https://www.youtube.com/watch?v=gSl-MoykYYk
 
@@ -35,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
               Navigator.pushReplacementNamed(context, 'navigation');
             },
           ),
-          actions: [],
+          actions: const [],
           elevation: 0,
         ),
         body: ListView(
@@ -46,9 +44,9 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.pushReplacementNamed(context, 'edit_profile');
                 }),
             const SizedBox(height: 24),
-            _Username(),
+            const _Username(),
             const SizedBox(height: 24),
-            _upgradeButton(),
+            const _upgradeButton(),
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +124,7 @@ class _Username extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(Preferences.username,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
     );
   }
 }

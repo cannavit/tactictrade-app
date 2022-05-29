@@ -16,12 +16,12 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final icon = CupertinoIcons.moon_circle;
+    const icon = CupertinoIcons.moon_circle;
     final themeColors = Theme.of(context);
 
     final settingServices = Provider.of<SettingServices>(context);
 
-    if (settingServices.isLoading) return LoadingView();
+    if (settingServices.isLoading) return const LoadingView();
 
     return Scaffold(
         appBar: AppBar(
@@ -43,10 +43,10 @@ class SettingsScreen extends StatelessWidget {
               Navigator.pushReplacementNamed(context, 'navigation');
             },
           ),
-          actions: [],
+          actions: const [],
           elevation: 0,
         ),
-        body: _DarkModeSetting(icon: icon));
+        body: const _DarkModeSetting(icon: icon));
   }
 }
 
@@ -73,9 +73,9 @@ class _DarkModeSettingState extends State<_DarkModeSetting> {
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     final settingsService = Provider.of<SettingServices>(context, listen: true);
 
-    if (settingsService.isLoading) return LoadingView();
+    if (settingsService.isLoading) return const LoadingView();
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       // height: 1000,
       child: ListView.builder(
@@ -83,7 +83,7 @@ class _DarkModeSettingState extends State<_DarkModeSetting> {
           itemBuilder: (BuildContext context, int index) => Column(
                 children: [
                   // Create dynamic title name.
-                  Divider(),
+                  const Divider(),
                   Container(
                     child: ListTile(
                       title: Text('${settingsService.settingFamily[index]}'),
@@ -124,7 +124,7 @@ class _settingSwitch extends StatefulWidget {
 class _settingSwitchState extends State<_settingSwitch> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       // width: double.infinity,
       height: 200,
 
@@ -166,7 +166,7 @@ class _settingSwitchState extends State<_settingSwitch> {
                                   '${widget.settingsService.settingFamily[widget.index]}']
                                   [index2]
                               .setting,
-                          style: TextStyle(fontWeight: FontWeight.w300)),
+                          style: const TextStyle(fontWeight: FontWeight.w300)),
                       onChanged: (value) {
                         final settings = widget.settingsService.settingList[
                                 '${widget.settingsService.settingFamily[widget.index]}']

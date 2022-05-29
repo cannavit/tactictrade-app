@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
-import 'package:tactictrade/share_preferences/preferences.dart';
 
 class CustomNavbar extends StatelessWidget {
   const CustomNavbar({Key? key}) : super(key: key);
@@ -11,7 +10,7 @@ class CustomNavbar extends StatelessWidget {
 
     final navigationModel = Provider.of<NavigationModel>(context);
 
-    return Container(
+    return SizedBox(
       height: 50,
       child: BottomNavigationBar(
         iconSize: 20,

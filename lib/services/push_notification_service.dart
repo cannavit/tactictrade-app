@@ -13,7 +13,7 @@ class PushNotificationService {
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
   static String? token;
   static final StreamController<String> _messageStreamController =
-      new StreamController.broadcast();
+      StreamController.broadcast();
 
   static Stream<String> get messageStreamController =>
       _messageStreamController.stream;
@@ -37,12 +37,12 @@ class PushNotificationService {
   static Future initializeApp() async {
     // Push Notification
     await Firebase.initializeApp();
-    final token_device = await FirebaseMessaging.instance.getToken();
+    final tokenDevice = await FirebaseMessaging.instance.getToken();
 
 
     final baseUrl =  Environment.baseUrl;
     final url = Uri.http(baseUrl, '/notifications/v1/register');
-    final _storage = new FlutterSecureStorage();
+    const _storage = FlutterSecureStorage();
 
     final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -57,7 +57,7 @@ class PushNotificationService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + token
     }, body: json.encode({
-      "token": token_device,
+      "token": tokenDevice,
       "device_type": ""
     }) );
 

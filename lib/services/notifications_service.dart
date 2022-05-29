@@ -21,7 +21,7 @@ class NotificationsService {
     final snackBar = SnackBar(
       backgroundColor: Preferences.isDarkmode ? Colors.white : Colors.black,
       content: Container(
-          margin: EdgeInsets.symmetric(horizontal: 70),
+          margin: const EdgeInsets.symmetric(horizontal: 70),
           child: Text(message,
               style: TextStyle(
                   color:

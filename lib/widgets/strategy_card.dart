@@ -1,17 +1,12 @@
-import 'dart:math';
-
-import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/models/strategy_models.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/statistics_values_widgets.dart';
 
-import '../pages/broker/service/broker_service.dart';
-import '../providers/trading_config_short_provider.dart';
+import '../services/broker_service.dart';
 import '../screens/transactions_records_screen.dart';
 import '../services/strategies_services.dart';
-import '../services/trading_config_view.dart';
 import '../services/transactions_record_service.dart';
 import 'follow_button_widget.dart';
 import 'icons_social_favorite_likes.dart';
@@ -36,7 +31,7 @@ class ProductCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Container(
-        margin: EdgeInsets.only(top: 20),
+        margin: const EdgeInsets.only(top: 20),
         width: double.infinity,
         // height: 430,
         decoration: _cardBorder(),
@@ -78,8 +73,9 @@ class ProductCard extends StatelessWidget {
                         ? null
                         : FadeInImage(
                             placeholder: Preferences.isDarkmode
-                                ? AssetImage('assets/giphy.gif')
-                                : AssetImage('assets/giphyDarkLoading.gif'),
+                                ? const AssetImage('assets/giphy.gif')
+                                : const AssetImage(
+                                    'assets/giphyDarkLoading.gif'),
                             image: NetworkImage(strategyData.postImage!)),
                   ),
                 ),
@@ -119,9 +115,8 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-
   BoxDecoration _cardBorder() => BoxDecoration(
-          color: Color(0xff181B25),
+          color: const Color(0xff181B25),
           borderRadius: BorderRadius.circular(0),
           boxShadow: const [
             BoxShadow(
@@ -185,9 +180,9 @@ class _likeIcons extends StatelessWidget {
               // Icon(Icons.history),
               IconButton(
                 splashColor: Colors.amber,
-                icon: Icon(Icons.history),
+                icon: const Icon(Icons.history),
                 onPressed: () {
-                  final isPrivateRecord = false;
+                  const isPrivateRecord = false;
 
                   // transactionServiceData
                   //     .getTransactionRecord(strategyId, {"private": false});

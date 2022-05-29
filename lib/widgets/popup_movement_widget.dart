@@ -42,7 +42,7 @@ class PopUpMovement extends StatelessWidget {
           child: Row(
             children: [
               TextButton(
-                child:  Text("$continueText",
+                child:  Text(continueText,
                     style: const TextStyle(
                         color: Colors.blue,
                         fontSize: 15,
@@ -56,7 +56,7 @@ class PopUpMovement extends StatelessWidget {
               ),
               Expanded(child: Container()),
               TextButton(
-                child:  Text('$cancelText',
+                child:  Text(cancelText,
                     style: const TextStyle(
                         color: Colors.red,
                         fontSize: 15,

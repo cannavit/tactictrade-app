@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 
 
 
-import 'package:flutter/material.dart';
 
 
 class CandleGraphScreen  extends StatefulWidget {
@@ -48,7 +47,7 @@ List<Candle> candles = [];
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("BTCUSDT 1H Chart"),
+          title: const Text("BTCUSDT 1H Chart"),
           actions: [
             IconButton(
               onPressed: () {

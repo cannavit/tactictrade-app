@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NewStrategyProvider extends ChangeNotifier {
-  GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   static String? _strategyName = '';
 

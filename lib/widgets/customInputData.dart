@@ -51,14 +51,14 @@ class CustomInput extends StatelessWidget {
           child: TextFormField(
             // cursorColor: Colors.red,
 
-            style: TextStyle(color: Colors.black87),
+            style: const TextStyle(color: Colors.black87),
             controller: textController,
             autocorrect: false,
             keyboardType: keyboardType,
             obscureText: isPassword,
 
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(30.0, 14.0, 20.0, 10.0),
+              contentPadding: const EdgeInsets.fromLTRB(30.0, 14.0, 20.0, 10.0),
               prefixIcon: Icon(icon),
               prefixIconColor: Colors.yellow,
               focusedBorder: InputBorder.none,
@@ -73,7 +73,7 @@ class CustomInput extends StatelessWidget {
               if (validatorType == 'email') {
                 String pattern =
                     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                RegExp regExp = new RegExp(pattern);
+                RegExp regExp = RegExp(pattern);
                 return regExp.hasMatch(value ?? '') ? null : 'Check your email';
               }
 
@@ -84,7 +84,7 @@ class CustomInput extends StatelessWidget {
                 }
                 return null;
               }
-              ;
+              return null;
             },
           ),
         ),
@@ -151,14 +151,14 @@ class _CustomInputPasswordState extends State<CustomInputPassword> {
           child: TextFormField(
             // cursorColor: Colors.red,
 
-            style: TextStyle(color: Colors.black87),
+            style: const TextStyle(color: Colors.black87),
             controller: widget.textController,
             autocorrect: false,
             keyboardType: widget.keyboardType,
             obscureText: _isObscure,
 
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.fromLTRB(30.0, 14.0, 20.0, 10.0),
+                contentPadding: const EdgeInsets.fromLTRB(30.0, 14.0, 20.0, 10.0),
                 prefixIcon: Icon(widget.icon),
                 prefixIconColor: Colors.yellow,
                 focusedBorder: InputBorder.none,
@@ -187,7 +187,6 @@ class _CustomInputPasswordState extends State<CustomInputPassword> {
                 return 'Password must be at least 6 characters long';
               }
               return null;
-              ;
             },
           ),
         ),

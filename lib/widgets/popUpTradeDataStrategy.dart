@@ -1,24 +1,16 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tactictrade/providers/new_strategy_provider.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 
-import '../pages/broker/service/broker_service.dart';
 import '../providers/theme_provider.dart';
 import '../providers/trading_config_short_provider.dart';
-import '../screens/create_strategy_screen.dart';
-import '../screens/loading_strategy.dart';
-import '../services/strategies_services.dart';
 import '../services/trading_config.dart';
-import 'editfield_custom.dart';
-import 'forms_components/general_input_field.dart';
 
 class PopUpTradeDataStrategy extends StatelessWidget {
   // PopUpTradeDataStrategy(BuildContext context, dynamic dataBroker);
 
-  PopUpTradeDataStrategy({Key? key, this.dataBroker, required this.strategyId})
+  const PopUpTradeDataStrategy({Key? key, this.dataBroker, required this.strategyId})
       : super(key: key);
 
   final dataBroker;
@@ -67,11 +59,11 @@ class PopUpTradeDataStrategy extends StatelessWidget {
         child: SafeArea(
           child: Dialog(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              insetPadding: EdgeInsets.only(top: 40),
+              insetPadding: const EdgeInsets.only(top: 40),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4.0)),
               child: Stack(
-                overflow: Overflow.visible,
+                // overflow: Overflow.visible, //TOOD this not work after of update
                 alignment: Alignment.center,
                 children: [
                   _FormCard(
@@ -143,7 +135,7 @@ class _FormCardState extends State<_FormCard> {
   Widget build(BuildContext context) {
     final tradingConfig = Provider.of<TradingConfig>(context);
 
-    return Container(
+    return SizedBox(
       // height: 400,
       width: MediaQuery.of(context).size.width * 0.8,
 
@@ -420,7 +412,7 @@ class _SwiftListState extends State<_SwiftList> {
           secondary: Icon(widget.iconSwift, size: 30, color: widget.iconColor),
           value: Preferences.brokerNewUseTradingLong,
           title: Text(widget.textSwift,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
           onChanged: (value) {
             // setState(() {});
 

@@ -35,7 +35,7 @@ class TradingConfigViewService extends ChangeNotifier {
         final url =
             Uri.http(Environment.baseUrl, '/trading/view_flutter/$strategyId');
 
-        final _storage = new FlutterSecureStorage();
+        const _storage = FlutterSecureStorage();
 
         final token = await _storage.read(key: 'token_access') ?? '';
 
@@ -59,7 +59,7 @@ class TradingConfigViewService extends ChangeNotifier {
         }
 
         tradingConfigViewData =
-            await TradingConfigViewModel.fromJson(response.body);
+            TradingConfigViewModel.fromJson(response.body);
 
         tradingConfigViewCache[strategyId] = tradingConfigViewData;
       }

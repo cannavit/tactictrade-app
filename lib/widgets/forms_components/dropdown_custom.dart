@@ -76,9 +76,9 @@ class _DropDownSelectBrokerState extends State<DropDownSelectBroker> {
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                   image: item['type'] == 'paperTrade'
-                                      ? AssetImage(
+                                      ? const AssetImage(
                                           'assets/ReduceBrokerTacticTradeIcon.png')
-                                      : AssetImage('assets/AlpacaMiniLogo.png'),
+                                      : const AssetImage('assets/AlpacaMiniLogo.png'),
                                   fit: BoxFit.fill),
                             ),
                           ),
