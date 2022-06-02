@@ -35,11 +35,14 @@ class PopUpMovement extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
+          // style: ButtonStyle(
+          //   textStyle: const TextStyle(color: Theme.of(context).primaryColor)
+          // ),
           onPressed: () {
             Navigator.of(context).pop();
           },
-          textColor: Theme.of(context).primaryColor,
+          // textColor: Theme.of(context).primaryColor,
           child: Row(
             children: [
               TextButton(
@@ -161,10 +164,10 @@ class _FormState extends State<_Form> {
   final descriptionCtrl = TextEditingController();
 
   final List<String> itemsData = [
-    'minutes',
-    'hours',
-    'days',
-    'weeks',
+    'minute',
+    'hour',
+    'day',
+    'week',
   ];
 
   @override
@@ -503,11 +506,12 @@ class ButtonNext extends StatelessWidget {
     final strategyPreferences =
         Provider.of<NewStrategyProvider>(context, listen: false);
 
-    return RaisedButton(
-        elevation: 2,
-        highlightElevation: 5,
-        color: Colors.blue,
-        shape: const StadiumBorder(),
+    return TextButton(
+        
+        // elevation: 2,
+        // highlightElevation: 5,
+        // color: Colors.blue,
+        // shape: const StadiumBorder(),
         child: SizedBox(
           width: double.infinity,
           height: 55,

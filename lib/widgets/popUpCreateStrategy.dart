@@ -113,7 +113,7 @@ class PopUpCreateStrategy extends StatelessWidget {
                                 },
                                 icon: const Icon(Icons.copy),
                               )),
-                          RaisedButton(
+                          TextButton(
                             onPressed: () {
 
             // Preferences.newFollowStrategyId = strategyId;
@@ -126,7 +126,7 @@ class PopUpCreateStrategy extends StatelessWidget {
                               // Navigator.pushReplacementNamed(
                               //     context, 'navigation');
                             },
-                            color: Colors.blue,
+                            // color: Colors.blue,
                             child: const Text(
                               'Continue',
                               style: TextStyle(color: Colors.white),

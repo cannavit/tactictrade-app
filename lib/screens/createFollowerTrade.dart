@@ -9,7 +9,7 @@ import 'package:tactictrade/providers/trading_config_input_long_provider.dart';
 import 'package:tactictrade/screens/navigation_screen.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
 import 'package:tactictrade/widgets/strategy_symbol_widget.dart';
-
+import 'package:flutter/material.dart';
 import '../providers/select_broker_trading_config_provider.dart';
 import '../providers/trading_config_short_provider.dart';
 import '../services/broker_service.dart';
@@ -320,11 +320,11 @@ class _widgetTradingConfigForm extends StatelessWidget {
 
             constraints: const BoxConstraints(minWidth: 150, maxWidth: 300),
 
-            child: RaisedButton(
-              elevation: 2,
-              highlightElevation: 5,
-              color: Colors.blue,
-              shape: const StadiumBorder(),
+            child: TextButton(
+              // elevation: 2,
+              // highlightElevation: 5,
+              // color: Colors.blue,
+              // shape: const StadiumBorder(),
               child: SizedBox(
                 width: double.infinity,
                 height: 50,

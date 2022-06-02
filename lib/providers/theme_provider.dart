@@ -27,7 +27,7 @@ class MyThemes {
     dividerColor: const Color(0xff898989),
     primaryColor: const Color(0xff008CED),
     secondaryHeaderColor: Colors.black87,
-    textSelectionColor: const Color(0xff142A32), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xff008CED)),
+    // textSelectionColor: const Color(0xff142A32), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xff008CED)),
 
     
   );
@@ -36,7 +36,7 @@ class MyThemes {
     // scaffoldBackgroundColor: const Color(0xff142A32),
     scaffoldBackgroundColor: const Color(0xff181B25),
 
-    textSelectionColor: Colors.white,
+    // textSelectionColor: Colors.white,
     secondaryHeaderColor: Colors.white,
     primaryColor: const Color(0xff08BEFB), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xff008CED)),
   );

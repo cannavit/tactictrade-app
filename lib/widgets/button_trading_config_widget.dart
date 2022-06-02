@@ -49,14 +49,14 @@ class ButtonTradingConfigWidgetState extends State<ButtonTradingConfigWidget> {
     return SizedBox(
       height: 48,
       width: 70,
-      child: RaisedButton(
-          elevation: 2,
-          highlightElevation: 5,
-          color: tradingConfigInputLongProvider.buttonValuesRead(
-                  widget.customTradingConfigView.dbFieldOne +
-                      "_${widget.operation}")
-              ? Colors.blue
-              : Colors.blue.shade600,
+      child: TextButton(
+          // elevation: 2,
+          // highlightElevation: 5,
+          // color: tradingConfigInputLongProvider.buttonValuesRead(
+          //         widget.customTradingConfigView.dbFieldOne +
+          //             "_${widget.operation}")
+          //     ? Colors.blue
+          //     : Colors.blue.shade600,
           child: SizedBox(
             width: double.infinity,
             // height: 30,

@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const LogoImage(),
-              const Text('Login', style: TextStyle(fontSize: 30)),
+              const Text('Login', style: TextStyle(fontSize: 20)),
               ChangeNotifierProvider(
                 create: (_) => LoginFormProvider(),
                 child: const _Form(),
@@ -159,11 +159,23 @@ class ButtonLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     final loginForm = Provider.of<LoginFormProvider>(context);
 
-    return RaisedButton(
-        elevation: 2,
-        highlightElevation: 5,
-        color: Colors.blue,
-        shape: const StadiumBorder(),
+    return TextButton(
+        style: ButtonStyle(
+          
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+          padding: MaterialStateProperty.all(const EdgeInsets.all(1)),
+
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+            // side: BorderSide(color: Colors.red)
+          )
+        )
+        ),
+        // elevation: 2,
+        // highlightElevation: 5,
+        // color: Colors.blue,
+        // shape: const StadiumBorder(),
         child: const SizedBox(
           width: double.infinity,
           height: 55,

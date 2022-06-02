@@ -77,8 +77,8 @@ class FollowButtonWidget extends StatelessWidget {
                   content: const Text(
                       "Do you want use this strategy for doing trade?"),
                   actions: <Widget>[
-                    FlatButton(
-                        color: Colors.green,
+                    TextButton(
+                        // color: Colors.green,
                         onPressed: () {
                           // Reset las configuration open
                           configTradeProvider.reset();
@@ -102,8 +102,8 @@ class FollowButtonWidget extends StatelessWidget {
                         },
                         child: const Text("USE FOR TRADE")),
                     // const SizedBox(width:30 ),
-                    FlatButton(
-                      color: Colors.red,
+                    TextButton(
+                      // color: Colors.red,
                       onPressed: () => Navigator.of(context).pop(false),
                       child: const Text("CANCEL"),
                     ),

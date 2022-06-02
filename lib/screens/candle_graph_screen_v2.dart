@@ -1,3 +1,4 @@
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,81 +20,100 @@ class CustomPaintGraphScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     //TODO connect this with the input of the strategy
 
+    return Scaffold(body: CandleGraphCustom());
+  }
+}
+
+class CandleGraphCustom extends StatelessWidget {
+  const CandleGraphCustom({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final marketDataService = Provider.of<MarketDataService>(context);
 
     if (marketDataService.isLoading) return const LoadingView();
-
     final filterList = Provider.of<TimeFilterSelected>(context, listen: true);
 
     filterList.categories =
         filterList.dynamicCategoryCarousel(filterList.period);
 
     final marketDataList = marketDataService.MarketDataList;
+    final operations = marketDataService.operations;
 
-    return Scaffold(
-        body: Column(
-      children: [
-        const SizedBox(height: 100),
+    return Container(
+      height: 210,
+      child: Column(
+        children: [
+          const SizedBox(height: 10),
 
-        // Candle Graph
-        SizedBox(
-            height: 195,
-            // color: Colors.green,
-            child: CustomPaint(
-                size: Size.infinite,
-                painter: CandleGraphPainter(
-                  stockData: marketDataService.MarketDataList,
-                ))),
-        const SizedBox(height: 5),
+          // Candle Graph
+          Container(
+              height: 145,
+              // color: Colors.green,
+              child: CustomPaint(
+                  size: Size.infinite,
+                  painter: CandleGraphPainter(
+                    operations: operations,
+                    stockData: marketDataList,
+                  ))),
+          Container(
+              height: 40,
+              child: GraphVolumeCandle(marketDataList: marketDataList)),
 
-        // Volume Graph
-        SizedBox(
-            height: 30,
-            // color: Colors.green,
-            child: CustomPaint(
-              size: Size.infinite,
-              painter: StockVolumePainter(
-                stockData: marketDataList,
-              ),
-            )),
+          // Volume Graph
+        ],
+      ),
+    );
+  }
+}
 
-        // Control Dates
+class GraphVolumeCandle extends StatelessWidget {
+  const GraphVolumeCandle({
+    Key? key,
+    required this.marketDataList,
+  }) : super(key: key);
 
-        SizedBox(
-          height: 25,
-          width: double.infinity,
-          child: Row(
-            children: const [
-              // Container(
-              //   height: 30,
-              //   width: 30,
-              //   child: _buttonChangeGraph(),
-              // ),
-              // Expanded(
-              //   child: CarouselListHome(
-              //       categoriesList: filterList,
-              //       pageCarausel: 'carousel_graph_candle'),
-              // ),
-            ],
-          ),
-        ),
-      ],
+  final List<Candle> marketDataList;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        // color: Colors.green,
+        child: CustomPaint(
+      size: Size.infinite,
+      painter: StockVolumePainter(
+        stockData: marketDataList,
+      ),
     ));
   }
 }
 
 class CandleGraphPainter extends CustomPainter {
-  CandleGraphPainter({required this.stockData})
+  CandleGraphPainter({required this.stockData, required this.operations})
       : _wickPaint = Paint()..color = Colors.grey,
         _grainPaint = Paint()..color = Colors.green,
-        _lossPaint = Paint()..color = Colors.red;
+        _lossPaint = Paint()..color = Colors.red,
+        _longOperationColor = Paint()..color = Color.fromARGB(60, 76, 175, 79);
+
+  final longWindow = new Paint()
+    ..color = Colors.green.shade500
+    ..style = PaintingStyle.stroke;
 
   final List<Candle> stockData;
+  final List operations;
   final Paint _wickPaint;
   final Paint _grainPaint;
   final Paint _lossPaint;
+  final Paint _longOperationColor;
+
   final double _wickWidth = 1.0;
   final double _candleWidth = 3.0;
+
+  final List<Offset> pointsLine = [];
+
+  final dynamic pointsLineDictionary = {};
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -101,8 +121,14 @@ class CandleGraphPainter extends CustomPainter {
 
     List<Candletick> candleticks = _generateCandlesticks(size);
 
+    var count = -1;
+    var lineCount = -1;
+    // final pathLineLong = new Path();
+
     // Paint the CandleSticks
     for (Candletick candletick in candleticks) {
+      count = count + 1;
+
       canvas.drawRect(
           Rect.fromLTRB(
               candletick.centerX - (_wickWidth - 2),
@@ -119,7 +145,81 @@ class CandleGraphPainter extends CustomPainter {
               candletick.centerX + (_candleWidth / 2),
               size.height - candletick.candleLowY),
           candletick.candlePlaint);
+
+      var isLongOpen = false;
+      var isLongClose = false;
+
+      for (List operation in operations) {
+        lineCount = lineCount + 1;
+        final initDate = DateTime.parse(operation[2]);
+
+        if (operation[3] == null) {
+          // If the operation is open
+          final closeDate = DateTime.now();
+        } else {
+          // The operation is closed
+          final closeDate = DateTime.parse(operation[3]);
+        }
+
+        final oper = operation[1];
+
+        if (candletick.date.compareTo(initDate) >= 0) {
+          isLongOpen = true;
+          var dataValue;
+          var xPoint;
+          var yPoint;
+
+          xPoint = candletick.centerX;
+
+          if (oper == 'long') {
+            yPoint = candletick.candleLowY;
+          }
+          if (oper == 'short') {
+            yPoint = candletick.candleLowY;
+
+            // dataValue = Offset(
+            //     candletick.centerX - 5, candletick.candleLowY * -1 + 160);
+          }
+
+          if (pointsLineDictionary[oper] == null) {
+            pointsLineDictionary[oper] = {};
+          }
+          if (pointsLineDictionary[oper][operation[2]] == null) {
+            pointsLineDictionary[oper][operation[2]] = [];
+          }
+          pointsLineDictionary[oper][operation[2]]
+              .add({'x': xPoint, 'y': yPoint});
+        } else {
+          isLongOpen = false;
+        }
+      }
     }
+
+    // Plot Buy Line --------------
+    // final pointMode = PointMode;
+
+    // for (List operation in operations) {
+    //   // print(operation);
+
+    //   if (operation[1] == 'long') {
+    //     final pathLong = new Path();
+    //     var pointsLineLong = pointsLineDictionary['long'][operation[2]];
+    //     // Draw the point for the line
+    //     for (final point in pointsLineLong) {
+    //       pathLong.lineTo(point['x'], point['y']);
+    //     }
+    //     // canvas.drawPath(pathLong, _grainPaint);
+    //     // canvas.drawPoints(pointMode, pointsLineLong, paintLong);
+    //     // canvas.drawPath(pathLineLong, paintLong);
+    //   }
+
+    //   // if (operation[1] == 'short') {
+    //   //   final pointsLineShort = pointsLineDictionary['short'][operation[2]];
+    //   //   // canvas.drawPoints(pointMode, pointsLineShort, paintShort);
+    //   // }
+    // }
+
+    // canvas.drawPoints(pointMode, pointsLine, paint);
   }
 
   List<Candletick> _generateCandlesticks(Size availableSpace) {
@@ -143,6 +243,7 @@ class CandleGraphPainter extends CustomPainter {
       final Candle window = stockData[i];
 
       candletick.add(Candletick(
+          date: window.date,
           centerX: (i + 1) * pixelsPerWindows,
           wickHeighY: (window.high - lowValue) * pixelsPerDollar,
           wickLowY: (window.low - lowValue) * pixelsPerDollar,
@@ -172,14 +273,17 @@ class Candletick {
   final double candleHightY;
   final double candleLowY;
   final Paint candlePlaint;
+  final DateTime date;
 
-  Candletick(
-      {required this.centerX,
-      required this.wickHeighY,
-      required this.wickLowY,
-      required this.candleHightY,
-      required this.candleLowY,
-      required this.candlePlaint});
+  Candletick({
+    required this.centerX,
+    required this.wickHeighY,
+    required this.wickLowY,
+    required this.candleHightY,
+    required this.candleLowY,
+    required this.candlePlaint,
+    required this.date,
+  });
 }
 
 class _buttonChangeGraph extends StatefulWidget {

@@ -33,6 +33,8 @@ class StockVolumePainter extends CustomPainter {
               bar.width, bar.heigth),
           bar.paint);
     }
+
+
   }
 
 

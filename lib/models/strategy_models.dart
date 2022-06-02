@@ -77,6 +77,8 @@ class Strategy {
         required this.likesNumber,
         required this.isFollower,
         required this.controllerCandleGraph,
+        required this.controllerCandleDefault,
+        
         
     });
 
@@ -119,6 +121,7 @@ class Strategy {
     int likesNumber;
     bool isFollower;
     List<ControllerCandleGraph> controllerCandleGraph;
+    ControllerCandleGraph controllerCandleDefault;
 
     factory Strategy.fromJson(String str) => Strategy.fromMap(json.decode(str));
 
@@ -164,6 +167,7 @@ class Strategy {
         likesNumber: json["likes_number"],
         isFollower: json["is_follower"],
         controllerCandleGraph: List<ControllerCandleGraph>.from(json["controller_candle_graph"].map((x) => ControllerCandleGraph.fromMap(x))),
+         controllerCandleDefault: ControllerCandleGraph.fromMap(json["controller_candle_default"]),
     );
 
     Map<String, dynamic> toMap() => {
@@ -206,6 +210,7 @@ class Strategy {
         "likes_number": likesNumber,
         "is_follower": isFollower,
         "controller_candle_graph": List<dynamic>.from(controllerCandleGraph.map((x) => x.toMap())),
+        "controller_candle_default": controllerCandleDefault.toMap(),
     };
 }
 

@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:tactictrade/models/strategy_models.dart';
+import 'package:tactictrade/providers/graph_transaction_selector_provider.dart';
+import 'package:tactictrade/screens/candle_graph_screen_v2.dart';
+import 'package:tactictrade/services/market_data_service.dart';
+import 'package:tactictrade/widgets/carousel_dynamic_options.dart';
 import 'package:tactictrade/widgets/carousel_list_home.dart';
 
 import '../models/record_model.dart';
@@ -36,6 +41,8 @@ class TransactionPageScreen extends StatelessWidget {
     this.titleLevelOne = 'Mantainer',
     required this.recordsProvider,
     required this.isPrivate,
+    this.controllerCandleGraph,
+    this.controllerCandleDefault,
   }) : super(key: key);
 
   final bool isPrivateRecord;
@@ -52,8 +59,10 @@ class TransactionPageScreen extends StatelessWidget {
   final String urlUser;
   final String titleLevelOne;
   final bool isPrivate;
-
   final TransactionRecordsServices recordsProvider;
+
+  final List<ControllerCandleGraph>? controllerCandleGraph;
+  final ControllerCandleGraph? controllerCandleDefault;
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +77,15 @@ class TransactionPageScreen extends StatelessWidget {
       'body': {"private": false}
     });
 
+    final marketDataService = Provider.of<MarketDataService>(context);
+
+    marketDataService.read(symbolName, controllerCandleDefault!.period,
+        controllerCandleDefault!.interval, strategyId);
+
     // final recordsProvider =
     //     Provider.of<TransactionRecordsServices>(context, listen: true);
 
-    if (recordsProvider.isLoading) return const LoadingView();
+    if (marketDataService.isLoading) return const LoadingView();
 
     // Build the data for Graph
 
@@ -167,6 +181,7 @@ class TransactionPageScreen extends StatelessWidget {
               ),
               body: Column(
                 children: [
+
                   MantainerDataWidget(
                       mantainerName: mantainerName,
                       urlUser: urlUser,
@@ -193,31 +208,76 @@ class TransactionPageScreen extends StatelessWidget {
                       recordsShortProfitSpots: recordsShortProfitSpots,
                       recordsLongProfitSpots: recordsLongProfitSpots),
 
-                  // -------------------------------------------------
-                  const SizedBox(height: 20),
+                  // Candle Graph  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-                  // Row Filters --------------------------------------
-                  SizedBox(
-                    height: 25,
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        const SizedBox(
-                          height: 30,
-                          width: 30,
-                          child: _buttonChangeGraph(),
+                  Container(
+                    height: 195,
+                    child: Visibility(
+                        visible: Provider.of<GraphTransactionSelectProvider>(
+                                    context,
+                                    listen: true)
+                                .read() ==
+                            1,
+                        child: const CandleGraphCustom()),
+                  ),
+
+
+
+
+
+
+                  
+
+                  //  CandleGraphCustom Candle Graph
+                  // const SizedBox(height: 5),
+
+                  Container(
+                    height: 20,
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Container(
+                        // margin: EdgeInsets.symmetric(horizontal: 20),
+                        // padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                      
+                            Expanded(
+                              child: CarouselDynamicOption(
+                                  strategyId: strategyId,
+                                  symbolName: symbolName,
+                                  controllerCandleGraph: controllerCandleGraph,
+                                  controllerCandleDefault:
+                                      controllerCandleDefault,
+                                  categoriesList: filterList,
+                                  providerStringFlag: 'candle_graph_v1'),
+                            ),
+
+                            Center(
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 3, top: 0),
+                                
+                                // height: 30,
+                                width: 30,
+                                child: const SizedBox(
+                               
+                                  child: _buttonChangeGraph(),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: CarouselListHome(
-                              categoriesList: filterList, pageCarausel: 'year'),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
 
+                  // Dynamic Filter
+                  // -------------------------------------------------
+
                   const ColumnTitlesTransactionsRecordsWidget(),
 
-                  Expanded(
+                  Expanded( //TODO actie this
                     // height: double.infinity,
                     child: ListView.separated(
                         separatorBuilder: (BuildContext context, int index) =>
@@ -289,8 +349,10 @@ class _2dGraphProfit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Visibility(
-        visible: Provider.of<ShowGraph2dProfitProvider>(context, listen: true)
-            .read(),
+        visible:
+            Provider.of<GraphTransactionSelectProvider>(context, listen: true)
+                    .read() ==
+                0,
         child: _2dProfitGraph(
             xMinValue: xMinValue,
             xMaxValue: xMaxValue,
@@ -375,25 +437,21 @@ class _buttonChangeGraphState extends State<_buttonChangeGraph> {
     final showGraph2dProfitProvider =
         Provider.of<ShowGraph2dProfitProvider>(context);
 
+    final graphTransactionSelectProvider =
+        Provider.of<GraphTransactionSelectProvider>(context);
+
+    var iconSelected = CupertinoIcons.airplane;
+
     return IconButton(
         onPressed: () {
-          print(Preferences.showProfitGraph);
-          setState(() {
-            Preferences.showProfitGraph = !Preferences.showProfitGraph;
-            showGraph2dProfitProvider.value(Preferences.showProfitGraph);
-          });
+          graphTransactionSelectProvider.write();
+          setState(() {});
         },
-        icon: Preferences.showProfitGraph
-            ? const Icon(
-                CupertinoIcons.graph_circle,
-                color: Colors.blue,
-                size: 16,
-              )
-            : const Icon(
-                CupertinoIcons.graph_circle_fill,
-                color: Colors.blue,
-                size: 16,
-              ));
+        icon: Icon(
+          graphTransactionSelectProvider.iconSelected,
+          color: Colors.blue,
+          size: 16,
+        ));
   }
 }
 

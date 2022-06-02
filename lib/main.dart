@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:tactictrade/providers/carousel_dynamic_provider.dart';
+import 'package:tactictrade/providers/graph_transaction_selector_provider.dart';
 import 'package:tactictrade/providers/providers.dart';
 import 'package:tactictrade/screens/screens.dart';
 import 'package:tactictrade/share_preferences/preferences.dart';
@@ -11,10 +14,6 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'services/trading_config.dart';
 // import 'package:sentry_flutter/sentry_flutter.dart';
-
-
-
-
 
 void main() async {
   dotenv.load(
@@ -65,6 +64,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => MarketDataService()),
       ChangeNotifierProvider(create: (_) => YahooFinance()),
       ChangeNotifierProvider(create: (_) => TimeFilterSelected()),
+      ChangeNotifierProvider(create: (_) => CarouselDynamicProvider()),
+      ChangeNotifierProvider(create: (_) => GraphTransactionSelectProvider()),
 
       // ChangeNotifierProvider(create: (_) => )
     ],

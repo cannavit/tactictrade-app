@@ -116,10 +116,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 margin: const EdgeInsets.symmetric(horizontal: 30),
                 height: 45,
                 width: double.infinity,
-                child: RaisedButton(
-                  elevation: 1,
-                  shape: const StadiumBorder(),
-                  color: Colors.blue,
+                child: TextButton(
+                  // elevation: 1,
+                  // shape: const StadiumBorder(),
+                  // color: Colors.blue,
                   child: const Center(
                     child: Text('Save',
                         style: TextStyle(

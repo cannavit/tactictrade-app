@@ -19,10 +19,10 @@ class PopUpTradeDataStrategy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> itemsData = [
-      'minutes',
-      'hours',
-      'days',
-      'weeks',
+      'minute',
+      'hour',
+      'day',
+      'week',
     ];
 
     // final dynamic dataBroker;
@@ -342,7 +342,7 @@ class _FormCardState extends State<_FormCard> {
               style: TextStyle(fontSize: 15),
             ),
 
-            RaisedButton(
+            TextButton(
               onPressed: () {
                 final data = {
                   'strategyNews': widget.strategyId,
@@ -366,7 +366,7 @@ class _FormCardState extends State<_FormCard> {
                 // Navigator.of(context).pop();
                 // Navigator.pushReplacementNamed(context, 'navigation');
               },
-              color: Colors.blue,
+              // color: Colors.blue,
               child: const Text(
                 'Use This Strategy Trade',
                 style: TextStyle(color: Colors.white),

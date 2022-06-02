@@ -8,11 +8,13 @@ class MarketData {
   MarketData({
     required this.status,
     required this.results,
+    required this.operations,
   });
 
   String status;
   List<Candle> results;
-
+  List<List<dynamic>> operations;
+  
   factory MarketData.fromJson(String str) =>
       MarketData.fromMap(json.decode(str));
 
@@ -22,11 +24,13 @@ class MarketData {
         status: json["status"],
         results:
             List<Candle>.from(json["results"].map((x) => Candle.fromMap(x))),
+         operations: List<List<dynamic>>.from(json["operations"].map((x) => List<dynamic>.from(x.map((x) => x)))),
       );
 
   Map<String, dynamic> toMap() => {
         "status": status,
         "result": List<dynamic>.from(results.map((x) => x.toMap())),
+        "operations": List<dynamic>.from(operations.map((x) => List<dynamic>.from(x.map((x) => x)))),
       };
 }
 

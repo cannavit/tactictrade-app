@@ -8,54 +8,89 @@ import 'package:tactictrade/models/market_data_model.dart';
 class MarketDataService extends ChangeNotifier {
   bool isLoading = true;
   int volumeMax = 0;
-
-  // Map<String, List<Candle>> MarketDataList;
-
+  dynamic marketDataCache = {};
   List<Candle> MarketDataList = [];
+  List operations = [];
+  dynamic operationCache = {};
 
-  MarketDataService() {
-    read('1w','1h');
+  currendData() {
+    return MarketDataList;
   }
 
+  read(
+    String symbol,
+    String period,
+    String interval,
+    int strategyId,
+  ) async {
+    var dataMarket;
 
-  // getCarrousel
+    var findNewData = true;
+    // Get data if exist inside of the cache.
+    if (marketDataCache[symbol] != null) {
+      if (marketDataCache[symbol][period] != null) {
+        if (marketDataCache[symbol][period][interval] != null) {
+          isLoading = false;
+          dataMarket = marketDataCache[symbol][period][interval];
+          MarketDataList = dataMarket;
 
-  Future read(String period, String interval, ) async {
-    isLoading = true;
+          operations = operationCache[symbol][period][interval];
 
-    notifyListeners();       
-
-    // Example of use of the API
-    // /market_data/yahoo/SOL-USD/1mo/30m
-    final url = Uri.http(Environment.baseUrl, '/market_data/yahoo/SOL-USD/$period/$interval');
-
-    const _storage = FlutterSecureStorage();
-
-    final token = await _storage.read(key: 'token_access') ?? '';
-
-    if (token == '') {
-      return '';
+          findNewData = false;
+          notifyListeners();
+        }
+      }
     }
 
-    final response = await http.get(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-    );
+    if (findNewData) {
+      isLoading = true;
 
-    final data = json.decode(response.body)['results'];
+      final url = Uri.http(Environment.baseUrl,
+          '/market_data/yahoo/$symbol/$period/$interval/$strategyId');
 
-    final dataList = MarketData.fromJson(response.body);
+      const _storage = FlutterSecureStorage();
 
-    MarketDataList = dataList.results;
+      final token = await _storage.read(key: 'token_access') ?? '';
 
-    isLoading = false;
+      if (token == '') {
+        return '';
+      }
+
+      final response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+      );
+
+      final data = json.decode(response.body)['results'];
+
+      final dataList = MarketData.fromJson(response.body);
+
+      // Init array
+      if (marketDataCache[symbol] == null) {
+        marketDataCache[symbol] = {};
+        operationCache[symbol] = {};
+      }
+
+      if (marketDataCache[symbol][period] == null) {
+        marketDataCache[symbol][period] = {};
+        operationCache[symbol][period] = {};
+
+      }
+
+      marketDataCache[symbol][period][interval] = dataList.results;
+      dataMarket = dataList.results;
+      isLoading = false;
+
+      operationCache[symbol][period][interval] = dataList.operations;
+      operations = dataList.operations;
+      MarketDataList = dataMarket;
+    }
 
     notifyListeners();
-
-    return MarketDataList;
+    return dataMarket;
   }
 }

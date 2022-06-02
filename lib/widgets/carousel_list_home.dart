@@ -76,10 +76,16 @@ class CarouselListHome extends StatelessWidget {
               if (pageCarausel == 'carousel_graph_candle') {
                 // Preferences.
 
-                marketDataService
-                    .read(
-                      period,
-                      categoriesList.categories[index].parameterFilter);
+                // marketDataService
+                //     .read(
+                //       period,
+                //       categoriesList.categories[index].parameterFilter);
+
+
+
+
+
+
               }
             },
             child: Padding(

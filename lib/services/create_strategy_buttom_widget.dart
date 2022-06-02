@@ -21,11 +21,11 @@ class ButtonCreateBroker extends StatelessWidget {
   Widget build(BuildContext context) {
     final brokerService = Provider.of<BrokerServices>(context, listen: false);
 
-    return RaisedButton(
-        elevation: 2,
-        highlightElevation: 5,
-        color: Colors.blue,
-        shape: const StadiumBorder(),
+    return TextButton(
+        // elevation: 2,
+        // highlightElevation: 5,
+        // color: Colors.blue,
+        // shape: const StadiumBorder(),
         child: SizedBox(
           width: double.infinity,
           height: 55,

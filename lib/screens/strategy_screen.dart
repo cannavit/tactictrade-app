@@ -102,4 +102,3 @@ class _StrategyScreenState extends State<StrategyScreen> {
         ));
   }
 }
-

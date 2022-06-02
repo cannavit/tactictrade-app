@@ -60,7 +60,7 @@ class BotsScreen extends StatelessWidget {
                       content: Text(
                           "Do you sure of close this operation  ${positions.positionsList[index]['symbol']} with one profit of: ${positions.positionsList[index]['profit']}. The current price of the accion is ${positions.positionsList[index]['current_price']} ?"),
                       actions: <Widget>[
-                        FlatButton(
+                        TextButton(
                             onPressed: () {
 
                               Navigator.of(context).pop(true);
@@ -71,7 +71,7 @@ class BotsScreen extends StatelessWidget {
 
                             },
                             child: const Text("CLOSE TRADE")),
-                        FlatButton(
+                        TextButton(
                           onPressed: () => Navigator.of(context).pop(false),
                           child: const Text("CANCEL"),
                         ),

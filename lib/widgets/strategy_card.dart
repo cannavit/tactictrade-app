@@ -96,18 +96,7 @@ class ProductCard extends StatelessWidget {
             ),
 
             _likeIcons(
-              isOwner: strategyData.isOwner,
-              isFollower: strategyData.isFollower,
-              strategyId: strategyData.id,
-              isActive: strategyData.isActive,
-              isVerify: strategyData.isVerified,
-              strategyName: strategyData.strategyNews,
-              symbolName: strategyData.symbolName,
-              timeTrade: strategyData.timeTrade,
-              urlPusher: strategyData.pusher,
-              urlSymbol: strategyData.symbolUrl,
-              mantainerName: strategyData.owner.username,
-              urlUser: strategyData.owner.profileImage,
+              strategyData: strategyData,
             )
           ],
         ),
@@ -126,39 +115,11 @@ class ProductCard extends StatelessWidget {
 
 class _likeIcons extends StatelessWidget {
   const _likeIcons(
-      {Key? key,
-      // required this.likesNumber,
-      required this.strategyId,
-      required this.isOwner,
-      required this.isFollower,
-      required this.urlSymbol,
-      required this.urlPusher,
-      required this.timeTrade,
-      required this.strategyName,
-      required this.isActive,
-      required this.isVerify,
-      required this.symbolName,
-      required this.mantainerName,
-      required this.urlUser,
-      this.titleLevelOne = 'Mantainer'})
+      {Key? key, this.titleLevelOne = 'Mantainer', required this.strategyData})
       : super(key: key);
 
-  // final int likesNumber;
-  final int strategyId;
-  final bool isOwner;
-  final bool isFollower;
-
-  final String urlSymbol;
-  final String urlPusher;
-  final String timeTrade;
-  final String strategyName;
-  final bool isActive;
-  final bool isVerify;
-  final String symbolName;
-
-  final String mantainerName;
-  final String urlUser;
   final String titleLevelOne;
+  final Strategy strategyData;
 
   get onPressed => null;
 
@@ -184,24 +145,25 @@ class _likeIcons extends StatelessWidget {
                 onPressed: () {
                   const isPrivateRecord = false;
 
-                  // transactionServiceData
-                  //     .getTransactionRecord(strategyId, {"private": false});
-
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => TransactionPageScreen(
+                                controllerCandleDefault:
+                                    strategyData.controllerCandleDefault,
+                                controllerCandleGraph:
+                                    strategyData.controllerCandleGraph,
                                 isPrivateRecord: false,
-                                strategyId: strategyId,
-                                urlSymbol: urlSymbol,
-                                isActive: isActive,
-                                isVerify: isVerify,
-                                strategyName: strategyName,
-                                symbolName: symbolName,
-                                timeTrade: timeTrade,
-                                urlPusher: urlPusher,
-                                mantainerName: mantainerName,
-                                urlUser: urlUser,
+                                strategyId: strategyData.id,
+                                urlSymbol: strategyData.symbolUrl,
+                                isActive: strategyData.isActive,
+                                isVerify: strategyData.isVerified,
+                                strategyName: strategyData.strategyNews,
+                                symbolName: strategyData.symbolName,
+                                timeTrade: strategyData.timeTrade,
+                                urlPusher: strategyData.pusher,
+                                mantainerName: strategyData.owner.username,
+                                urlUser: strategyData.owner.profileImage,
                                 titleLevelOne: titleLevelOne,
                                 recordsProvider: transactionServiceData,
                                 isPrivate: false,
@@ -217,18 +179,18 @@ class _likeIcons extends StatelessWidget {
             ],
           ),
           FollowButtonWidget(
-              isFollower: isFollower,
+              isFollower: strategyData.isFollower,
               brokerServices: brokerServices,
-              strategyId: strategyId,
-              mantainerName: mantainerName,
+              strategyId: strategyData.id,
+              mantainerName: strategyData.owner.username,
               titleLevelOne: titleLevelOne,
-              isActive: false,
-              isVerify: false,
-              strategyName: strategyName,
-              symbolName: symbolName,
-              timeTrade: timeTrade,
-              urlPusher: urlPusher,
-              urlSymbol: urlSymbol),
+              isActive: strategyData.isActive,
+              isVerify: strategyData.isVerified,
+              strategyName: strategyData.strategyNews,
+              symbolName: strategyData.symbolName,
+              timeTrade: strategyData.timeTrade,
+              urlPusher: strategyData.pusher,
+              urlSymbol: strategyData.symbolUrl),
         ],
       ),
     );
